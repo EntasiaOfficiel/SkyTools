@@ -1,0 +1,27 @@
+package fr.entasia.skytools.objs.custom;
+
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
+
+public enum CustomArrows {
+	FIREWORKS("Flèche d'Artifice"),
+	EXPLOSION("Flèche à Explosion"),
+
+
+	;
+
+	public String name;
+
+	CustomArrows(String name){
+		this.name = name;
+	}
+
+	public boolean is(ItemStack item){
+		if(item==null)return false;
+		ItemMeta meta = item.getItemMeta();
+		if(meta==null)return false;
+		return ("§f"+name).equals(meta.getDisplayName());
+	}
+}

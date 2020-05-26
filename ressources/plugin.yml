@@ -1,0 +1,14 @@
+name: SkyTools
+depend: [Libraries, SkyCore]
+softdepend: [Multiverse-Core]
+version: '1.0'
+main: fr.entasia.skytools.Main
+commands:
+  test:
+
+  skytools:
+
+  speedwriter:
+
+  warp:
+    aliases: [warps]

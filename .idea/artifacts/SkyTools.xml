@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SkyTools">
+    <output-path>$USER_HOME$/Desktop/localservs/paperspigot-2/plugins</output-path>
+    <root id="archive" name="SkyTools.jar">
+      <element id="module-output" name="SkyTools" />
+      <element id="dir-copy" path="$PROJECT_DIR$/ressources" />
+    </root>
+  </artifact>
+</component>
