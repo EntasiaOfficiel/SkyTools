@@ -2,17 +2,18 @@ package fr.entasia.skytools.tasks;
 
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.World;
+import fr.entasia.skytools.objs.Color;
+import fr.entasia.skytools.objs.custom.CustomEnchants;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.FishHook;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class AirHooksTask extends BukkitRunnable {
-
 
 	// constantes
 	public static final float iterations = 120;
@@ -30,8 +31,13 @@ public class AirHooksTask extends BukkitRunnable {
 	public Location base;
 	public World w;
 	public Vector[] points;
-	public boolean spawned = false;
-	public static Vector finalVector = null;
+	public byte state = 0;
+
+	// particules
+	public Particle background=null;
+	public Color backgroundColor=null;
+	public Particle fish=null;
+	public Color fishColor=null;
 
 	// fonctions
 	public static Vector randomVector(){
@@ -48,7 +54,6 @@ public class AirHooksTask extends BukkitRunnable {
 		counter = Main.random.nextInt(15*10)+4*10; // 10 pas 20 car periode de 2 ticks
 
 		base = armorStand.getLocation().subtract(baserVector);
-		w = base.getWorld();
 
 		points = new Vector[Main.random.nextInt(2)+4];
 		for(int i=0;i<points.length-1;i++){
@@ -57,43 +62,50 @@ public class AirHooksTask extends BukkitRunnable {
 
 		points[points.length-1] = baserVector;
 
+
 		runTaskTimer(Main.main, 0, 2);
 	}
 
 	public boolean isTrapped(){
-		if(spawned){
-			Vector v = getVector();
-			return v.distance(baserVector) < 1;
-		}else return false;
+		if(state==1)return getVector().distance(baserVector) < 1;
+		else return state == 2;
 	}
 
 
 	public void run() {
 		if (hook.isValid()) {
 
-			for (int j = 0; j < 50; j++) {
-				w.spawnParticle(Particle.REDSTONE, base.clone().add(randomVector()), 0, color(222), color(249), color(255), 1);
+			if(background!=null){
+				for (int j = 0; j < 50; j++) {
+					w.spawnParticle(background, base.clone().add(randomVector()), 0, backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
+				}
 			}
 
-			if (spawned) {
-				counter += 1;
-				Vector a = getVector();
-				if (counter == iterations){
-					finalVector = a;
-					counter = 0;
-				}else if(finalVector!=null&&counter==10)stop();
-
-				w.spawnParticle(Particle.END_ROD, base.clone().add(a), 10, 0, 0, 0, 0);
-			} else {
+			if(state==0) {
 				counter--;
-				if (counter == -1) spawned = true;
+				if (counter == -1) {
+					state = 1;
+				}
+			}else {
+				Vector a=null;
+				if (state == 1) {
+					counter++;
+					a = getVector();
+					if (counter == iterations) {
+						state = 2;
+						counter = 0;
+					}
+				} else if (state == 2){
+					counter++;
+					if (counter == 10) stop();
+					a = baserVector;
+				}
+				w.spawnParticle(fish, base.clone().add(a), 10, fishColor.r, fishColor.g, fishColor.b, 0);
 			}
 		}else stop();
 	}
 
 	public Vector getVector(){
-		if(finalVector!=null)return finalVector;
-
 		float percent = counter/iterations;
 		Vector[] a = points;
 
@@ -117,4 +129,51 @@ public class AirHooksTask extends BukkitRunnable {
 		Utils.airHookTasks.remove(this);
 		cancel();
 	}
+
+
+
+	private Entity entity(ItemStack item){
+		return w.dropItem(base.clone().add(baserVector), item);
+	}
+
+
+	public Entity owLoot(){
+		int r = Main.random.nextInt(100);
+
+		return null;
+	}
+
+	public Entity netherLoot(){
+		int r = Main.random.nextInt(100);
+		if(r<30) {
+			return entity(new ItemStack(Material.NETHER_WARTS));
+		}else if(r<45){
+			return entity(new ItemStack(Material.BLAZE_ROD));
+		}else if(r==98){
+		    ItemStack item = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+		    ItemMeta meta = item.getItemMeta();
+		    CustomEnchants.LAVA_EATER.enchant(meta, 1);
+		    item.setItemMeta(meta);
+		    return entity(item);
+		}else if(r==99){
+		    ItemStack item = new ItemStack(Material.IRON_CHESTPLATE);
+		    ItemMeta meta = item.getItemMeta();
+		    CustomEnchants.LAVA_EATER.enchant(meta, 1);
+		    item.setItemMeta(meta);
+		    return entity(item);
+		}
+
+		return null;
+	}
+
+	public Entity endLoot(){
+		int r = Main.random.nextInt(100);
+		if(r<15){
+			return entity(new ItemStack(Material.CHORUS_FRUIT));
+		}
+
+		return null;
+	}
+
+
 }

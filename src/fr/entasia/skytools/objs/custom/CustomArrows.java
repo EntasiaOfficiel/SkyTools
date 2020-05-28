@@ -6,6 +6,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public enum CustomArrows {
 	FIREWORKS("Flèche d'Artifice"),
 	EXPLOSION("Flèche à Explosion"),
+	DRAGON("Flèche du dragon"),
 
 
 	;

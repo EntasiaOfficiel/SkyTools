@@ -182,16 +182,26 @@ public class Main extends JavaPlugin {
 
 		FireworkMeta base = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK);
 
-		base.addEffect(FireworkEffect.builder().withColor(Color.BLUE).withFade(Color.MAROON).build());
 
-		Utils.metas = new FireworkMeta[6];
+		Utils.metas = new FireworkMeta[3];
 
 		Utils.metas[0] = base.clone();
+		Utils.metas[0].addEffect(FireworkEffect.builder().withColor(Color.fromRGB(255, 102, 163), Color.ORANGE, Color.MAROON).build());
+
 		Utils.metas[1] = base.clone();
+		Utils.metas[1].addEffect(FireworkEffect.builder().withColor(Color.GREEN, Color.BLUE).build());
+
 		Utils.metas[2] = base.clone();
-		Utils.metas[3] = base.clone();
-		Utils.metas[4] = base.clone();
-		Utils.metas[5] = base.clone();
+		Utils.metas[2].addEffect(FireworkEffect.builder().withColor(Color.fromRGB(255, 0, 102), Color.PURPLE, Color.GRAY).build());
+
+//		Utils.metas[3] = base.clone();
+//		Utils.metas[3].addEffect(FireworkEffect.builder().withColor(Color.BLUE).build());
+//
+//		Utils.metas[4] = base.clone();
+//		Utils.metas[4].addEffect(FireworkEffect.builder().withColor(Color.BLUE).build());
+//
+//		Utils.metas[5] = base.clone();
+//		Utils.metas[5].addEffect(FireworkEffect.builder().withColor(Color.BLUE).withFade(Color.MAROON).build());
 	}
 
 }

@@ -1,8 +1,11 @@
 package fr.entasia.skytools.objs.custom;
 
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum CustomEnchants {
@@ -31,6 +34,8 @@ public enum CustomEnchants {
 
 	;
 
+	public static String[] roman = new String[]{"I", "II", "III", "IV", "V"};
+
 	public String name;
 	public int maxlvl;
 
@@ -54,29 +59,21 @@ public enum CustomEnchants {
 			split = s.split(" ");
 			n = String.join(" ", Arrays.copyOfRange(split, 0, split.length-1));
 			if(n.equals("§7"+name)){
-				lvl = roman(split[split.length-1]);
-				if(lvl!=0){
-					return Math.min(maxlvl, lvl);
-				}
+				lvl = toInt(split[split.length-1]);
+				if(lvl!=0)return Math.min(maxlvl, lvl);
 			}
 		}
 		return 0;
 	}
 
-
-	public static int roman(String s){
-		switch (s){
-			case "I":
-				return 1;
-			case "II":
-				return 2;
-			case "III":
-				return 3;
-			case "IV":
-				return 4;
-			case "V":
-				return 5;
+	public static int toInt(String s){
+		for(int i=0;i<roman.length;i++){
+			if(roman[i].equals(s))return i;
 		}
 		return 0;
+	}
+
+	public void enchant(ItemMeta meta, int level){
+		meta.setLore(Collections.singletonList(name+" "+roman[level]));
 	}
 }
