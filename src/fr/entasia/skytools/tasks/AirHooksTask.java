@@ -14,23 +14,34 @@ import org.bukkit.util.Vector;
 public class AirHooksTask extends BukkitRunnable {
 
 
-	public static final float iterations = 150;
+	// constantes
+	public static final float iterations = 120;
 	public static final int radius = 20;
 	public static final Vector baserVector = new Vector(radius, radius, radius);
 
-	public static Vector randomVector(){
-		return Vector.getRandom().multiply(radius*2);
-	}
 
+	// base
 	public FishHook hook;
 	public ArmorStand armorStand;
 	public int counter = 0;
+
 
 	// pour bézier
 	public Location base;
 	public World w;
 	public Vector[] points;
 	public boolean spawned = false;
+	public static Vector finalVector = null;
+
+	// fonctions
+	public static Vector randomVector(){
+		return Vector.getRandom().multiply(radius*2);
+	}
+
+	public static double color(int color){
+		return color/255f;
+	}
+
 
 	public void init(){
 
@@ -50,25 +61,28 @@ public class AirHooksTask extends BukkitRunnable {
 	}
 
 	public boolean isTrapped(){
-		Vector v = getVector();
-		return v.distance(baserVector) < 1;
+		if(spawned){
+			Vector v = getVector();
+			return v.distance(baserVector) < 1;
+		}else return false;
 	}
 
 
 	public void run() {
 		if (hook.isValid()) {
-			System.out.println(counter);
-			for (int j = 0; j < 20; j++) {
-				w.spawnParticle(
-						Particle.CLOUD,
-						base.clone().add(randomVector())
-						, 1, 0, 0, 0, 0);
+
+			for (int j = 0; j < 50; j++) {
+				w.spawnParticle(Particle.REDSTONE, base.clone().add(randomVector()), 0, color(222), color(249), color(255), 1);
 			}
 
 			if (spawned) {
 				counter += 1;
-				if (counter == iterations) stop();
 				Vector a = getVector();
+				if (counter == iterations){
+					finalVector = a;
+					counter = 0;
+				}else if(finalVector!=null&&counter==10)stop();
+
 				w.spawnParticle(Particle.END_ROD, base.clone().add(a), 10, 0, 0, 0, 0);
 			} else {
 				counter--;
@@ -78,6 +92,8 @@ public class AirHooksTask extends BukkitRunnable {
 	}
 
 	public Vector getVector(){
+		if(finalVector!=null)return finalVector;
+
 		float percent = counter/iterations;
 		Vector[] a = points;
 
