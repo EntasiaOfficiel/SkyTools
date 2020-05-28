@@ -4,7 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
-import fr.entasia.skytools.tasks.ConstantTask;
+import fr.entasia.skytools.tasks.LavaTask;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,7 +16,7 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler
 	public void a(PlayerItemDamageEvent e) {
-		if(ConstantTask.isLava(e.getPlayer().getLocation().getBlock().getType())){
+		if(LavaTask.isLava(e.getPlayer().getLocation().getBlock().getType())){
 			if(CustomEnchants.LAVA_EATER.hasEnchant(e.getItem())) e.setCancelled(true);
 		}
 	}
@@ -42,6 +42,6 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void a(PlayerArmorChangeEvent e) {
-		Utils.checkEffects(e.getPlayer());
+		Utils.updateEffects(e.getPlayer());
 	}
 }

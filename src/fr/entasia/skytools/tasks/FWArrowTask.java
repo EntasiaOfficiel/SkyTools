@@ -3,9 +3,7 @@ package fr.entasia.skytools.tasks;
 import fr.entasia.apis.other.InstantFirework;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
-import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class FWArrowTask extends BukkitRunnable {

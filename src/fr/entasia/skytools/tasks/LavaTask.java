@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class ConstantTask extends BukkitRunnable { // 10 ticks actuellement
+public class LavaTask extends BukkitRunnable { // 10 ticks actuellement
 
 	public static class LavaItem{
 		public ItemStack item;

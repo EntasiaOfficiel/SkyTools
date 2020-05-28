@@ -1,8 +1,6 @@
 package fr.entasia.skytools.tasks;
 
 import fr.entasia.skytools.Utils;
-import fr.entasia.skytools.events.EnchantEvents2;
-import fr.entasia.skytools.events.FireworksEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -10,11 +8,21 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class CleanUpTask extends BukkitRunnable {
 	@Override
 	public void run() {
-		FireworksEvents.fireworks.entrySet().removeIf(e->!e.getKey().isValid()||e.getKey().getTicksLived()>500);
-		EnchantEvents2.explosions.removeIf(e->!e.isValid()||e.getTicksLived()>500);
+		Utils.fireworks.entrySet().removeIf(e->!e.getKey().isValid()||e.getKey().getTicksLived()>500);
+		Utils.cooldown.entrySet().removeIf(e->System.currentTimeMillis()-e.getValue()>500);
+		Utils.explosions.removeIf(e->!e.isValid()||e.getTicksLived()>500);
+		Utils.airHookTasks.removeIf(ah -> { // boucle
+			if (!ah.hook.isValid() || ah.hook.getTicksLived() > 5000 ) {
+				ah.hook.remove();
+				ah.armorStand.remove();
+				return true;
+			} else return false;
+		});
 
 		for(Player p : Bukkit.getOnlinePlayers()){
-			Utils.checkEffects(p);
+			Utils.updateEffects(p);
 		}
+
+
 	}
 }

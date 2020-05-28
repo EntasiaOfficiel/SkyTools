@@ -3,8 +3,6 @@ package fr.entasia.skytools.objs.custom;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
-
 public enum CustomArrows {
 	FIREWORKS("Flèche d'Artifice"),
 	EXPLOSION("Flèche à Explosion"),

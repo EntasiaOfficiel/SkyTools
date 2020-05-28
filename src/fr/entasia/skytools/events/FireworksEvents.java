@@ -4,24 +4,22 @@ import fr.entasia.apis.nbt.EntityNBT;
 import fr.entasia.apis.nbt.ItemNBT;
 import fr.entasia.apis.nbt.NBTComponent;
 import fr.entasia.apis.other.InstantFirework;
+import fr.entasia.skytools.Utils;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.projectiles.ProjectileSource;
-
-import java.util.HashMap;
 
 
 public class FireworksEvents implements Listener {
 
-
-	public static HashMap<Entity, NBTComponent> fireworks = new HashMap<>();
-	public static HashMap<ProjectileSource, Long> cooldown = new HashMap<>();
 
 	@EventHandler
 	public void a(CraftItemEvent e) {
@@ -61,9 +59,9 @@ public class FireworksEvents implements Listener {
 		if (pr.getType() == EntityType.SNOWBALL&&pr.getShooter() instanceof Player) {
 			ItemStack item = ((Player) pr.getShooter()).getInventory().getItemInMainHand();
 			if(item.getType()==Material.SNOW_BALL){
-				if(System.currentTimeMillis()-cooldown.getOrDefault(pr.getShooter(), 2L)>500){
-					cooldown.put(pr.getShooter(), System.currentTimeMillis());
-					fireworks.put(pr, ItemNBT.getNBT(item).getComponent("entasia"));
+				if(System.currentTimeMillis()-Utils.cooldown.getOrDefault(pr.getShooter(), 2L)>500){
+					Utils.cooldown.put(pr.getShooter(), System.currentTimeMillis());
+					Utils.fireworks.put(pr, ItemNBT.getNBT(item).getComponent("entasia"));
 				}else{
 					e.setCancelled(true);
 				}
@@ -75,7 +73,7 @@ public class FireworksEvents implements Listener {
 	public void b(ProjectileHitEvent e) {
 		Projectile pr = e.getEntity();
 		if (pr.getType() == EntityType.SNOWBALL&&pr.getShooter() instanceof Player) {
-			NBTComponent inject = fireworks.remove(pr);
+			NBTComponent inject = Utils.fireworks.remove(pr);
 			if(inject!=null){
 				Firework fw = (Firework) pr.getWorld().spawnEntity(pr.getLocation(), EntityType.FIREWORK);
 				NBTComponent nbt = EntityNBT.getNBT(fw);

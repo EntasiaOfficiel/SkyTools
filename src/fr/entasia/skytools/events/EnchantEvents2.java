@@ -3,15 +3,16 @@ package fr.entasia.skytools.events;
 import fr.entasia.apis.other.InstantFirework;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
-import fr.entasia.skytools.objs.Direction;
 import fr.entasia.skytools.objs.custom.CustomArrows;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.tasks.FWArrowTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -22,19 +23,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EnchantEvents2 implements Listener {
 
-	public static ArrayList<Entity> explosions = new ArrayList<>();
 
 	@EventHandler
 	public void a(EntityShootBowEvent e){
 		if(e.getEntity() instanceof Player){
 			if(CustomArrows.EXPLOSION.is(e.getArrowItem())) {
-				explosions.add(e.getProjectile());
+				Utils.explosions.add(e.getProjectile());
 			}else if(CustomArrows.FIREWORKS.is(e.getArrowItem())) {
 				FWArrowTask.start(e.getProjectile());
 			}
@@ -45,7 +44,7 @@ public class EnchantEvents2 implements Listener {
 	public void a(ProjectileHitEvent e){
 		Projectile pr = e.getEntity();
 		if (pr.getShooter() instanceof Player && pr.getType() == EntityType.ARROW) {
-			if(explosions.remove(pr)){
+			if(Utils.explosions.remove(pr)){
 				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
 			}
 		}

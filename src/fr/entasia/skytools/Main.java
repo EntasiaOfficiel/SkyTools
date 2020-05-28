@@ -4,10 +4,10 @@ import fr.entasia.skytools.commands.SWCommand;
 import fr.entasia.skytools.commands.SkyToolsCommand;
 import fr.entasia.skytools.commands.WarpCommand;
 import fr.entasia.skytools.events.*;
-import fr.entasia.skytools.objs.custom.CustomArrows;
 import fr.entasia.skytools.objs.Warp;
+import fr.entasia.skytools.objs.custom.CustomArrows;
 import fr.entasia.skytools.tasks.CleanUpTask;
-import fr.entasia.skytools.tasks.ConstantTask;
+import fr.entasia.skytools.tasks.LavaTask;
 import fr.entasia.skytools.tasks.SWTask;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
@@ -69,6 +69,7 @@ public class Main extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new SkullEvents(), this);
 			getServer().getPluginManager().registerEvents(new EnchantEvents(), this);
 			getServer().getPluginManager().registerEvents(new EnchantEvents2(), this);
+			getServer().getPluginManager().registerEvents(new SkyFisherEvents(), this);
 
 			getCommand("skytools").setExecutor(new SkyToolsCommand());
 			getCommand("speedwriter").setExecutor(new SWCommand());
@@ -76,7 +77,8 @@ public class Main extends JavaPlugin {
 
 			new SWTask().runTaskTimerAsynchronously(this, 0, 10*60*20);
 			new CleanUpTask().runTaskTimerAsynchronously(this, 0, 5*60*20);
-			new ConstantTask().runTaskTimerAsynchronously(this, 0, 20);
+			// a voir pour mettre tout ca plus bas par joueur ?
+			new LavaTask().runTaskTimerAsynchronously(this, 0, 20);
 
 			getLogger().info("Plugin activé !");
 		}catch(Throwable e){
