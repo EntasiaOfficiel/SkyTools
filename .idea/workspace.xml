@@ -15,21 +15,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51cf28a9-5585-4a9b-96de-e220816fe636" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/events/SkyFisherEvents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/tasks/AirHooksTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/events/EnchantEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/events/EnchantEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/events/EnchantEvents2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/events/EnchantEvents2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/events/FireworksEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/events/FireworksEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/events/SkullEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/events/SkullEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/objs/custom/CustomArrows.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/objs/custom/CustomArrows.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/tasks/CleanUpTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/tasks/CleanUpTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/tasks/ConstantTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/tasks/LavaTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fr/entasia/skytools/tasks/FWArrowTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/entasia/skytools/tasks/FWArrowTask.java" afterDir="false" />
-    </list>
+    <list default="true" id="51cf28a9-5585-4a9b-96de-e220816fe636" name="Default Changelist" comment="test" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -182,20 +168,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1572862089950</updated>
-    </task>
-    <task id="LOCAL-00011" summary="test">
-      <created>1573757905466</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1573757905466</updated>
-    </task>
-    <task id="LOCAL-00012" summary="test">
-      <created>1573844841986</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1573844841986</updated>
     </task>
     <task id="LOCAL-00013" summary="test">
       <created>1573856927474</created>
@@ -526,7 +498,21 @@
       <option name="project" value="LOCAL" />
       <updated>1590395566864</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="test">
+      <created>1590658480415</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1590658480415</updated>
+    </task>
+    <task id="LOCAL-00061" summary="test">
+      <created>1590658584260</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1590658584260</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
