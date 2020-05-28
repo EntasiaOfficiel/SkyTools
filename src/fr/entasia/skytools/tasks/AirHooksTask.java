@@ -34,7 +34,7 @@ public class AirHooksTask extends BukkitRunnable {
 
 	public void init(){
 
-		counter = Main.random.nextInt(15*20)+4*20;
+		counter = Main.random.nextInt(15*10)+4*10; // 10 pas 20 car periode de 2 ticks
 
 		base = armorStand.getLocation().subtract(baserVector);
 		w = base.getWorld();
