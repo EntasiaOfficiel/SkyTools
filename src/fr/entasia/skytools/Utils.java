@@ -23,6 +23,7 @@ import java.util.UUID;
 
 public class Utils {
 
+
 	public static HashMap<UUID, ToolPlayer> playerCache = new HashMap<>();
 	public static FireworkMeta[] metas;
 	public static FireworkMeta blackmeta;

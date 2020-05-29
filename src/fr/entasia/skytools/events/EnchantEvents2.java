@@ -9,10 +9,7 @@ import fr.entasia.skytools.tasks.FWArrowTask;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -20,6 +17,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -46,6 +45,12 @@ public class EnchantEvents2 implements Listener {
 		if (pr.getShooter() instanceof Player && pr.getType() == EntityType.ARROW) {
 			if(Utils.explosions.remove(pr)){
 				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
+				for(LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 3, 3, 3)){
+					if(!(ent instanceof Player)){
+						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4, 0));
+					}
+					ent.damage(2);
+				}
 			}
 		}
 	}

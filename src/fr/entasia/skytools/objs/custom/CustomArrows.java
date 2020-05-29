@@ -1,5 +1,7 @@
 package fr.entasia.skytools.objs.custom;
 
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -22,5 +24,11 @@ public enum CustomArrows {
 		ItemMeta meta = item.getItemMeta();
 		if(meta==null)return false;
 		return ("§f"+name).equals(meta.getDisplayName());
+	}
+
+	public void enchant(ItemMeta meta){
+		meta.setDisplayName("§f"+name);
+		meta.addEnchant(Enchantment.LURE, 1, false);
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 	}
 }

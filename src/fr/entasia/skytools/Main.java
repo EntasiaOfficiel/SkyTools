@@ -1,8 +1,10 @@
 package fr.entasia.skytools;
 
-import fr.entasia.skytools.commands.SWCommand;
-import fr.entasia.skytools.commands.SkyToolsCommand;
-import fr.entasia.skytools.commands.WarpCommand;
+import fr.entasia.skytools.commands.SWCmd;
+import fr.entasia.skytools.commands.SkyToolsCmd;
+import fr.entasia.skytools.commands.WarpCmd;
+import fr.entasia.skytools.commands.custom.CustomArrowCmd;
+import fr.entasia.skytools.commands.custom.CustomEnchantCmd;
 import fr.entasia.skytools.events.*;
 import fr.entasia.skytools.objs.Warp;
 import fr.entasia.skytools.objs.custom.CustomArrows;
@@ -53,7 +55,7 @@ public class Main extends JavaPlugin {
 			enableDev = main.getConfig().getBoolean("dev", false);
 
 			warpsfile = new File(getDataFolder()+"/warps.yml");
-			if(!warpsfile.exists())warpsfile.createNewFile();
+			warpsfile.createNewFile();
 			warpsconfig = YamlConfiguration.loadConfiguration(warpsfile);
 
 			loadConfigs();
@@ -71,9 +73,12 @@ public class Main extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new EnchantEvents2(), this);
 			getServer().getPluginManager().registerEvents(new SkyFisherEvents(), this);
 
-			getCommand("skytools").setExecutor(new SkyToolsCommand());
-			getCommand("speedwriter").setExecutor(new SWCommand());
-			getCommand("warp").setExecutor(new WarpCommand());
+			getCommand("skytools").setExecutor(new SkyToolsCmd());
+			getCommand("speedwriter").setExecutor(new SWCmd());
+			getCommand("warp").setExecutor(new WarpCmd());
+
+			getCommand("customarrow").setExecutor(new CustomArrowCmd());
+			getCommand("customenchant").setExecutor(new CustomEnchantCmd());
 
 			new SWTask().runTaskTimerAsynchronously(this, 0, 10*60*20);
 			new CleanUpTask().runTaskTimerAsynchronously(this, 0, 5*60*20);

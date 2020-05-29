@@ -1,10 +1,9 @@
 package fr.entasia.skytools.events;
 
-import com.google.gson.internal.$Gson$Preconditions;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
-import fr.entasia.skytools.tasks.AirHooksTask;
 import fr.entasia.skytools.objs.Color;
+import fr.entasia.skytools.tasks.AirHooksTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

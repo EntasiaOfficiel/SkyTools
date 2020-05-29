@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class WarpCommand implements CommandExecutor {
+public class WarpCmd implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 		if(!(sender instanceof Player))return false;
 		if(args.length==0) BaseMenus.WarpsOpen((Player)sender);

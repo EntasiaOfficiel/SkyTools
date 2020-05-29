@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Collections;
 
-public class SetWarpCommand implements CommandExecutor {
+public class SetWarpCmd implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 		if(!(sender instanceof Player))return false;
 		if(sender.hasPermission("entasia.setwarp")){

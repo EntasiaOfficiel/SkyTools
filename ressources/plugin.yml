@@ -4,7 +4,6 @@ softdepend: [Multiverse-Core]
 version: '1.0'
 main: fr.entasia.skytools.Main
 commands:
-  test:
 
   skytools:
 
@@ -12,3 +11,9 @@ commands:
 
   warp:
     aliases: [warps]
+
+  customarrow:
+    aliases: [customarrows]
+
+  customenchant:
+    aliases: [customenchants]
