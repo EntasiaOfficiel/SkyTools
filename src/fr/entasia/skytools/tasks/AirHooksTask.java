@@ -1,13 +1,12 @@
 package fr.entasia.skytools.tasks;
 
+import fr.entasia.apis.other.Randomiser;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.Color;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.*;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.FishHook;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -131,46 +130,92 @@ public class AirHooksTask extends BukkitRunnable {
 	}
 
 
+	private Location centerLoc(){
+		return base.clone().add(baserVector);
+	}
 
 	private Entity entity(ItemStack item){
-		return w.dropItem(base.clone().add(baserVector), item);
+		return w.dropItem(centerLoc(), item);
 	}
 
 
+	// Merci Narcos pour les loots !
 	public Entity owLoot(){
-		int r = Main.random.nextInt(100);
+		Randomiser r = new Randomiser();
+		System.out.println(r.getCPercent());
 
 		return null;
 	}
 
 	public Entity netherLoot(){
-		int r = Main.random.nextInt(100);
-		if(r<30) {
-			return entity(new ItemStack(Material.NETHER_WARTS));
-		}else if(r<45){
+		Randomiser r = new Randomiser();
+		System.out.println(r.getCPercent());
+		if(r.isInNext(10)) {
+			return entity(new ItemStack(Material.SOUL_SAND));
+		}else if(r.isInNext(10)){
 			return entity(new ItemStack(Material.BLAZE_ROD));
-		}else if(r==98){
-		    ItemStack item = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-		    ItemMeta meta = item.getItemMeta();
-		    CustomEnchants.LAVA_EATER.enchant(meta, 1);
-		    item.setItemMeta(meta);
-		    return entity(item);
-		}else if(r==99){
-		    ItemStack item = new ItemStack(Material.IRON_CHESTPLATE);
-		    ItemMeta meta = item.getItemMeta();
-		    CustomEnchants.LAVA_EATER.enchant(meta, 1);
-		    item.setItemMeta(meta);
-		    return entity(item);
+		}else if(r.isInNext(15)) {
+			return entity(new ItemStack(Material.FIREBALL));
 		}
 
-		return null;
+
+		if(r.isInNext(5)) {
+			return w.spawnEntity(centerLoc(), EntityType.SMALL_FIREBALL);
+		}else if(r.isInNext(10)){
+			return w.spawnEntity(centerLoc(), EntityType.BLAZE);
+		}else if(r.isInNext(5)){
+			return w.spawnEntity(centerLoc(), EntityType.GHAST);
+		}else if(r.isInNext(0.5)) {
+			return w.spawnEntity(centerLoc(), EntityType.WITHER);
+		}
+
+		if(r.isInNext(4)){
+		    ItemStack item = new ItemStack(Material.STONE_SWORD);
+			item.setDurability((short) (Randomiser.random.nextInt(60)+40));
+		    ItemMeta meta = item.getItemMeta();
+		    CustomEnchants.WITHER.enchant(meta, 1);
+		    item.setItemMeta(meta);
+		    return entity(item);
+		}else if(r.isInNext(2)){
+		    ItemStack item = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+		    item.setDurability((short) (Randomiser.random.nextInt(100)+50));
+		    ItemMeta meta = item.getItemMeta();
+		    CustomEnchants.LAVA_EATER.enchant(meta, 1);
+		    item.setItemMeta(meta);
+		    return entity(item);
+		}else if(r.isInNext(1)){
+		    ItemStack item = new ItemStack(Material.IRON_CHESTPLATE);
+			item.setDurability((short) (Randomiser.random.nextInt(100)+50));
+		    ItemMeta meta = item.getItemMeta();
+		    CustomEnchants.LAVA_EATER.enchant(meta, 1);
+		    item.setItemMeta(meta);
+		    return entity(item);
+		}else{
+			if(r.getNumber()%2==0) return entity(new ItemStack(Material.GLOWSTONE));
+			else return entity(new ItemStack(Material.NETHERRACK));
+		}
 	}
 
 	public Entity endLoot(){
-		int r = Main.random.nextInt(100);
-		if(r<15){
+		Randomiser r = new Randomiser();
+		System.out.println(r.getCPercent());
+		if(r.isInNext(15)){
 			return entity(new ItemStack(Material.CHORUS_FRUIT));
 		}
+
+
+		if(r.isInNext(5)) {
+			LingeringPotion lp = (LingeringPotion)w.spawnEntity(centerLoc(), EntityType.LINGERING_POTION);
+//			lp.set
+			return w.spawnEntity(centerLoc(), EntityType.LINGERING_POTION);
+		}else if(r.isInNext(2)){
+			return w.spawnEntity(centerLoc(), EntityType.ENDERMITE);
+		}else if(r.isInNext(1)){
+			return w.spawnEntity(centerLoc(), EntityType.ENDERMAN);
+		}else if(r.isInNext(0.5)) {
+			return w.spawnEntity(centerLoc(), EntityType.ENDER_DRAGON);
+		}
+
 
 		return null;
 	}

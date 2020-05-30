@@ -9,14 +9,16 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.Warp;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -183,5 +185,59 @@ public class OthersEvents implements Listener {
 			}
 		}else if(e.getLine(0).equalsIgnoreCase("poubelle")||e.getLine(0).equalsIgnoreCase("[poubelle]"))
 			e.setLine(0, "§8[§7Poubelle§8]");
+	}
+
+
+	@EventHandler
+	public void a(ProjectileHitEvent e) {
+		if (e.getHitBlock() != null) {
+			Projectile pr = e.getEntity();
+			if (pr instanceof Arrow && pr.getTicksLived() > 1) {
+				if (e.getHitBlock().getType() == Material.SLIME_BLOCK) {
+					/*
+					paper 1.12.2
+					direction inversée
+					vélocité OK
+					 */
+					Vector direction = pr.getLocation().getDirection().multiply(-1);
+					Vector velocity = pr.getVelocity().multiply(1.1);
+
+					int score = 0;
+					String s = "";
+					for (String ls : pr.getScoreboardTags()) {
+						if (ls.startsWith("$")) {
+							score = ls.length();
+							s = ls;
+							break;
+						}
+					}
+
+					if (e.getHitBlockFace().getModX() != 0) {
+						direction.setX(direction.getX() * -1);
+						velocity.setX(velocity.getX() * -1);
+					} else if (e.getHitBlockFace().getModY() != 0) {
+						direction.setY(direction.getY() * -1);
+						velocity.setY(velocity.getY() * -1);
+					} else if (e.getHitBlockFace().getModZ() != 0) {
+						direction.setZ(direction.getZ() * -1);
+						velocity.setZ(velocity.getZ() * -1);
+					}
+
+					if (score == 5) return;
+					World w = pr.getWorld();
+					Location loc = pr.getLocation().add(direction.clone().multiply(1));
+//					loc.setDirection(direction);
+					pr.remove();
+
+					Arrow a = (Arrow) w.spawnEntity(loc, EntityType.ARROW);
+
+					a.addScoreboardTag(s + "$");
+
+
+					a.setPickupStatus(Arrow.PickupStatus.ALLOWED);
+					a.setVelocity(velocity);
+				}
+			}
+		}
 	}
 }

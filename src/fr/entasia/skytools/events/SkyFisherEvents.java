@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,7 +50,6 @@ public class SkyFisherEvents implements Listener {
 				@Override
 				public void run() {
 					if (e.getHook().isValid()) {
-
 						Location baseLoc = e.getHook().getLocation();
 
 						if(aht.background!=null){
@@ -61,9 +61,7 @@ public class SkyFisherEvents implements Listener {
 						}
 						y = e.getHook().getVelocity().getY();
 						if (y >= 0)return;
-
 						Location loc = e.getHook().getLocation();
-
 						for(int x=-2;x<=2;x++) {
 							loc.setX(baseLoc.getX()+x);
 							for (int y = -2; y <= 2; y++) {
@@ -75,10 +73,7 @@ public class SkyFisherEvents implements Listener {
 							}
 						}
 
-
 						aht.w.spawnParticle(aht.fish, baseLoc, 3000, AirHooksTask.radius, AirHooksTask.radius, AirHooksTask.radius, 0.1);
-
-
 						aht.hook = e.getHook();
 						aht.armorStand = (ArmorStand) e.getHook().getWorld().spawnEntity(baseLoc.add(0, -1, 0), EntityType.ARMOR_STAND);
 						aht.armorStand.setMarker(true);
@@ -99,6 +94,27 @@ public class SkyFisherEvents implements Listener {
 				if(aht.hook==e.getHook()){
 					if(aht.isTrapped()){
 						Bukkit.broadcastMessage("Poisson attrapé !");
+						Entity ent;
+						switch(e.getHook().getWorld().getEnvironment()){
+							case NORMAL:{
+								ent = aht.owLoot();
+								break;
+							}
+							case NETHER:{
+								ent = aht.netherLoot();
+								break;
+							}
+							case THE_END:{
+								ent = aht.endLoot();
+								break;
+							}
+							default:{
+								e.getPlayer().sendMessage("§cCongrats ! T'a cassé tout le système :)\nBon... Tu préviens un membre du Staff stp ?");
+								return;
+							}
+						}
+						assert ent != null;
+						ent.setVelocity(e.getPlayer().getLocation().getDirection().multiply(-1));
 					}
 					aht.cancel();
 					aht.hook.remove();
