@@ -9,9 +9,8 @@ public enum CustomArrows {
 	FIREWORKS("Flèche d'Artifice"),
 	EXPLOSION("Flèche à Explosion"),
 
-	FIRE("Flèche de feu"),
+	FIRE("Flèche incendiaire"),
 	DRAGON("Flèche du dragon"),
-
 
 	;
 

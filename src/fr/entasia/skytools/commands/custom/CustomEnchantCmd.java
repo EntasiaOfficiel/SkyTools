@@ -32,7 +32,7 @@ public class CustomEnchantCmd implements CommandExecutor {
 							level = Integer.parseInt(args[1]);
 							if(level<1||level>5)throw new NumberFormatException();
 						}
-						CustomEnchants ca = CustomEnchants.valueOf(args[0]);
+						CustomEnchants ca = CustomEnchants.valueOf(args[0].toUpperCase());
 						ItemMeta meta = item.getItemMeta();
 						ca.enchant(meta, level);
 						item.setItemMeta(meta);

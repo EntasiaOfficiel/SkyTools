@@ -22,7 +22,7 @@ public class CustomArrowCmd implements CommandExecutor {
 				}
 			}else{
 				try{
-					CustomArrows ca = CustomArrows.valueOf(args[0]);
+					CustomArrows ca = CustomArrows.valueOf(args[0].toUpperCase());
 					ItemStack item = new ItemStack(Material.ARROW);
 					ItemMeta meta = item.getItemMeta();
 					ca.enchant(meta);

@@ -31,9 +31,6 @@ public enum CustomEnchants {
 	// houe
 	SEEDS_CANOON("Canon", 1),
 
-	// arc
-	FIREBLASTER("Lanceur de feu", 1),
-
 	// REGARDE LES NEWS SUR DISCORD
 
 	;

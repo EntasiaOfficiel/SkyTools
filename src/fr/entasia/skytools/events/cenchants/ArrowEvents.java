@@ -14,6 +14,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -50,9 +51,19 @@ public class ArrowEvents implements Listener {
 
 	@EventHandler
 	public void a(EntityDamageByEntityEvent e) {
-		System.out.println(" ");
+		System.out.println("DAMAGE");
 		if(e.getDamager() instanceof AreaEffectCloud){
+			AreaEffectCloud a = (AreaEffectCloud) e.getDamager();
+
 			e.getEntity().setFireTicks(70);
+			String name = e.getDamager().getCustomName();
+			System.out.println(name);
+			if (name == null) return;
+			if(name.equals("$fire")) {
+				e.getEntity().setFireTicks(70);
+			}else if(name.equals("$dragon")) {
+				((LivingEntity) e.getEntity()).damage(20);
+			}
 		}
 	}
 
@@ -62,33 +73,37 @@ public class ArrowEvents implements Listener {
 		if (pr.getShooter() instanceof Player && pr.getType() == EntityType.ARROW) {
 			String name = pr.getCustomName();
 			if (name == null) return;
-			switch (name) {
-				case "$explode": {
-					InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
-					for (LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 3, 3, 3)) {
-						if (!(ent instanceof Player)) {
-							ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4, 0));
-						}
-						ent.damage(2);
+			if(name.equals("$explode")) {
+				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
+				for (LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 3, 3, 3)) {
+					if (!(ent instanceof Player)) {
+						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4, 0));
 					}
 					break;
 				}
-
-				case "$fire": {
-					AreaEffectCloud a = (AreaEffectCloud) pr.getWorld().spawnEntity(pr.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-					a.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 1, 1), true);
-					a.setParticle(Particle.FLAME);
-					a.setRadiusPerTick(-0.01f);
-					break;
-				}
-				case "$dragon": {
-					AreaEffectCloud a = (AreaEffectCloud) pr.getWorld().spawnEntity(pr.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-					a.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 1, 2), true);
-					a.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 30, 1), true);
-					a.setParticle(Particle.DRAGON_BREATH);
-					a.setRadiusPerTick(-0.01f);
-					break;
-				}
+			}else{
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						if(name.equals("$fire")) {
+							AreaEffectCloud a = (AreaEffectCloud) pr.getWorld().spawnEntity(pr.getLocation(), EntityType.AREA_EFFECT_CLOUD);
+							a.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 1, 1), true);
+							a.setParticle(Particle.FLAME);
+							a.setRadiusPerTick(-0.01f);
+							a.setWaitTime(10);
+							a.setDurationOnUse(10);
+							a.setReapplicationDelay(20);
+						}else if(name.equals("$dragon")){
+							AreaEffectCloud a = (AreaEffectCloud) pr.getWorld().spawnEntity(pr.getLocation(), EntityType.AREA_EFFECT_CLOUD);
+							a.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 1, 1), true);
+//							a.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 30, 1), true);
+							a.setParticle(Particle.DRAGON_BREATH);
+							a.setRadiusPerTick(-0.01f);
+							a.setWaitTime(2);
+							a.setReapplicationDelay(20);
+						}
+					}
+				}.runTaskLater(Main.main, 1);
 			}
 		}
 	}
