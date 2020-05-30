@@ -31,7 +31,6 @@ public class Utils {
 	public static ArrayList<AirHooksTask> airHookTasks = new ArrayList<>();
 	public static HashMap<Entity, NBTComponent> fireworks = new HashMap<>();
 	public static HashMap<ProjectileSource, Long> cooldown = new HashMap<>();
-	public static ArrayList<Entity> explosions = new ArrayList<>();
 
 	static{
 		blackmeta = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK);

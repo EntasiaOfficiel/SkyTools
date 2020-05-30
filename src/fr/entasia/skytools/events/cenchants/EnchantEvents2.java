@@ -1,4 +1,4 @@
-package fr.entasia.skytools.events;
+package fr.entasia.skytools.events.cenchants;
 
 import fr.entasia.apis.other.InstantFirework;
 import fr.entasia.skytools.Main;
@@ -26,34 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EnchantEvents2 implements Listener {
-
-
-	@EventHandler
-	public void a(EntityShootBowEvent e){
-		if(e.getEntity() instanceof Player){
-			if(CustomArrows.EXPLOSION.is(e.getArrowItem())) {
-				Utils.explosions.add(e.getProjectile());
-			}else if(CustomArrows.FIREWORKS.is(e.getArrowItem())) {
-				FWArrowTask.start(e.getProjectile());
-			}
-		}
-	}
-
-	@EventHandler
-	public void a(ProjectileHitEvent e){
-		Projectile pr = e.getEntity();
-		if (pr.getShooter() instanceof Player && pr.getType() == EntityType.ARROW) {
-			if(Utils.explosions.remove(pr)){
-				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
-				for(LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 3, 3, 3)){
-					if(!(ent instanceof Player)){
-						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4, 0));
-					}
-					ent.damage(2);
-				}
-			}
-		}
-	}
 
 	public static HashMap<Material, Material> seeds = new HashMap<>();
 	public static Vector[] vectors;

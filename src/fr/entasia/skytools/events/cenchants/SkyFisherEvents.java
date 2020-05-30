@@ -1,4 +1,4 @@
-package fr.entasia.skytools.events;
+package fr.entasia.skytools.events.cenchants;
 
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;

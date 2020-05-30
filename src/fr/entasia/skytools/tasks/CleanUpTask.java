@@ -10,7 +10,6 @@ public class CleanUpTask extends BukkitRunnable {
 	public void run() {
 		Utils.fireworks.entrySet().removeIf(e->!e.getKey().isValid()||e.getKey().getTicksLived()>500);
 		Utils.cooldown.entrySet().removeIf(e->System.currentTimeMillis()-e.getValue()>500);
-		Utils.explosions.removeIf(e->!e.isValid()||e.getTicksLived()>500);
 		Utils.airHookTasks.removeIf(ah -> { // boucle
 			if (!ah.hook.isValid() || ah.hook.getTicksLived() > 5000 ) {
 				ah.hook.remove();
@@ -22,7 +21,5 @@ public class CleanUpTask extends BukkitRunnable {
 		for(Player p : Bukkit.getOnlinePlayers()){
 			Utils.updateEffects(p);
 		}
-
-
 	}
 }

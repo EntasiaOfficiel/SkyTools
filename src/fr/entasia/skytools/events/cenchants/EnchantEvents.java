@@ -1,4 +1,4 @@
-package fr.entasia.skytools.events;
+package fr.entasia.skytools.events.cenchants;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import fr.entasia.skytools.Main;
