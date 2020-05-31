@@ -71,7 +71,9 @@ public class SkyFisherEvents implements Listener {
 						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
 						short dura = (short) (e.getPlayer().getInventory().getItemInMainHand().getDurability()+15);
 						if(dura>=item.getType().getMaxDurability()){
-							item.setType(Material.AIR);
+							System.out.println("delete");
+							e.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+							cancel();
 							return;
 						}else item.setDurability(dura);
 
