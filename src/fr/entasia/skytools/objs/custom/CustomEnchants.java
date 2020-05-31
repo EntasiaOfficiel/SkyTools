@@ -5,7 +5,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public enum CustomEnchants {
@@ -35,8 +34,6 @@ public enum CustomEnchants {
 
 	;
 
-	private static final String[] roman = new String[]{"I", "II", "III", "IV", "V"};
-
 	public String name;
 	public int maxlvl;
 
@@ -60,29 +57,17 @@ public enum CustomEnchants {
 			split = s.split(" ");
 			n = String.join(" ", Arrays.copyOfRange(split, 0, split.length-1));
 			if(n.equals("§7"+name)){
-				lvl = toInt(split[split.length-1]);
+				lvl = RomanUtils.toInt(split[split.length-1]);
 				if(lvl!=0)return Math.min(maxlvl, lvl);
 			}
 		}
 		return 0;
 	}
 
-	public String toRoman(int level){
-		return roman[level-1];
-	}
-
-
-	public static int toInt(String s){
-		for(int i=0;i<roman.length;i++){
-			if(roman[i].equals(s))return i+1;
-		}
-		return 0;
-	}
-
-	public void enchant(ItemMeta meta, int level){
-		List<String> lore = meta.getLore();
+	public void enchant(ItemStack item, int level){
+		List<String> lore = item.getLore();
 		if(lore==null)lore = new ArrayList<>();
-		lore.add("§7"+name+" "+toRoman(level));
-		meta.setLore(lore);
+		lore.add("§7"+name+" "+ RomanUtils.toRoman(level));
+		item.setLore(lore);
 	}
 }

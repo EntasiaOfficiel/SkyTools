@@ -34,32 +34,63 @@ public class ArrowEvents implements Listener {
 	@EventHandler
 	public void a(EntityShootBowEvent e){
 		if(e.getEntity() instanceof Player){
-			if(CustomArrows.EXPLOSION.is(e.getArrowItem())) {
+			if(CustomArrows.EXPLOSION.hasEnchant(e.getArrowItem())) {
 				e.getProjectile().setCustomName("$explode");
 			}
-			if(CustomArrows.FIREWORKS.is(e.getArrowItem())) {
+			if(CustomArrows.FIREWORKS.hasEnchant(e.getArrowItem())) {
 				FWArrowTask.start(e.getProjectile());
 			}
 
-			if(CustomArrows.FIRE.is(e.getArrowItem())) {
+			if(CustomArrows.FIRE.hasEnchant(e.getArrowItem())) {
 				e.getProjectile().setCustomName("$fire");
-			}else if(CustomArrows.DRAGON.is(e.getArrowItem())) {
+			}else if(CustomArrows.DRAGON.hasEnchant(e.getArrowItem())) {
 				e.getProjectile().setCustomName("$dragon");
 			}
 		}
 	}
 
 	@EventHandler
-	public void a(EntityDamageByEntityEvent e) {
-		if(e.getDamager() instanceof AreaEffectCloud){
-			String name = e.getDamager().getCustomName();
-			System.out.println(name);
-			if (name == null||!name.startsWith("$")) return;
-			if(name.equals("$fire")) {
-				e.getEntity().setFireTicks(70);
+	public void a(AreaEffectCloudApplyEvent e) {
+		if(e.getAffectedEntities().size()==0)return;
+		String name = e.getEntity().getCustomName();
+		int type;
+		if (name == null||!name.startsWith("$")) return;
+		if(name.equals("$fire")) type=1;
+		else if(name.equals("$dragon")) type=2;
+		else return;
+		for(LivingEntity ent : e.getAffectedEntities()){
+			if(type==1){
+				ent.setFireTicks(70);
+			}else if(type==2) {
+//				ent.damage(4);
 			}
+//			System.out.println(2);
+//			String name = e.getDamager().getCustomName();
+//			System.out.println(3);
+//			if (name == null||!name.startsWith("$")) return;
+//			if(name.equals("$fire")) {
+//				e.getEntity().setFireTicks(70);
+//			}else if(name.equals("dragon")) {
+//				((LivingEntity) e.getEntity()).damage(0.5);
+//			}
 		}
 	}
+
+//	@EventHandler
+//	public void a(EntityDamageByEntityEvent e) {
+//		System.out.println(1);
+//		if(e.getDamager() instanceof AreaEffectCloud){
+//			System.out.println(2);
+//			String name = e.getDamager().getCustomName();
+//			System.out.println(3);
+//			if (name == null||!name.startsWith("$")) return;
+//			if(name.equals("$fire")) {
+//				e.getEntity().setFireTicks(70);
+//			}else if(name.equals("dragon")) {
+//				((LivingEntity) e.getEntity()).damage(0.5);
+//			}
+//		}
+//	}
 
 	@EventHandler
 	public void a(ProjectileHitEvent e) {
@@ -71,7 +102,7 @@ public class ArrowEvents implements Listener {
 				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
 				for (LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 3, 3, 3)) {
 					if (!(ent instanceof Player)) {
-						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4, 0));
+						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4, 1));
 					}
 					break;
 				}
@@ -82,7 +113,7 @@ public class ArrowEvents implements Listener {
 						AreaEffectCloud a;
 						if(name.equals("$fire")) {
 							a = (AreaEffectCloud) pr.getWorld().spawnEntity(pr.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-							a.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 0, 0), true);
+							a.addCustomEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1), true);
 							a.setParticle(Particle.FLAME);
 							a.setRadiusPerTick(-0.01f);
 							a.setWaitTime(10);
@@ -90,12 +121,11 @@ public class ArrowEvents implements Listener {
 							a.setReapplicationDelay(20);
 						}else if(name.equals("$dragon")){
 							a = (AreaEffectCloud) pr.getWorld().spawnEntity(pr.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-							a.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 1, 1), true);
-//							a.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 30, 1), true);
+							a.addCustomEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1), true);
 							a.setParticle(Particle.DRAGON_BREATH);
 							a.setRadiusPerTick(-0.01f);
 							a.setWaitTime(2);
-							a.setReapplicationDelay(20);
+							a.setReapplicationDelay(5);
 						}else return;
 						a.setCustomName(name);
 

@@ -15,17 +15,24 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+
+import java.util.Objects;
 
 
 public class FireworksEvents implements Listener {
 
 
 	@EventHandler
-	public void a(CraftItemEvent e) {
-		ItemStack item = e.getRecipe().getResult();
+	public void a(PrepareItemCraftEvent e) {
+		Recipe r = e.getRecipe();
+		if(r==null)return;
+		ItemStack item = r.getResult();
 		if (item.getType() == Material.SNOW_BALL) {
-			char type='0';
+			char type = '0';
 			NBTComponent nbt = null;
 			for (ItemStack i : e.getInventory().getContents()) {
 				if (i.getType() == Material.FIREWORK_CHARGE) {
@@ -48,7 +55,8 @@ public class FireworksEvents implements Listener {
 				nbt = ItemNBT.getNBT(item);
 				nbt.setComponent("entasia", injected);
 
-				e.setCurrentItem(ItemNBT.setNBT(item, nbt));
+				item = ItemNBT.setNBT(item, nbt);
+				e.getInventory().setResult(item);
 			}
 		}
 	}
@@ -70,7 +78,7 @@ public class FireworksEvents implements Listener {
 	}
 
 	@EventHandler
-	public void b(ProjectileHitEvent e) {
+	public void a(ProjectileHitEvent e) {
 		Projectile pr = e.getEntity();
 		if (pr.getType() == EntityType.SNOWBALL&&pr.getShooter() instanceof Player) {
 			NBTComponent inject = Utils.fireworks.remove(pr);
@@ -79,7 +87,7 @@ public class FireworksEvents implements Listener {
 				NBTComponent nbt = EntityNBT.getNBT(fw);
 				nbt.setComponent("FireworksItem", inject);
 				EntityNBT.setNBT(fw, nbt);
-				if(inject.getKeyString("type").equals("1")){
+				if("1".equals(inject.getKeyString("type"))){
 					InstantFirework.explode(fw);
 				}
 			}

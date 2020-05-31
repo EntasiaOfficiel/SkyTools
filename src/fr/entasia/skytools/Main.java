@@ -143,19 +143,19 @@ public class Main extends JavaPlugin {
 
 		item = new ItemStack(Material.POISONOUS_POTATO);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "poison_potato_a"), item);
-		slrecipe.addIngredient(1, Material.POTATO);
+		slrecipe.addIngredient(1, Material.POTATO_ITEM);
 		slrecipe.addIngredient(1, Material.ROTTEN_FLESH);
 		Bukkit.addRecipe(slrecipe);
 
-		item.setAmount(3);
+		item = new ItemStack(Material.POISONOUS_POTATO, 3);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "poison_potato_b"), item);
-		slrecipe.addIngredient(1, Material.POTATO);
+		slrecipe.addIngredient(1, Material.POTATO_ITEM);
 		slrecipe.addIngredient(1, Material.SPIDER_EYE);
 		Bukkit.addRecipe(slrecipe);
 
-		item.setAmount(5);
+		item = new ItemStack(Material.POISONOUS_POTATO, 5);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "poison_potato_c"), item);
-		slrecipe.addIngredient(1, Material.POTATO);
+		slrecipe.addIngredient(1, Material.POTATO_ITEM);
 		slrecipe.addIngredient(1, Material.FERMENTED_SPIDER_EYE);
 		Bukkit.addRecipe(slrecipe);
 
@@ -173,7 +173,7 @@ public class Main extends JavaPlugin {
 		pmeta.setColor(Color.fromRGB(255, 153, 255));
 		pmeta.setDisplayName("§f"+CustomArrows.FIREWORKS.name);
 		item.setItemMeta(pmeta);
-		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "arrow_fireworks"), item);
+		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "arrow_fw"), item);
 		slrecipe.addIngredient(1, Material.ARROW);
 		slrecipe.addIngredient(4, Material.FIREWORK);
 		Bukkit.addRecipe(slrecipe);
@@ -186,6 +186,18 @@ public class Main extends JavaPlugin {
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "arrow_explosion"), item);
 		slrecipe.addIngredient(1, Material.ARROW);
 		slrecipe.addIngredient(1, Material.SULPHUR);
+		Bukkit.addRecipe(slrecipe);
+
+		item = new ItemStack(Material.SNOW_BALL);
+		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "snow_fw_1"), item);
+		slrecipe.addIngredient(1, Material.SNOW_BALL);
+		slrecipe.addIngredient(1, Material.FIREWORK_CHARGE);
+		Bukkit.addRecipe(slrecipe);
+
+		item = new ItemStack(Material.SNOW_BALL);
+		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "snow_fw_2"), item);
+		slrecipe.addIngredient(1, Material.SNOW_BALL);
+		slrecipe.addIngredient(1, Material.FIREWORK);
 		Bukkit.addRecipe(slrecipe);
 	}
 

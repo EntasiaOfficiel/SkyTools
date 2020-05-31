@@ -33,9 +33,7 @@ public class CustomEnchantCmd implements CommandExecutor {
 							if(level<1||level>5)throw new NumberFormatException();
 						}
 						CustomEnchants ca = CustomEnchants.valueOf(args[0].toUpperCase());
-						ItemMeta meta = item.getItemMeta();
-						ca.enchant(meta, level);
-						item.setItemMeta(meta);
+						ca.enchant(item, level);
 					}catch(NumberFormatException e) {
 						p.sendMessage("§cNiveau "+args[1]+" invalide !");
 					}catch(IllegalArgumentException e) {

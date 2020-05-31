@@ -24,9 +24,7 @@ public class CustomArrowCmd implements CommandExecutor {
 				try{
 					CustomArrows ca = CustomArrows.valueOf(args[0].toUpperCase());
 					ItemStack item = new ItemStack(Material.ARROW);
-					ItemMeta meta = item.getItemMeta();
-					ca.enchant(meta);
-					item.setItemMeta(meta);
+					ca.enchant(item);
 					p.getInventory().addItem(item);
 				}catch(IllegalArgumentException e){
 					p.sendMessage("§cEnchantement invalide !");

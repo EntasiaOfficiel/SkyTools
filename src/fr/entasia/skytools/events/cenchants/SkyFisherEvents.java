@@ -26,21 +26,8 @@ public class SkyFisherEvents implements Listener {
 		if(e.getState()==PlayerFishEvent.State.FISHING) {
 
 			AirHooksTask aht = new AirHooksTask();
-
 			aht.w = e.getHook().getWorld();
-			if(aht.w.getTime()>13000){
-				aht.fish = Particle.SMOKE_NORMAL;
-				aht.fishColor = new Color(0, 0, 0);
-				aht.background = Particle.REDSTONE;
-				aht.backgroundColor = new Color(128, 128, 128);
-			}else{
-				aht.fish = Particle.END_ROD;
-				aht.fishColor = new Color(0, 0, 0);
-				aht.background = Particle.REDSTONE;
-				aht.backgroundColor = new Color(210, 240, 255);
-			}
-
-			if(aht.w.hasStorm())aht.background = null;
+			aht.initColors();
 
 			new BukkitRunnable() {
 

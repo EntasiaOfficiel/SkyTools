@@ -1,9 +1,13 @@
 package fr.entasia.skytools.objs.custom;
 
+import fr.entasia.apis.nbt.NBTComponent;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public enum CustomArrows {
 	FIREWORKS("Flèche d'Artifice"),
@@ -20,16 +24,19 @@ public enum CustomArrows {
 		this.name = name;
 	}
 
-	public boolean is(ItemStack item){
+	public boolean hasEnchant(ItemStack item){
 		if(item==null)return false;
 		ItemMeta meta = item.getItemMeta();
 		if(meta==null)return false;
 		return ("§f"+name).equals(meta.getDisplayName());
 	}
 
-	public void enchant(ItemMeta meta){
-		meta.setDisplayName("§f"+name);
-		meta.addEnchant(Enchantment.LURE, 1, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+	public void enchant(ItemStack item){
+		if(item==null)return;
+		List<String> lore = item.getLore();
+		if(lore==null)lore = new ArrayList<>();
+		lore.add("§7"+name);
+		item.setLore(lore);
 	}
+
 }
