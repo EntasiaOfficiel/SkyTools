@@ -23,6 +23,7 @@ public class SkyFisherEvents implements Listener {
 
 
 
+	public static final int AR = 3;
 
 	@EventHandler
 	public void a(PlayerFishEvent e){
@@ -55,20 +56,24 @@ public class SkyFisherEvents implements Listener {
 						y = e.getHook().getVelocity().getY();
 						if (y >= 0)return;
 						Location loc = e.getHook().getLocation();
-						for(int x=-2;x<=2;x++) {
+						for(int x=-AR; x<=AR; x++) {
 							loc.setX(baseLoc.getX()+x);
-							for (int y = -2; y <= 2; y++) {
+							for (int y=-AR; y<=AR; y++) {
 								loc.setY(baseLoc.getX()+y);
-								for (int z = -2; z <= 2; z++) {
+								for (int z=-AR; z<=AR; z++) {
 									loc.setZ(baseLoc.getZ()+z);
 									if(loc.getBlock().getType()!=Material.AIR)return;
 								}
 							}
 						}
 
-						short dura = (short) (e.getPlayer().getInventory().getItemInMainHand().getDurability()-5);
-						if(dura<0)dura=0;
-						e.getPlayer().getInventory().getItemInMainHand().setDurability(dura);
+						ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
+						short dura = (short) (e.getPlayer().getInventory().getItemInMainHand().getDurability()+15);
+						if(dura>=item.getType().getMaxDurability()){
+							item.setType(Material.AIR);
+							return;
+						}else item.setDurability(dura);
 
 						aht.w.spawnParticle(aht.fish, baseLoc, 3000, AirHooksTask.radius, AirHooksTask.radius, AirHooksTask.radius, 0.1);
 						aht.hook = e.getHook();

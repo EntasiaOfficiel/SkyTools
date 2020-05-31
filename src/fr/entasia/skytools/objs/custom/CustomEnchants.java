@@ -67,7 +67,7 @@ public enum CustomEnchants {
 	public void enchant(ItemStack item, int level){
 		List<String> lore = item.getLore();
 		if(lore==null)lore = new ArrayList<>();
-		lore.add("§7"+name+" "+ RomanUtils.toRoman(level));
+		lore.add("§7"+name+" "+ RomanUtils.toRoman(Math.min(maxlvl, level)));
 		item.setLore(lore);
 	}
 }

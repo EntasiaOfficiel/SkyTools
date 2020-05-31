@@ -62,7 +62,7 @@ public class ArrowEvents implements Listener {
 			if(type==1){
 				ent.setFireTicks(70);
 			}else if(type==2) {
-//				ent.damage(4);
+				ent.damage(4);
 			}
 //			System.out.println(2);
 //			String name = e.getDamager().getCustomName();
@@ -100,9 +100,10 @@ public class ArrowEvents implements Listener {
 			if (name == null||!name.startsWith("$")) return;
 			if(name.equals("$explode")) {
 				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
-				for (LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 3, 3, 3)) {
+				for (LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 4.5, 4.5, 4.5)) {
 					if (!(ent instanceof Player)) {
-						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4, 1));
+						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4*20, 1));
+						ent.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0));
 					}
 					break;
 				}

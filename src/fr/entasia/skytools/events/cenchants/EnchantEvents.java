@@ -44,7 +44,7 @@ public class EnchantEvents implements Listener {
 			}
 			l = CustomEnchants.WITHER.getLevel(item);
 			if(l!=0){
-				((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, 1));
+				((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, l-1), true);
 			}
 		}
 	}

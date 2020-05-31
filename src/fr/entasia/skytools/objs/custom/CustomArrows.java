@@ -26,9 +26,12 @@ public enum CustomArrows {
 
 	public boolean hasEnchant(ItemStack item){
 		if(item==null)return false;
-		ItemMeta meta = item.getItemMeta();
-		if(meta==null)return false;
-		return ("§f"+name).equals(meta.getDisplayName());
+		List<String> list = item.getLore();
+		if(list==null)return false;
+		for(String s : list){
+			if(("§7"+name).equals(s))return true;
+		}
+		return false;
 	}
 
 	public void enchant(ItemStack item){
