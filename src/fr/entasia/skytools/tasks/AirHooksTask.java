@@ -6,12 +6,14 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.Color;
 import fr.entasia.skytools.objs.custom.CustomArrows;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
-import javafx.scene.layout.BorderWidths;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -32,7 +34,7 @@ public class AirHooksTask extends BukkitRunnable {
 
 
 	// pour bézier
-	public Location base;
+	public Location corner;
 	public World w;
 	public Vector[] points;
 	public byte state = 0;
@@ -88,7 +90,7 @@ public class AirHooksTask extends BukkitRunnable {
 
 		counter = Main.random.nextInt(15*10)+4*10; // 10 pas 20 car periode de 2 ticks
 
-		base = armorStand.getLocation().subtract(baserVector);
+		corner = armorStand.getLocation().subtract(baserVector);
 
 		points = new Vector[Main.random.nextInt(2)+4];
 		for(int i=0;i<points.length-1;i++){
@@ -112,7 +114,7 @@ public class AirHooksTask extends BukkitRunnable {
 
 			if(background!=null){
 				for (int j = 0; j < 50; j++) {
-					w.spawnParticle(background, base.clone().add(randomVector()), 0, backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
+					w.spawnParticle(background, corner.clone().add(randomVector()), 0, backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
 				}
 			}
 
@@ -132,10 +134,10 @@ public class AirHooksTask extends BukkitRunnable {
 					}
 				} else if (state == 2){
 					counter++;
-					if (counter == 10) stop();
+					if (counter == 8) stop();
 					a = baserVector;
 				}
-				w.spawnParticle(fish, base.clone().add(a), 10, 0, 0, 0, 0);
+				w.spawnParticle(fish, corner.clone().add(a), 10, 0, 0, 0, 0);
 			}
 		}else stop();
 	}
@@ -166,27 +168,24 @@ public class AirHooksTask extends BukkitRunnable {
 	}
 
 
-	private Location centerLoc(){
-		return base.clone().add(baserVector);
+	public Location centerLoc(){
+		return corner.clone().add(baserVector);
 	}
 
 	// Merci Narcos pour les loots !
 
 	public Entity owLoot(){
-		Randomiser r = new Randomiser();
-		if(r.isInNext(30)) {
+		Randomiser r = new Randomiser(80);
+		if(r.isInNext(15)) {
 			return w.dropItem(centerLoc(), new ItemStack(Material.FEATHER));
-		}else if(r.isInNext(20)) {
-			ItemStack item = new ItemStack(Material.BOW);
-			item.setDurability((short) (Randomiser.random.nextInt(300)+25));
-			return w.dropItem(centerLoc(), item);
+		}else if(r.isInNext(8)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.ARROW));
 		}else if(r.isInNext(5)) {
 			ItemStack item = new ItemStack(Material.ELYTRA);
 			item.setDurability((short) (Randomiser.random.nextInt(300)+75));
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(10)) {
 			ItemStack item = new ItemStack(Material.ARROW);
-			item.setDurability((short) (Randomiser.random.nextInt(300)+75));
 			return w.dropItem(centerLoc(), item);
 		}
 
@@ -215,19 +214,16 @@ public class AirHooksTask extends BukkitRunnable {
 			CustomArrows.FIREWORKS.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else{
-			if(r.getNumber()%2==0) return w.dropItem(centerLoc(), new ItemStack(Material.ARROW));
-			else{
-				ItemStack item = new ItemStack(Material.FIREWORK);
-				FireworkMeta meta = (FireworkMeta) item.getItemMeta();
-				meta.addEffect(FireworkEffect.builder().withColor(org.bukkit.Color.RED, org.bukkit.Color.PURPLE).build());
-				meta.setPower(2);
-				return w.dropItem(centerLoc(), new ItemStack(Material.FIREWORK));
-			}
+			ItemStack item = new ItemStack(Material.FIREWORK);
+			FireworkMeta meta = (FireworkMeta) item.getItemMeta();
+			meta.addEffect(FireworkEffect.builder().withColor(org.bukkit.Color.RED, org.bukkit.Color.PURPLE).build());
+			meta.setPower(2);
+			return w.dropItem(centerLoc(), new ItemStack(Material.FIREWORK));
 		}
 	}
 
 	public Entity netherLoot(){
-		Randomiser r = new Randomiser();
+		Randomiser r = new Randomiser(80);
 
 		if(r.isInNext(20)) {
 			return w.dropItem(centerLoc(), new ItemStack(Material.SOUL_SAND));
@@ -235,9 +231,9 @@ public class AirHooksTask extends BukkitRunnable {
 			return w.dropItem(centerLoc(), new ItemStack(Material.BLAZE_ROD));
 		}else if(r.isInNext(15)) {
 			return w.dropItem(centerLoc(), new ItemStack(Material.FIREBALL));
-		}else if(r.isInNext(10)) {
-			ItemStack item = new ItemStack(Material.ARROW);
-			CustomArrows.FIREWORKS.enchant(item);
+		}else if(r.isInNext(5)) {
+			ItemStack item = new ItemStack(Material.ELYTRA);
+			item.setDurability((short) (Randomiser.random.nextInt(300)+75));
 			return w.dropItem(centerLoc(), item);
 		}
 
@@ -267,39 +263,60 @@ public class AirHooksTask extends BukkitRunnable {
 		    item.setDurability((short) (Randomiser.random.nextInt(100)+50));
 		    CustomEnchants.LAVA_EATER.enchant(item, 1);
 		    return w.dropItem(centerLoc(), item);
-		}else if(r.isInNext(1)){
+		}else if(r.isInNext(2)){
 		    ItemStack item = new ItemStack(Material.IRON_CHESTPLATE);
 			item.setDurability((short) (Randomiser.random.nextInt(100)+50));
 		    CustomEnchants.LAVA_EATER.enchant(item, 1);
 		    return w.dropItem(centerLoc(), item);
 		}else{
-			if(r.getNumber()%2==0) return w.dropItem(centerLoc(), new ItemStack(Material.GLOWSTONE));
+			if(r.number%2==0) return w.dropItem(centerLoc(), new ItemStack(Material.GLOWSTONE));
 			else return w.dropItem(centerLoc(), new ItemStack(Material.NETHERRACK));
 		}
 	}
 
 	public Entity endLoot(){
-		Randomiser r = new Randomiser();
+		Randomiser r = new Randomiser(80);
 
-		if(r.isInNext(15)){
-			return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT));
+		if(r.isInNext(20)){
+			return w.dropItem(centerLoc(), new ItemStack(Material.ENDER_PEARL));
+		}else if(r.isInNext(5)) {
+			ItemStack item = new ItemStack(Material.ELYTRA);
+			item.setDurability((short) (Randomiser.random.nextInt(300)+75));
+			return w.dropItem(centerLoc(), item);
 		}
-
 
 		if(r.isInNext(5)) {
 			LingeringPotion lp = (LingeringPotion)w.spawnEntity(centerLoc(), EntityType.LINGERING_POTION);
-//			lp.set
-			return w.spawnEntity(centerLoc(), EntityType.LINGERING_POTION);
+
+			ItemStack item = new ItemStack(Material.LINGERING_POTION);
+			PotionMeta meta = (PotionMeta) item.getItemMeta();
+			meta.addCustomEffect(new PotionEffect(PotionEffectType.HARM,1, 1), true);
+			item.setItemMeta(meta);
+
+			lp.setItem(item);
+
+			System.out.println(lp.getEffects());
+			return lp;
 		}else if(r.isInNext(2)){
 			return w.spawnEntity(centerLoc(), EntityType.ENDERMITE);
 		}else if(r.isInNext(1)){
 			return w.spawnEntity(centerLoc(), EntityType.ENDERMAN);
-		}else if(r.isInNext(0.5)) {
+		}else if(r.isInNext(1)) {
 			return w.spawnEntity(centerLoc(), EntityType.ENDER_DRAGON);
 		}
 
-
-		return null;
+		if(r.isInNext(10)){
+			ItemStack item = new ItemStack(Material.ARROW);
+			CustomArrows.DRAGON.enchant(item);
+			return w.dropItem(centerLoc(), item);
+		}else if(r.isInNext(5)){
+			ItemStack item = new ItemStack(Material.IRON_SWORD);
+			CustomEnchants.VAMPIRE.enchant(item, Randomiser.random.nextInt(2)+1);
+			return w.dropItem(centerLoc(), item);
+		}else{
+			if(r.number%2==0) return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT));
+			else return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT_POPPED));
+		}
 	}
 
 

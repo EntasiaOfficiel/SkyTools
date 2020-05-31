@@ -5,12 +5,16 @@ import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.tasks.LavaTask;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class EnchantEvents implements Listener {
 
@@ -27,7 +31,8 @@ public class EnchantEvents implements Listener {
 	public void a(EntityDamageByEntityEvent e) {
 		if(e.getDamager() instanceof Player){
 			Player p = (Player) e.getDamager();
-			int l = CustomEnchants.VAMPIRE.getLevel(p.getInventory().getItemInMainHand());
+			ItemStack item = p.getInventory().getItemInMainHand();
+			int l = CustomEnchants.VAMPIRE.getLevel(item);
 			if(l!=0){
 				int r = Main.random.nextInt(100);
 				if(r<PERCENT*l){
@@ -36,6 +41,10 @@ public class EnchantEvents implements Listener {
 					if(heal>p.getMaxHealth())heal = p.getMaxHealth();
 					p.setHealth(heal);
 				}
+			}
+			l = CustomEnchants.WITHER.getLevel(item);
+			if(l!=0){
+				((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, 1));
 			}
 		}
 	}

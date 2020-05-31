@@ -16,18 +16,18 @@ public enum CustomEnchants {
 	VISION("Vision", 1), // basic
 
 	// bottes
-//	SLOW_FALLING("Chute Lente", 1), // a voir si j'y arrive
 	JUMP("Saut", 3), // basic
 	SPEED("Vitesse", 3), // basic
 
 	// épée
-	VAMPIRE("Vampire", 5),
+	VAMPIRE("Vampire", 4),
 	WITHER("Wither", 2),
 
 	// canne à pêche
 	SKY_FISHER("Pécheur du ciel", 3),
 
 	// houe
+	AREA("Aire", 2),
 	SEEDS_CANOON("Canon", 1),
 
 	// REGARDE LES NEWS SUR DISCORD

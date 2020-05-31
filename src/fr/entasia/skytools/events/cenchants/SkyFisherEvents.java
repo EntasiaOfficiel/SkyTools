@@ -2,19 +2,22 @@ package fr.entasia.skytools.events.cenchants;
 
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
-import fr.entasia.skytools.objs.Color;
+import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.tasks.AirHooksTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.LingeringPotionSplashEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class SkyFisherEvents implements Listener {
 
@@ -24,6 +27,9 @@ public class SkyFisherEvents implements Listener {
 	@EventHandler
 	public void a(PlayerFishEvent e){
 		if(e.getState()==PlayerFishEvent.State.FISHING) {
+
+			ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+			if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
 
 			AirHooksTask aht = new AirHooksTask();
 			aht.w = e.getHook().getWorld();
@@ -59,6 +65,10 @@ public class SkyFisherEvents implements Listener {
 								}
 							}
 						}
+
+						short dura = (short) (e.getPlayer().getInventory().getItemInMainHand().getDurability()-5);
+						if(dura<0)dura=0;
+						e.getPlayer().getInventory().getItemInMainHand().setDurability(dura);
 
 						aht.w.spawnParticle(aht.fish, baseLoc, 3000, AirHooksTask.radius, AirHooksTask.radius, AirHooksTask.radius, 0.1);
 						aht.hook = e.getHook();
@@ -101,15 +111,20 @@ public class SkyFisherEvents implements Listener {
 							}
 						}
 						assert ent != null;
-						ent.setVelocity(e.getPlayer().getLocation().getDirection().multiply(-1));
+						Vector v = e.getPlayer().getLocation().subtract(aht.centerLoc()).toVector().multiply(0.1).add(new Vector(0, 0.2, 0));
+						System.out.println(v);
+						ent.setVelocity(v);
 					}
-					aht.cancel();
-					aht.hook.remove();
-					aht.armorStand.remove();
+					aht.stop();
 					break;
 				}
 			}
 		}
+	}
+
+
+	public void a(LingeringPotionSplashEvent e){
+
 	}
 
 }
