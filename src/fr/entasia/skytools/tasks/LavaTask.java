@@ -1,6 +1,6 @@
 package fr.entasia.skytools.tasks;
 
-import fr.entasia.skycore.others.enums.Dimension;
+import fr.entasia.skycore.others.enums.Dimensions;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.Bukkit;
@@ -32,7 +32,7 @@ public class LavaTask extends BukkitRunnable { // 10 ticks actuellement
 	@Override
 	public void run() {
 		for(Player p : Bukkit.getOnlinePlayers()){
-			if(Dimension.isIslandWorld(p.getWorld())){
+			if(Dimensions.isIslandWorld(p.getWorld())){
 				Material m = p.getLocation().getBlock().getType();
 				if(isLava(m)){
 					ArrayList<LavaItem> list = new ArrayList<>();
