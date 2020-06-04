@@ -1,5 +1,6 @@
 package fr.entasia.skytools.events.cenchants;
 
+import fr.entasia.apis.ItemUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
@@ -69,13 +70,12 @@ public class SkyFisherEvents implements Listener {
 
 						ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
 						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
-						short dura = (short) (e.getPlayer().getInventory().getItemInMainHand().getDurability()+15);
-						if(dura>item.getType().getMaxDurability()){
+						ItemUtils.damage(item, 15);
+						if(item.getType()==Material.AIR) {
 							System.out.println("delete");
-							e.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR));
 							cancel();
 							return;
-						}else item.setDurability(dura);
+						}
 
 						aht.w.spawnParticle(aht.fish, baseLoc, 3000, AirHooksTask.radius, AirHooksTask.radius, AirHooksTask.radius, 0.1);
 						aht.hook = e.getHook();

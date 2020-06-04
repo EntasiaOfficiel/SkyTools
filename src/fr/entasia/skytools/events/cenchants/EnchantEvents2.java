@@ -1,5 +1,6 @@
 package fr.entasia.skytools.events.cenchants;
 
+import fr.entasia.apis.ItemUtils;
 import fr.entasia.apis.other.InstantFirework;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
@@ -71,9 +72,11 @@ public class EnchantEvents2 implements Listener {
 				}
 				if(item==null)return;
 				Vector v = p.getLocation().getDirection();
+
 				byte data;
-				if(m== Material.BEETROOT_BLOCK)data= 3;
+				if(m==Material.BEETROOT_BLOCK)data=3;
 				else data = 0x7;
+
 				FallingBlock fb = p.getWorld().spawnFallingBlock(p.getLocation().add(0 ,1, 0).add(v), m, data);
 				fb.setDropItem(false);
 				fb.setHurtEntities(false);
@@ -111,7 +114,10 @@ public class EnchantEvents2 implements Listener {
 												}
 											}
 										}
-										finalItem.setAmount(amount);
+										if(amount!=finalItem.getAmount()){
+											finalItem.setAmount(amount);
+											ItemUtils.damage(e.getItem(), 1);
+										}
 									}
 								}.runTask(Main.main);
 							}
