@@ -1,6 +1,5 @@
 package fr.entasia.skytools.commands.custom;
 
-import fr.entasia.skytools.objs.custom.CustomArrows;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -8,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class CustomEnchantCmd implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {

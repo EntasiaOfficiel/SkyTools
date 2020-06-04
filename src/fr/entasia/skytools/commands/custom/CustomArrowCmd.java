@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class CustomArrowCmd implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
