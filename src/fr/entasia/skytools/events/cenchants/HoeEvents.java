@@ -5,10 +5,7 @@ import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.TreeSpecies;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
@@ -22,9 +19,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,15 +115,15 @@ public class HoeEvents implements Listener {
 
 	@EventHandler
 	public void a(PlayerInteractEvent e){
-		if(e.getItem()!=null&&e.getAction()== Action.RIGHT_CLICK_AIR||(e.getAction()== Action.RIGHT_CLICK_BLOCK&&e.getClickedBlock().getType()==Material.SOIL)){
+		if(e.getItem()!=null&&(e.getAction()== Action.RIGHT_CLICK_AIR||e.getAction()== Action.RIGHT_CLICK_BLOCK)){
 			int lvl = CustomEnchants.SEEDS_CANOON.getLevel(e.getItem());
 			if(lvl==0)return;
 
 			ToolPlayer tp = Utils.getPlayer(e.getPlayer());
-			if(System.currentTimeMillis()-tp.cdCanoon<500)return;
+			if(System.currentTimeMillis()-tp.cdCanoon<400)return;
 			tp.cdCanoon = System.currentTimeMillis();
 			ItemStack item = null;
-			CanoonBlock cb=null;
+			CanoonBlock cb = null;
 
 			for(ItemStack litem : tp.p.getInventory().getStorageContents()){
 				if(litem==null||litem.getType()==Material.AIR)continue;
@@ -148,7 +148,8 @@ public class HoeEvents implements Listener {
 			else if(cb.material==Material.COCOA)data = (byte) (Main.random.nextInt(4)+8);
 			else data = cb.maxdata;
 
-			FallingBlock fb = tp.p.getWorld().spawnFallingBlock(tp.p.getLocation().add(0 ,1, 0).add(v), cb.material, data);
+			Location loc = tp.p.getLocation().add(0 ,1, 0).add(v);
+			FallingBlock fb = tp.p.getWorld().spawnFallingBlock(loc, cb.material, data);
 			fb.setDropItem(false);
 			fb.setHurtEntities(false);
 			fb.setInvulnerable(true);
@@ -156,28 +157,37 @@ public class HoeEvents implements Listener {
 
 			ItemStack finalItem = item;
 			CanoonBlock finalCb = cb;
-			new BukkitRunnable() { // detect if gone
-				Location futureLoc;
+			new BukkitRunnable() {
 				@Override
 				public void run() {
-					if(fb.getTicksLived() > 20*10) {
+					Block aa = loc.getBlock();
+					if(aa.getType()==Material.SOIL)aa = aa.getRelative(BlockFace.UP);
+					aa.getState().update(true, true);
+				}
+			}.runTask(Main.main);
+			new BukkitRunnable() { // detect if gone
+
+				@Override
+				public void run() {
+
+					if (fb.getTicksLived() > 20 * 10) {
 						cancel();
 						fb.remove();
-					}else if (finalCb.material==Material.COCOA) {
-						if(fb.isValid()){
+					} else if (finalCb.material == Material.COCOA) {
+						if (fb.isValid()) {
 							Block lb;
 							boolean go = false;
 							Location loc = fb.getLocation();
-							for(Vector v : vectors) {
+							for (Vector v : vectors) {
 								lb = loc.clone().add(v).getBlock();
-								if(lb.getType()==Material.LOG){
+								if (lb.getType() == Material.LOG) {
 									if (TreeSpecies.getByData(lb.getData()) == TreeSpecies.JUNGLE) {
 										go = true;
 										break;
 									}
 								}
 							}
-							if(go){
+							if (go) {
 								cancel();
 								fb.remove();
 								new BukkitRunnable() {
@@ -185,7 +195,7 @@ public class HoeEvents implements Listener {
 									public void run() {
 										short amount = (short) finalItem.getAmount();
 										Block lb, lb2;
-										for(Vector v : vectors) {
+										for (Vector v : vectors) {
 											lb = loc.clone().add(v).getBlock();
 											if (lb.getType() == Material.AIR) {
 												for (Directions cd : Directions.values()) {
@@ -203,7 +213,7 @@ public class HoeEvents implements Listener {
 											}
 											if (amount == 0) break;
 										}
-										if(amount!=finalItem.getAmount()){
+										if (amount != finalItem.getAmount()) {
 											finalItem.setAmount(amount);
 											ItemUtils.damage(e.getItem(), 1);
 										}
@@ -212,8 +222,8 @@ public class HoeEvents implements Listener {
 							}
 						}
 
-					}else{
-						if(!fb.isValid()){
+					} else {
+						if (!fb.isValid()) {
 							cancel();
 							fallingBlockBreak(fb, e.getItem(), finalItem, finalCb);
 						}
@@ -226,11 +236,14 @@ public class HoeEvents implements Listener {
 	@EventHandler
 	public void EntityChangeBlockEvent (EntityChangeBlockEvent e) {
 		if (e.getEntityType() == EntityType.FALLING_BLOCK) {
-			e.setCancelled(true);
+			FallingBlock fb = (FallingBlock) e.getEntity();
+			if(seeds.containsKey(fb.getMaterial()))e.setCancelled(true);
+			else if(seeds2.containsKey(fb.getMaterial()))e.setCancelled(true);
 		}
 	}
 
 	public static void fallingBlockBreak(FallingBlock fb, ItemStack hoe, ItemStack seeds, CanoonBlock exCb){
+
 
 		CanoonBlock cb;
 		CanoonBlock tempCb = getSeedBlock(seeds.getType());
@@ -285,25 +298,40 @@ public class HoeEvents implements Listener {
 		if(lvl==0)return;
 		Material m = e.getBlock().getType();
 		boolean nop = true;
-		for(CanoonBlock cb : seeds.values()){
+		ArrayList<CanoonBlock> list = new ArrayList<>(seeds.values());
+		list.addAll(seeds2.values());
+		for(CanoonBlock cb : list){
 			if(cb.material==m){
 				nop = false;
 				break;
 			}
 		}
 		if(nop)return;
-		Location loc = e.getBlock().getLocation();
-		Vector v = e.getPlayer().getLocation().getDirection();
+
+		Location loc = e.getBlock().getLocation().add(0.5, 0.5, 0.5);
+
+		Vector v = e.getPlayer().getLocation().getDirection().setY(0);
+//		Vector v = loc.toVector().subtract(e.getPlayer().getLocation().toVector()).setY(0);
+
+		double highest = Math.max(Math.abs(v.getX()), Math.abs(v.getZ()));
+		v.divide(new Vector(highest, 1, highest));
+		System.out.println(v);
+
 		for(int i=0;i<lvl*3;i++){
 			loc.add(v);
-			Block b = loc.getBlock();
+			Location loc2 = loc.clone();
+			Block b = loc2.getBlock();
 			if(b.getType()==m){
 				new BukkitRunnable() {
 					@Override
 					public void run() {
-						b.breakNaturally();
+						if(b.getType()==m) {
+							b.getWorld().spawnParticle(Particle.BLOCK_CRACK, loc2, 150, 0.5, 0.5, 0.5, 1, new MaterialData(m, b.getData()));
+							b.getWorld().playSound(loc2, Sound.BLOCK_GRASS_BREAK, SoundCategory.BLOCKS, 1, 0.8f);
+							b.breakNaturally();
+						}
 					}
-				}.runTaskLater(Main.main, 50 * i);
+				}.runTaskLater(Main.main, i);
 			}else if(b.getType()!=Material.AIR)break;
 		}
 

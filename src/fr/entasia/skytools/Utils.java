@@ -48,11 +48,6 @@ public class Utils {
 		return tp;
 	}
 
-
-	private static class Bool{
-		boolean value;
-	}
-
 	public static void updateEffects(Player p){
 		ToolPlayer tp = getPlayer(p);
 		PlayerInventory inv = p.getInventory();
