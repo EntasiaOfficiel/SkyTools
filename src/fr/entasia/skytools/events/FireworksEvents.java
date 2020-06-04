@@ -5,6 +5,7 @@ import fr.entasia.apis.nbt.ItemNBT;
 import fr.entasia.apis.nbt.NBTComponent;
 import fr.entasia.apis.other.InstantFirework;
 import fr.entasia.skytools.Utils;
+import fr.entasia.skytools.objs.ToolPlayer;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -63,8 +64,9 @@ public class FireworksEvents implements Listener {
 		if (pr.getType() == EntityType.SNOWBALL&&pr.getShooter() instanceof Player) {
 			ItemStack item = ((Player) pr.getShooter()).getInventory().getItemInMainHand();
 			if(item.getType()==Material.SNOW_BALL){
-				if(System.currentTimeMillis()-Utils.cooldown.getOrDefault(pr.getShooter(), 2L)>500){
-					Utils.cooldown.put(pr.getShooter(), System.currentTimeMillis());
+				ToolPlayer tp = Utils.getPlayer((Player)pr.getShooter());
+				if(System.currentTimeMillis()-tp.cdFirework>500){
+					tp.cdFirework = System.currentTimeMillis();
 					Utils.fireworks.put(pr, ItemNBT.getNBT(item).getComponent("entasia"));
 				}else{
 					e.setCancelled(true);

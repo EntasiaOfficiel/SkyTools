@@ -47,38 +47,19 @@ public class ArrowEvents implements Listener {
 		else if(name.equals("$dragon")) type=2;
 		else return;
 		for(LivingEntity ent : e.getAffectedEntities()){
-			if(type==1){
-				ent.setFireTicks(70);
-			}else if(type==2) {
-				ent.damage(4);
+			switch(type){
+				case 1:{
+					ent.setFireTicks(70);
+					break;
+				}
+				case 2:{
+					ent.damage(4);
+					break;
+				}
 			}
-//			System.out.println(2);
-//			String name = e.getDamager().getCustomName();
-//			System.out.println(3);
-//			if (name == null||!name.startsWith("$")) return;
-//			if(name.equals("$fire")) {
-//				e.getEntity().setFireTicks(70);
-//			}else if(name.equals("dragon")) {
-//				((LivingEntity) e.getEntity()).damage(0.5);
-//			}
 		}
 	}
 
-//	@EventHandler
-//	public void a(EntityDamageByEntityEvent e) {
-//		System.out.println(1);
-//		if(e.getDamager() instanceof AreaEffectCloud){
-//			System.out.println(2);
-//			String name = e.getDamager().getCustomName();
-//			System.out.println(3);
-//			if (name == null||!name.startsWith("$")) return;
-//			if(name.equals("$fire")) {
-//				e.getEntity().setFireTicks(70);
-//			}else if(name.equals("dragon")) {
-//				((LivingEntity) e.getEntity()).damage(0.5);
-//			}
-//		}
-//	}
 
 	@EventHandler
 	public void a(ProjectileHitEvent e) {

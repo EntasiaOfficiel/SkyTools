@@ -12,12 +12,11 @@ public class SWTask extends BukkitRunnable {
 		int n;
 		if(Main.guessWord==null){
 			if((n=Bukkit.getOnlinePlayers().size())<2)return;
-			Random r = new Random();
 			StringBuilder a = new StringBuilder();
 			for(int i=0;i<7+n/3;i++){
-				if(r.nextInt(4)==0){
-					a.append((char) (r.nextInt(26) + 'a'));
-				}else a.append((char) (r.nextInt(26) + 'A'));
+				if(Main.random.nextInt(4)==0){
+					a.append((char) (Main.random.nextInt(26) + 'a'));
+				}else a.append((char) (Main.random.nextInt(26) + 'A'));
 				if(i==15)break;
 			}
 			Main.guessWord = a.toString();

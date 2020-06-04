@@ -20,7 +20,7 @@ public class ChatEvents implements Listener {
 			e.setCancelled(true);
 			Bukkit.broadcastMessage("§eSpeedWriter §7» §e" + e.getPlayer().getDisplayName() + "§6 à gagné !");
 			Main.guessWord = null;
-			switch (new Random().nextInt(6)) {
+			switch (Main.random.nextInt(6)) {
 				case 0:
 					e.getPlayer().getInventory().addItem(new ItemStack(Material.EXP_BOTTLE, 32));
 					break;

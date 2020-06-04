@@ -33,9 +33,7 @@ public class OthersEvents implements Listener {
 
 	@EventHandler
 	public void firework(PlayerJoinEvent e){
-		ToolPlayer tp = Utils.playerCache.get(e.getPlayer().getUniqueId());
-		if(tp==null) Utils.playerCache.put(e.getPlayer().getUniqueId(), new ToolPlayer(e.getPlayer()));
-		else tp.p = e.getPlayer();
+		Utils.getPlayer(e.getPlayer());
 	}
 
 

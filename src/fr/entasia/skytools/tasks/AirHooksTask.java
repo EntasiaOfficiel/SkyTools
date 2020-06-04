@@ -295,7 +295,6 @@ public class AirHooksTask extends BukkitRunnable {
 
 			lp.setItem(item);
 
-			System.out.println(lp.getEffects());
 			return lp;
 		}else if(r.isInNext(2)){
 			return w.spawnEntity(centerLoc(), EntityType.ENDERMITE);

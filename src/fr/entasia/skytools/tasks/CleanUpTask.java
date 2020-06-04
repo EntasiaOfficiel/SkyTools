@@ -9,7 +9,6 @@ public class CleanUpTask extends BukkitRunnable {
 	@Override
 	public void run() {
 		Utils.fireworks.entrySet().removeIf(e->!e.getKey().isValid()||e.getKey().getTicksLived()>500);
-		Utils.cooldown.entrySet().removeIf(e->System.currentTimeMillis()-e.getValue()>500);
 		Utils.airHookTasks.removeIf(ah -> { // boucle
 			if (!ah.hook.isValid() || ah.hook.getTicksLived() > 5000 ) {
 				ah.hook.remove();

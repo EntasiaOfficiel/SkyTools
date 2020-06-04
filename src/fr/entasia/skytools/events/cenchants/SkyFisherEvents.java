@@ -71,7 +71,6 @@ public class SkyFisherEvents implements Listener {
 						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
 						ItemUtils.damage(item, 15);
 						if(item.getType()==Material.AIR) {
-							System.out.println("delete");
 							cancel();
 							return;
 						}
@@ -118,7 +117,6 @@ public class SkyFisherEvents implements Listener {
 						}
 						assert ent != null;
 						Vector v = e.getPlayer().getLocation().subtract(aht.centerLoc()).toVector().multiply(0.1).add(new Vector(0, 0.2, 0));
-						System.out.println(v);
 						ent.setVelocity(v);
 					}
 					aht.stop();

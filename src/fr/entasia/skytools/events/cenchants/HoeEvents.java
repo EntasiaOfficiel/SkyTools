@@ -2,7 +2,10 @@ package fr.entasia.skytools.events.cenchants;
 
 import fr.entasia.apis.ItemUtils;
 import fr.entasia.skytools.Main;
+import fr.entasia.skytools.Utils;
+import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
@@ -12,8 +15,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -113,10 +118,14 @@ public class HoeEvents implements Listener {
 		if(e.getItem()!=null&&e.getAction()== Action.RIGHT_CLICK_AIR||(e.getAction()== Action.RIGHT_CLICK_BLOCK&&e.getClickedBlock().getType()==Material.SOIL)){
 			int lvl = CustomEnchants.SEEDS_CANOON.getLevel(e.getItem());
 			if(lvl==0)return;
-			Player p = e.getPlayer();
+
+			ToolPlayer tp = Utils.getPlayer(e.getPlayer());
+			if(System.currentTimeMillis()-tp.cdCanoon<500)return;
+			tp.cdCanoon = System.currentTimeMillis();
 			ItemStack item = null;
 			CanoonBlock cb=null;
-			for(ItemStack litem : p.getInventory().getStorageContents()){
+
+			for(ItemStack litem : tp.p.getInventory().getStorageContents()){
 				if(litem==null||litem.getType()==Material.AIR)continue;
 				cb = getSeedBlock(litem.getType());
 				if(cb==null&&lvl==2){
@@ -130,14 +139,16 @@ public class HoeEvents implements Listener {
 					break;
 				}
 			}
+
 			if(item==null)return;
-			Vector v = p.getLocation().getDirection();
+			Vector v = tp.p.getLocation().getDirection();
 
 			byte data;
 			if(cb.material==Material.SAPLING)data = (byte) item.getDurability();
+			else if(cb.material==Material.COCOA)data = (byte) (Main.random.nextInt(4)+8);
 			else data = cb.maxdata;
 
-			FallingBlock fb = p.getWorld().spawnFallingBlock(p.getLocation().add(0 ,1, 0).add(v), cb.material, data);
+			FallingBlock fb = tp.p.getWorld().spawnFallingBlock(tp.p.getLocation().add(0 ,1, 0).add(v), cb.material, data);
 			fb.setDropItem(false);
 			fb.setHurtEntities(false);
 			fb.setInvulnerable(true);
@@ -268,8 +279,33 @@ public class HoeEvents implements Listener {
 
 	}
 
-//	@EventHandler
-//	public void a(BlockBreakEvent e){
-//		if(e.getBlock().getType()==Material.CROPS
-//	}
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	public void a(BlockBreakEvent e){
+		int lvl = CustomEnchants.AURA.getLevel(e.getPlayer().getInventory().getItemInMainHand());
+		if(lvl==0)return;
+		Material m = e.getBlock().getType();
+		boolean nop = true;
+		for(CanoonBlock cb : seeds.values()){
+			if(cb.material==m){
+				nop = false;
+				break;
+			}
+		}
+		if(nop)return;
+		Location loc = e.getBlock().getLocation();
+		Vector v = e.getPlayer().getLocation().getDirection();
+		for(int i=0;i<lvl*3;i++){
+			loc.add(v);
+			Block b = loc.getBlock();
+			if(b.getType()==m){
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						b.breakNaturally();
+					}
+				}.runTaskLater(Main.main, 50 * i);
+			}else if(b.getType()!=Material.AIR)break;
+		}
+
+	}
 }
