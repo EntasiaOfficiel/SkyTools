@@ -9,7 +9,7 @@ public class RomanUtils {
 	}
 
 	public static int toInt(String s){
-		for(int i=0;i<roman.length;i++){
+		for(byte i=0;i<roman.length;i++){
 			if(roman[i].equals(s))return i+1;
 		}
 		return 0;

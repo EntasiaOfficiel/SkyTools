@@ -27,8 +27,8 @@ public enum CustomEnchants {
 	SKY_FISHER("Pécheur du ciel", 3),
 
 	// houe
-	AREA("Aire", 2),
-	SEEDS_CANOON("Canon", 1),
+	AURA("Aura", 3),
+	SEEDS_CANOON("Canon", 2),
 
 	// REGARDE LES NEWS SUR DISCORD
 
