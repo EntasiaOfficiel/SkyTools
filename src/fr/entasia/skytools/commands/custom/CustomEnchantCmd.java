@@ -32,6 +32,7 @@ public class CustomEnchantCmd implements CommandExecutor {
 						}
 						CustomEnchants ca = CustomEnchants.valueOf(args[0].toUpperCase());
 						ca.enchant(item, level);
+						p.sendMessage("§aEnchantement fait avec succès !");
 					}catch(NumberFormatException e) {
 						p.sendMessage("§cNiveau "+args[1]+" invalide !");
 					}catch(IllegalArgumentException e) {

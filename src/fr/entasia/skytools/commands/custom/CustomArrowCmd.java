@@ -20,13 +20,17 @@ public class CustomArrowCmd implements CommandExecutor {
 					p.sendMessage("§c - "+ca.name()+" | ("+ca.name+")");
 				}
 			}else{
-				try{
-					CustomArrows ca = CustomArrows.valueOf(args[0].toUpperCase());
-					ItemStack item = new ItemStack(Material.ARROW);
-					ca.enchant(item);
-					p.getInventory().addItem(item);
-				}catch(IllegalArgumentException e){
-					p.sendMessage("§cEnchantement invalide !");
+				ItemStack item = p.getInventory().getItemInMainHand();
+				if (item == null || item.getType() == Material.AIR) {
+					p.sendMessage("§cItem invalide !");
+				} else {
+					try{
+						CustomArrows ca = CustomArrows.valueOf(args[0].toUpperCase());
+						ca.enchant(item);
+						p.sendMessage("§aEnchantement fait avec succès !");
+					}catch(IllegalArgumentException e){
+						p.sendMessage("§cEnchantement invalide !");
+					}
 				}
 			}
 		}else sender.sendMessage("§cTu n'as pas accès à cette commande !");
