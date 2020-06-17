@@ -15,8 +15,10 @@ public class SWTask extends BukkitRunnable {
 			StringBuilder a = new StringBuilder();
 			for(int i=0;i<7+n/3;i++){
 				if(Main.random.nextInt(4)==0){
+					a.append((char) (Main.random.nextInt(26) + 'A'));
+				}else{
 					a.append((char) (Main.random.nextInt(26) + 'a'));
-				}else a.append((char) (Main.random.nextInt(26) + 'A'));
+				}
 				if(i==15)break;
 			}
 			Main.guessWord = a.toString();

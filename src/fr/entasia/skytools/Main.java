@@ -16,6 +16,7 @@ import fr.entasia.skytools.tasks.CleanUpTask;
 import fr.entasia.skytools.tasks.LavaTask;
 import fr.entasia.skytools.tasks.SWTask;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
