@@ -315,7 +315,6 @@ public class HoeEvents implements Listener {
 
 		double highest = Math.max(Math.abs(v.getX()), Math.abs(v.getZ()));
 		v.divide(new Vector(highest, 1, highest));
-		System.out.println(v);
 
 		for(int i=0;i<lvl*3;i++){
 			loc.add(v);

@@ -32,72 +32,9 @@ import org.bukkit.util.Vector;
 public class OthersEvents implements Listener {
 
 	@EventHandler
-	public void firework(PlayerJoinEvent e){
-		Utils.getPlayer(e.getPlayer());
-	}
-
-
-	@EventHandler
-	public void firework(InventoryClickEvent e){
-		if(e.getWhoClicked().getOpenInventory().getType() == InventoryType.CRAFTING){
-			if(e.getClick()==ClickType.LEFT||e.getClick()==ClickType.RIGHT) {
-				if (e.getSlot() == 39){
-					if(e.getCursor().getType() == Material.FIREWORK){
-						e.setCancelled(true);
-						if(e.getWhoClicked().getInventory().getHelmet()==null){ // aucun item en casque , on set juste le curseur
-							e.getWhoClicked().getInventory().setHelmet(e.getCursor());
-							e.setCursor(new ItemStack(Material.AIR));
-						}else{
-							if(e.getCursor().getItemMeta().equals(e.getWhoClicked().getInventory().getHelmet().getItemMeta())){
-								// mise en place du système de reste
-								int total = e.getCursor().getAmount()+e.getWhoClicked().getInventory().getHelmet().getAmount();
-								ItemStack helmet = e.getWhoClicked().getInventory().getHelmet();
-								ItemStack reste = new ItemStack(Material.AIR);
-								if(total>64){ // pour ne pas avoir des stacks de + de 64
-									helmet.setAmount(64);
-									reste = helmet.clone();
-									reste.setAmount(total-64);
-								}else helmet.setAmount(total);
-								e.getWhoClicked().getInventory().setHelmet(helmet);
-								e.setCursor(reste);
-								// fin du système de reste
-
-							}else{
-								ItemStack a = e.getWhoClicked().getInventory().getHelmet();
-								e.getWhoClicked().getInventory().setHelmet(e.getCursor());
-								e.setCursor(a);
-							}
-						}
-					}
-				}
-			}else if(e.getClick()==ClickType.SHIFT_LEFT) {
-				if (e.getCurrentItem()!=null&&e.getCurrentItem().getType() == Material.FIREWORK && e.getSlot() != 39){
-					// mise en place du système de reste ( geant size )
-					ItemStack helmet = e.getWhoClicked().getInventory().getHelmet();
-					ItemStack reste = new ItemStack(Material.AIR);
-					if(helmet==null){ // cas 1 du système de reste
-						e.setCancelled(true);
-						helmet = e.getCurrentItem();
-					}else{
-						if(e.getCurrentItem().getItemMeta().equals(helmet.getItemMeta())){
-							// cas 2 du système de reste
-							e.setCancelled(true);
-							int total = e.getWhoClicked().getInventory().getHelmet().getAmount()+e.getCurrentItem().getAmount();
-							if(total>64){
-								reste = e.getCurrentItem().clone();
-								reste.setAmount(total-64);
-								helmet.setAmount(64);
-							}else{
-								helmet.setAmount(total);
-							}
-						}else return; // shift click quand les deux items sont différents , on fait rien on laisse mc opérer
-					}
-					e.getWhoClicked().getInventory().setHelmet(helmet);
-					e.setCurrentItem(reste);
-					// fin du système de reste
-				}
-			}
-		}
+	public void a(PlayerJoinEvent e){
+		ToolPlayer tp = Utils.playerCache.get(e.getPlayer().getUniqueId());
+		if(tp!=null)tp.p = e.getPlayer();
 	}
 
 	@EventHandler
