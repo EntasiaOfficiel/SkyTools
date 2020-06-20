@@ -36,11 +36,11 @@ public class FireworksEvents implements Listener {
 			NBTComponent nbt = null;
 			for (ItemStack i : e.getInventory().getContents()) {
 				if (i.getType() == Material.FIREWORK_CHARGE) {
-					nbt = new NBTComponent("{Fireworks:{Explosions:[" + ItemNBT.getNBT(i).getComponent("Explosion") + "]}}");
+					nbt = new NBTComponent("{Fireworks:{Explosions:[" + ItemNBT.getNBTSafe(i).getComponent("Explosion") + "]}}");
 					type = '1';
 					break;
 				} else if (i.getType() == Material.FIREWORK) {
-					nbt = ItemNBT.getNBT(i);
+					nbt = ItemNBT.getNBTSafe(i);
 					type = '0';
 					break;
 				}
@@ -52,10 +52,11 @@ public class FireworksEvents implements Listener {
 				injected.fusion(new NBTComponent("{Count:1b,Damage:0s}"));
 				injected.setComponent("tag", nbt);
 
-				nbt = ItemNBT.getNBT(item);
+				nbt = ItemNBT.getNBTSafe(item);
+				if(nbt==null)nbt = new NBTComponent();
 				nbt.setComponent("entasia", injected);
 
-				item = ItemNBT.setNBT(item, nbt);
+				ItemNBT.setNBT(item, nbt);
 				e.getInventory().setResult(item);
 			}
 		}
