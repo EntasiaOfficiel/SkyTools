@@ -7,6 +7,7 @@ import fr.entasia.apis.nbt.NBTComponent;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
+import fr.entasia.skytools.objs.villagers.Villagers;
 import fr.entasia.skytools.objs.Warp;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,13 +19,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -175,4 +174,15 @@ public class OthersEvents implements Listener {
 			}
 		}
 	}
+
+
+	@EventHandler
+	public void a(EntitySpawnEvent e){
+		if(e.getEntity().getType()==EntityType.VILLAGER){
+			Villager v = (Villager)e.getEntity();
+			Villagers vi = Villagers.getOne();
+			vi.apply(v);
+		}
+	}
+
 }
