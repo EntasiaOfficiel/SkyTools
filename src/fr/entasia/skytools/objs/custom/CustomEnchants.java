@@ -63,7 +63,7 @@ public enum CustomEnchants {
 		for(String s : list){
 			split = s.split(" ");
 			n = String.join(" ", Arrays.copyOfRange(split, 0, split.length-1));
-			if(("§7§6§r"+name).equals(n)){
+			if(("§6§r§7"+name).equals(n)){
 				lvl = RomanUtils.toInt(split[split.length-1]);
 				if(lvl!=0)return Math.min(maxlvl, lvl);
 			}

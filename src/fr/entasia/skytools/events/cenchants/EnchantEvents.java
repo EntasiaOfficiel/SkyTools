@@ -13,6 +13,7 @@ import fr.entasia.skytools.objs.custom.RomanUtils;
 import fr.entasia.skytools.tasks.LavaTask;
 import net.minecraft.server.v1_12_R1.ContainerAnvil;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.craftbukkit.v1_12_R1.event.CraftEventFactory;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -80,7 +81,6 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler
 	public void a(PrepareAnvilEvent e) { // gngn ca s'éxecute 3 fois
-		System.out.println("---EVENT---");
 		ItemStack item1 = e.getInventory().getItem(0);
 		if (item1 == null) return;
 		ItemStack item2 = e.getInventory().getItem(1);
@@ -118,10 +118,7 @@ public class EnchantEvents implements Listener {
 					lvl = ench1.get(pair.a);
 					if (lvl == null) ench1.put(pair.a, new Mutable<>(pair.b));
 					else {
-						System.out.println(ServerUtils.bukkit);
-						System.out.println("a");
 						if (lvl.value.equals(pair.b)){
-							System.out.println("b");
 							CustomEnchants ench = CustomEnchants.get(pair.a);
 							if(ench==null){
 								InternalAPI.warn("Enchantement invalide : "+pair.a.replace("§", "&")+" (lore ?)", false);
@@ -141,7 +138,6 @@ public class EnchantEvents implements Listener {
 			temp.add(entry.getKey() + " " + entry.getValue().value);
 		}
 		temp.addAll(lore);
-		System.out.println(Arrays.asList(temp.toArray()));
 		result.setLore(temp);
 	}
 }
