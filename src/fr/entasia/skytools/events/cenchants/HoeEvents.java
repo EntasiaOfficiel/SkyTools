@@ -292,7 +292,8 @@ public class HoeEvents implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void a(BlockBreakEvent e){
-		int lvl = CustomEnchants.AURA.getLevel(e.getPlayer().getInventory().getItemInMainHand());
+		ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+		int lvl = CustomEnchants.AURA.getLevel(item);
 		if(lvl==0)return;
 		Material m = e.getBlock().getType();
 		boolean nop = true;
@@ -314,7 +315,9 @@ public class HoeEvents implements Listener {
 		double highest = Math.max(Math.abs(v.getX()), Math.abs(v.getZ()));
 		v.divide(new Vector(highest, 1, highest));
 
-		for(int i=0;i<lvl*3;i++){
+		ItemUtils.damage(item, lvl*2);
+
+		for(int i=0;i<(lvl*3)-1;i++){
 			loc.add(v);
 			Location loc2 = loc.clone();
 			Block b = loc2.getBlock();
