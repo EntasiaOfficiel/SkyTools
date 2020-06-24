@@ -43,7 +43,6 @@ public enum Villagers {
 		for(ComplexTrade ct : cTrades){
 			list.add(ct.getTrade());
 		}
-		System.out.println(list.size());
 		v.setRecipes(list);
 	}
 }

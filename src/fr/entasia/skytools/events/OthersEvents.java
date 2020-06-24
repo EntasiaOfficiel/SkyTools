@@ -175,7 +175,6 @@ public class OthersEvents implements Listener {
 		}
 	}
 
-
 	@EventHandler
 	public void a(EntitySpawnEvent e){
 		if(e.getEntity().getType()==EntityType.VILLAGER){
