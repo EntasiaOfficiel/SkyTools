@@ -1,6 +1,6 @@
 package fr.entasia.skytools.events.cenchants;
 
-import fr.entasia.apis.ItemUtils;
+import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
@@ -10,7 +10,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -24,7 +23,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -149,7 +147,7 @@ public class HoeEvents implements Listener {
 			else data = cb.maxdata;
 
 			Location loc = tp.p.getLocation().add(0 ,1, 0).add(v);
-			FallingBlock fb = tp.p.getWorld().spawnFallingBlock(loc, cb.material, data);
+			FallingBlock fb = tp.p.getWorld().spawnFallingBlock(loc, new MaterialData(cb.material, data));
 			fb.setDropItem(false);
 			fb.setHurtEntities(false);
 			fb.setInvulnerable(true);

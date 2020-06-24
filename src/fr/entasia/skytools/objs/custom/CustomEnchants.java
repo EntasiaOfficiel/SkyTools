@@ -1,6 +1,5 @@
 package fr.entasia.skytools.objs.custom;
 
-import fr.entasia.skytools.objs.Pair;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -43,6 +42,13 @@ public enum CustomEnchants {
 		this.maxlvl = maxlvl;
 	}
 
+	public static CustomEnchants get(String s){
+		for(CustomEnchants ce : values()){
+			if(("§6§r§7"+ce.name).equals(s))return ce;
+		}
+		return null;
+	}
+
 	public boolean hasEnchant(ItemStack item){
 		return getLevel(item)!=0;
 	}
@@ -57,7 +63,7 @@ public enum CustomEnchants {
 		for(String s : list){
 			split = s.split(" ");
 			n = String.join(" ", Arrays.copyOfRange(split, 0, split.length-1));
-			if(n.equals("§7"+name)){
+			if(("§7§6§r"+name).equals(n)){
 				lvl = RomanUtils.toInt(split[split.length-1]);
 				if(lvl!=0)return Math.min(maxlvl, lvl);
 			}
@@ -68,7 +74,7 @@ public enum CustomEnchants {
 	public void enchant(ItemStack item, int level){
 		List<String> lore = item.getLore();
 		if(lore==null)lore = new ArrayList<>();
-		lore.add("§7"+name+" "+ RomanUtils.toRoman(Math.min(maxlvl, level)));
+		lore.add("§6§r§7"+name+" "+ RomanUtils.toRoman(Math.min(maxlvl, level)));
 		item.setLore(lore);
 	}
 }

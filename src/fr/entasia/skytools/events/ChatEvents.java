@@ -8,8 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
-
 import static org.bukkit.event.EventPriority.HIGHEST;
 
 public class ChatEvents implements Listener {

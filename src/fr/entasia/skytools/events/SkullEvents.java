@@ -19,8 +19,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import java.util.Random;
-
 public class SkullEvents implements Listener {
 
 	public static enum SkullDirections {

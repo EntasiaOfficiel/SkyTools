@@ -277,6 +277,7 @@ public class AirHooksTask extends BukkitRunnable {
 	public Entity endLoot(){
 		Randomiser r = new Randomiser(80);
 
+
 		if(r.isInNext(20)){
 			return w.dropItem(centerLoc(), new ItemStack(Material.ENDER_PEARL));
 		}else if(r.isInNext(5)) {

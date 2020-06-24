@@ -14,18 +14,14 @@ public class ComplexTrade {
 
 	public ComplexTrade(Trade... trades){
 		this.trades = trades;
-		System.out.println("constructor");
 		for(Trade t : trades){
-			System.out.println("add "+t.percent);
 			r.max+=t.percent;
 		}
 	}
 
 	public Trade getTrade(){
 		r.regen();
-		System.out.println(r.number);
 		for(Trade t : trades){
-		System.out.println(t.percent);
 			if(r.isInNext(t.percent)){
 				return t;
 			}

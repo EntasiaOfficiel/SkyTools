@@ -14,4 +14,8 @@ public class RomanUtils {
 		}
 		return 0;
 	}
+
+	public static String max(String a, String b){
+		return toRoman(Math.max(toInt(a), toInt(b)));
+	}
 }
