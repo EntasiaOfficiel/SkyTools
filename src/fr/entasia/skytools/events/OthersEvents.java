@@ -1,7 +1,7 @@
 package fr.entasia.skytools.events;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
-import fr.entasia.apis.TextUtils;
+import fr.entasia.apis.utils.TextUtils;
 import fr.entasia.apis.nbt.EntityNBT;
 import fr.entasia.apis.nbt.NBTComponent;
 import fr.entasia.skytools.Main;
@@ -9,10 +9,7 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.Warp;
 import fr.entasia.skytools.objs.villagers.Villagers;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -66,7 +63,7 @@ public class OthersEvents implements Listener {
 					vec = 0;
 					life = 0;
 			}
-			EntityNBT.addNBT(fw, new NBTComponent("{LifeTime:\"+life+\"}"));
+			EntityNBT.addNBT(fw, new NBTComponent("{LifeTime:"+life+"}"));
 			e.getPlayer().setPassenger(fw);
 
 			new BukkitRunnable() {
@@ -184,4 +181,23 @@ public class OthersEvents implements Listener {
 		}
 	}
 
+
+	@EventHandler
+	public void clickEvent(PlayerInteractEvent e){
+		ItemStack i = e.getItem();
+		Player p = e.getPlayer();
+		if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
+			if(e.getClickedBlock().getType() == Material.NETHER_WARTS){
+				if(i != null && i.getType() == Material.BLAZE_POWDER){
+					byte b = e.getClickedBlock().getData();
+					if(b != 3){
+						e.getClickedBlock().setData((byte) (b+1));
+						if(p.getGameMode() != GameMode.CREATIVE){
+							p.getInventory().getItemInMainHand().subtract(1);
+						}
+					}
+				}
+			}
+		}
+	}
 }

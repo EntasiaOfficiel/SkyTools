@@ -1,6 +1,6 @@
 package fr.entasia.skytools.events.cenchants;
 
-import fr.entasia.apis.ItemUtils;
+import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
@@ -13,7 +13,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -71,6 +70,7 @@ public class SkyFisherEvents implements Listener {
 						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
 						ItemUtils.damage(item, 15);
 						if(item.getType()==Material.AIR) {
+							System.out.println("I'm air");
 							cancel();
 							return;
 						}
@@ -125,10 +125,4 @@ public class SkyFisherEvents implements Listener {
 			}
 		}
 	}
-
-
-	public void a(LingeringPotionSplashEvent e){
-
-	}
-
 }
