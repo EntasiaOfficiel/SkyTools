@@ -1,15 +1,14 @@
 package fr.entasia.skytools.objs.villagers;
 
+import fr.entasia.apis.other.ItemBuilder;
 import fr.entasia.apis.other.Randomiser;
-import fr.entasia.apis.utils.ItemBuilder;
-import net.minecraft.server.v1_12_R1.Village;
 import org.bukkit.Material;
-import static org.bukkit.entity.Villager.Profession;
-
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.MerchantRecipe;
 
 import java.util.ArrayList;
+
+import static org.bukkit.entity.Villager.Profession;
 
 public enum Villagers {
 

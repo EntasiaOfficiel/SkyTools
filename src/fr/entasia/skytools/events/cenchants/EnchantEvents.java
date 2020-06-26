@@ -1,35 +1,25 @@
 package fr.entasia.skytools.events.cenchants;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
-import com.google.common.collect.Lists;
 import fr.entasia.apis.other.Mutable;
 import fr.entasia.apis.other.Pair;
-import fr.entasia.apis.utils.ServerUtils;
 import fr.entasia.skycore.apis.InternalAPI;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.objs.custom.RomanUtils;
 import fr.entasia.skytools.tasks.LavaTask;
-import net.minecraft.server.v1_12_R1.ContainerAnvil;
-import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.craftbukkit.v1_12_R1.event.CraftEventFactory;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 

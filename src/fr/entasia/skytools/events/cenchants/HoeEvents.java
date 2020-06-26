@@ -2,8 +2,6 @@ package fr.entasia.skytools.events.cenchants;
 
 import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
-import fr.entasia.skytools.Utils;
-import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.*;
 import org.bukkit.block.Block;

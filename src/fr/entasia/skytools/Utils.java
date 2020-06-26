@@ -1,7 +1,6 @@
 package fr.entasia.skytools;
 
 import fr.entasia.apis.nbt.NBTComponent;
-import fr.entasia.skycore.objs.CodePasser;
 import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.tasks.AirHooksTask;
@@ -17,6 +16,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;

@@ -1,10 +1,10 @@
 package fr.entasia.skytools.events;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
-import fr.entasia.apis.utils.ItemUtils;
-import fr.entasia.apis.utils.TextUtils;
 import fr.entasia.apis.nbt.EntityNBT;
 import fr.entasia.apis.nbt.NBTComponent;
+import fr.entasia.apis.utils.ItemUtils;
+import fr.entasia.apis.utils.TextUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;

@@ -4,8 +4,6 @@ import fr.entasia.skytools.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Random;
-
 public class SWTask extends BukkitRunnable {
 
 	public void run(){

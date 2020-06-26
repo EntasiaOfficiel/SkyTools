@@ -66,14 +66,7 @@ public class SkyFisherEvents implements Listener {
 							}
 						}
 
-						ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
-						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
-						ItemUtils.damage(item, 15);
-						if(item.getType()==Material.AIR) {
-							System.out.println("I'm air");
-							cancel();
-							return;
-						}
+						if(!CustomEnchants.SKY_FISHER.hasEnchant(e.getPlayer().getInventory().getItemInMainHand()))return;
 
 						aht.w.spawnParticle(aht.fish, baseLoc, 3000, AirHooksTask.radius, AirHooksTask.radius, AirHooksTask.radius, 0.1);
 						aht.hook = e.getHook();
@@ -96,6 +89,12 @@ public class SkyFisherEvents implements Listener {
 				if(aht.hook==e.getHook()){
 					if(aht.isTrapped()){
 						Bukkit.broadcastMessage("Poisson attrapé !");
+						ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
+
+						if(ItemUtils.damage(item, 12)) {
+							e.getPlayer().getInventory().setItemInMainHand(null);
+						}
 						Entity ent;
 						switch(e.getHook().getWorld().getEnvironment()){
 							case NORMAL:{

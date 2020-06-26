@@ -6,7 +6,6 @@ import fr.entasia.apis.nbt.NBTComponent;
 import fr.entasia.apis.other.InstantFirework;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
-import fr.entasia.skytools.objs.ToolPlayer;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;

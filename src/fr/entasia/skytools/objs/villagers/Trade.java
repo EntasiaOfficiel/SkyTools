@@ -1,11 +1,7 @@
 package fr.entasia.skytools.objs.villagers;
 
-import fr.entasia.apis.utils.ItemBuilder;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
+import fr.entasia.apis.other.ItemBuilder;
 import org.bukkit.inventory.MerchantRecipe;
-
-import javax.annotation.Nullable;
 
 public class Trade extends MerchantRecipe {
 
