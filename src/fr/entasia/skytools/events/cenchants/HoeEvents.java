@@ -1,6 +1,10 @@
 package fr.entasia.skytools.events.cenchants;
 
 import fr.entasia.apis.utils.ItemUtils;
+import fr.entasia.apis.utils.ServerUtils;
+import fr.entasia.skycore.apis.BaseAPI;
+import fr.entasia.skycore.apis.BaseIsland;
+import fr.entasia.skycore.apis.CooManager;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.*;
@@ -125,6 +129,13 @@ public class HoeEvents implements Listener {
 			if(list.size()==0||System.currentTimeMillis()-list.get(0).asLong()>400){
 				p.setMetadata("cdCannon", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
 			}else return;
+
+			BaseIsland is = BaseAPI.getIsland(CooManager.getIslandID(p.getLocation()));
+			if(is.getMember(p.getUniqueId())==null){
+				p.sendMessage("§cTu n'es pas membre de cette île !");
+				return;
+			}
+
 			ItemStack item = null;
 			CanoonBlock cb = null;
 
@@ -178,57 +189,21 @@ public class HoeEvents implements Listener {
 						fb.remove();
 					} else if (finalCb.material == Material.COCOA) {
 						if (fb.isValid()) {
-							Block lb;
-							boolean go = false;
-							Location loc = fb.getLocation();
-							for (Vector v : vectors) {
-								lb = loc.clone().add(v).getBlock();
-								if (lb.getType() == Material.LOG) {
-									if (TreeSpecies.getByData(lb.getData()) == TreeSpecies.JUNGLE) {
-										go = true;
-										break;
-									}
-								}
-							}
-							if (go) {
-								cancel();
-								fb.remove();
-								new BukkitRunnable() {
-									@Override
-									public void run() {
-										short amount = (short) finalItem.getAmount();
-										Block lb, lb2;
-										for (Vector v : vectors) {
-											lb = loc.clone().add(v).getBlock();
-											if (lb.getType() == Material.AIR) {
-												for (Directions cd : Directions.values()) {
-													lb2 = lb.getRelative(cd.face);
-													if (lb2.getType() == Material.LOG) {
-														if (TreeSpecies.getByData(lb2.getData()) == TreeSpecies.JUNGLE) {
-															lb.setType(Material.COCOA);
-															lb.setData(cd.data);
-															amount -= 1;
-															if (amount == 0) break;
-															break;
-														}
-													}
-												}
-											}
-											if (amount == 0) break;
-										}
-										if (amount != finalItem.getAmount()) {
-											finalItem.setAmount(amount);
-											ItemUtils.damage(e.getItem(), 1);
-										}
-									}
-								}.runTask(Main.main);
-							}
+//							if(cocoaFBBreak(fb, e.getItem(), finalItem))cancel();
+						}else{
+							cancel();
+							Block b = fb.getLocation().getBlock();
+							if(b.getType()==Material.COCOA)b.setType(Material.AIR);
+							else ServerUtils.permMsg("log.bug", "§cPossible duplication trouvée pour le canon à graine (cacao). Infos :",
+							b.getLocation().toString(),
+							is.toString(),
+							p.getName());
 						}
 
 					} else {
 						if (!fb.isValid()) {
 							cancel();
-							fallingBlockBreak(fb, e.getItem(), finalItem, finalCb);
+							fBBreak(fb, e.getItem(), finalItem, finalCb);
 						}
 					}
 				}
@@ -237,7 +212,7 @@ public class HoeEvents implements Listener {
 	}
 
 	@EventHandler
-	public void EntityChangeBlockEvent (EntityChangeBlockEvent e) {
+	public void a(EntityChangeBlockEvent e) {
 		if (e.getEntityType() == EntityType.FALLING_BLOCK) {
 			FallingBlock fb = (FallingBlock) e.getEntity();
 			if(seeds.containsKey(fb.getMaterial()))e.setCancelled(true);
@@ -245,12 +220,59 @@ public class HoeEvents implements Listener {
 		}
 	}
 
-	public static void fallingBlockBreak(FallingBlock fb, ItemStack hoe, ItemStack seeds, CanoonBlock exCb){
+	public static boolean cocoaFBBreak(FallingBlock fb, ItemStack hoeItem, ItemStack seedsItem){
+		Block lb;
+		boolean go = false;
+		Location loc = fb.getLocation();
+		for (Vector v : vectors) {
+			lb = loc.clone().add(v).getBlock();
+			if (lb.getType() == Material.LOG) {
+				if (TreeSpecies.getByData(lb.getData()) == TreeSpecies.JUNGLE) {
+					go = true;
+					break;
+				}
+			}
+		}
+		if (!go) return false;
+		fb.remove();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				short amount = (short) seedsItem.getAmount();
+				Block lb, lb2;
+				for (Vector v : vectors) {
+					lb = loc.clone().add(v).getBlock();
+					if (lb.getType() == Material.AIR) {
+						for (Directions cd : Directions.values()) {
+							lb2 = lb.getRelative(cd.face);
+							if (lb2.getType() == Material.LOG) {
+								if (TreeSpecies.getByData(lb2.getData()) == TreeSpecies.JUNGLE) {
+									lb.setType(Material.COCOA);
+									lb.setData(cd.data);
+									amount -= 1;
+									if (amount == 0) break;
+									break;
+								}
+							}
+						}
+					}
+					if (amount == 0) break;
+				}
+				if (amount != seedsItem.getAmount()) {
+					seedsItem.setAmount(amount);
+					ItemUtils.damage(hoeItem, 1);
+				}
+			}
+		}.runTask(Main.main);
+		return true;
+	}
+
+	public static void fBBreak(FallingBlock fb, ItemStack hoeItem, ItemStack seedsItem, CanoonBlock exCb){
 
 
 		CanoonBlock cb;
-		CanoonBlock tempCb = getSeedBlock(seeds.getType());
-		if(tempCb==null)cb = getSeed2Block(seeds.getType());
+		CanoonBlock tempCb = getSeedBlock(seedsItem.getType());
+		if(tempCb==null)cb = getSeed2Block(seedsItem.getType());
 		else cb = tempCb;
 		if (exCb.equals(cb)) {
 			Location loc = fb.getLocation();
@@ -258,7 +280,7 @@ public class HoeEvents implements Listener {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					int amount = seeds.getAmount();
+					int amount = seedsItem.getAmount();
 					Block baseBlock = loc.getBlock();
 					Block lb;
 					if(cb.hasRadius){
@@ -279,15 +301,15 @@ public class HoeEvents implements Listener {
 							if (baseBlock.getType() == Material.AIR) {
 								baseBlock.setType(cb.material);
 								if(cb.material==Material.SAPLING){
-									baseBlock.setData((byte) seeds.getDurability());
+									baseBlock.setData((byte) seedsItem.getDurability());
 								}
 								amount -= 1;
 							}
 						}
 					}
-					if(amount!=seeds.getAmount()){
-						seeds.setAmount(amount);
-						ItemUtils.damage(hoe, 1);
+					if(amount!=seedsItem.getAmount()){
+						seedsItem.setAmount(amount);
+						ItemUtils.damage(hoeItem, 1);
 					}
 				}
 			}.runTask(Main.main);

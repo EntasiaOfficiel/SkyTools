@@ -1,6 +1,9 @@
 package fr.entasia.skytools.commands.custom;
 
+import fr.entasia.apis.other.ChatComponent;
 import fr.entasia.skytools.objs.custom.CustomArrows;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,8 +19,12 @@ public class CustomArrowCmd implements CommandExecutor {
 
 			if (args.length==0){
 				p.sendMessage("§cEnchantements disponibles : ");
+				ChatComponent cc;
 				for(CustomArrows ca : CustomArrows.values()){
-					p.sendMessage("§c - "+ca.name()+" | ("+ca.name+")");
+					cc = new ChatComponent("§c - "+ca.name()+" | ("+ca.name+")");
+					cc.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/customenchant "+ca.name()+" "));
+					cc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponent.create("§cClique pour appliquer !")));
+					p.sendMessage(cc.create());
 				}
 			}else{
 				ItemStack item = p.getInventory().getItemInMainHand();
