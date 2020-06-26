@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,11 +20,14 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HoeEvents implements Listener {
@@ -117,13 +121,16 @@ public class HoeEvents implements Listener {
 			int lvl = CustomEnchants.SEEDS_CANOON.getLevel(e.getItem());
 			if(lvl==0)return;
 
-			ToolPlayer tp = Utils.getPlayer(e.getPlayer());
-			if(System.currentTimeMillis()-tp.cdCanoon<400)return;
-			tp.cdCanoon = System.currentTimeMillis();
+			Player p = e.getPlayer();
+
+			List<MetadataValue> list = p.getMetadata("cdCannon");
+			if(list.size()==0||System.currentTimeMillis()-list.get(0).asLong()>400){
+				p.setMetadata("cdCannon", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
+			}else return;
 			ItemStack item = null;
 			CanoonBlock cb = null;
 
-			for(ItemStack litem : tp.p.getInventory().getStorageContents()){
+			for(ItemStack litem : p.getInventory().getStorageContents()){
 				if(litem==null||litem.getType()==Material.AIR)continue;
 				cb = getSeedBlock(litem.getType());
 				if(cb==null&&lvl==2){
@@ -139,15 +146,15 @@ public class HoeEvents implements Listener {
 			}
 
 			if(item==null)return;
-			Vector v = tp.p.getLocation().getDirection();
+			Vector v = p.getLocation().getDirection();
 
 			byte data;
 			if(cb.material==Material.SAPLING)data = (byte) item.getDurability();
 			else if(cb.material==Material.COCOA)data = (byte) (Main.random.nextInt(4)+8);
 			else data = cb.maxdata;
 
-			Location loc = tp.p.getLocation().add(0 ,1, 0).add(v);
-			FallingBlock fb = tp.p.getWorld().spawnFallingBlock(loc, new MaterialData(cb.material, data));
+			Location loc = p.getLocation().add(0 ,1, 0).add(v);
+			FallingBlock fb = p.getWorld().spawnFallingBlock(loc, new MaterialData(cb.material, data));
 			fb.setDropItem(false);
 			fb.setHurtEntities(false);
 			fb.setInvulnerable(true);
@@ -334,6 +341,5 @@ public class HoeEvents implements Listener {
 				}.runTaskLater(Main.main, i);
 			}else if(b.getType()!=Material.AIR)break;
 		}
-
 	}
 }

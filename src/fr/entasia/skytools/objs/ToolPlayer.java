@@ -11,7 +11,7 @@ public class ToolPlayer {
 	public MutableBoolean speed = new MutableBoolean(false);
 	public MutableBoolean jump = new MutableBoolean(false);
 
-	public long cdCanoon, cdFirework;
+	public long cdFirework;
 
 	public ToolPlayer(Player p){
 		this.p = p;

@@ -1,6 +1,7 @@
 package fr.entasia.skytools.events;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
+import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.apis.utils.TextUtils;
 import fr.entasia.apis.nbt.EntityNBT;
 import fr.entasia.apis.nbt.NBTComponent;
@@ -18,8 +19,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -200,4 +203,20 @@ public class OthersEvents implements Listener {
 			}
 		}
 	}
+
+
+	@EventHandler
+	public void a(PlayerInteractEntityEvent e) {
+		if(e.getHand()!= EquipmentSlot.HAND)return;
+		if(e.getRightClicked().getType()==EntityType.ZOMBIE_VILLAGER){
+			ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
+			if(!ItemUtils.hasName(item, "§fÉtoile guérisseuse")) {
+				item = e.getPlayer().getInventory().getItemInOffHand();
+				if (!ItemUtils.hasName(item, "§fÉtoile guérisseuse")) return;
+			}
+			item.subtract();
+			EntityNBT.addNBT(e.getRightClicked(), new NBTComponent("{ConversionTime:60}"));
+		}
+	}
+
 }

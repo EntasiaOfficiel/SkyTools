@@ -4,6 +4,7 @@ import fr.entasia.apis.nbt.EntityNBT;
 import fr.entasia.apis.nbt.ItemNBT;
 import fr.entasia.apis.nbt.NBTComponent;
 import fr.entasia.apis.other.InstantFirework;
+import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
 import org.bukkit.Material;
@@ -21,6 +22,10 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+
+import java.util.List;
 
 
 public class FireworksEvents implements Listener {
@@ -68,13 +73,13 @@ public class FireworksEvents implements Listener {
 		if (pr.getType() == EntityType.SNOWBALL&&pr.getShooter() instanceof Player) {
 			ItemStack item = ((Player) pr.getShooter()).getInventory().getItemInMainHand();
 			if(item.getType()==Material.SNOW_BALL){
-				ToolPlayer tp = Utils.getPlayer((Player)pr.getShooter());
-				if(System.currentTimeMillis()-tp.cdFirework>500){
-					tp.cdFirework = System.currentTimeMillis();
-					Utils.fireworks.put(pr, ItemNBT.getNBT(item).getComponent("entasia"));
-				}else{
-					e.setCancelled(true);
-				}
+				Player p = (Player)pr.getShooter();
+
+				List<MetadataValue> list = p.getMetadata("cdFirework");
+				if(list.size()==0||System.currentTimeMillis()-list.get(0).asLong()>500){
+					p.setMetadata("cdFirework", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
+					Utils.fireworks.put(pr, ItemNBT.getNBTSafe(item).getComponent("entasia"));
+				}else e.setCancelled(true);
 			}
 		}
 	}
