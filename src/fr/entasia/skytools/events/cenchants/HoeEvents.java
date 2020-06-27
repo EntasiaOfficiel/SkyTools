@@ -88,7 +88,6 @@ public class HoeEvents implements Listener {
 		seeds.put(Material.BEETROOT_SEEDS, new CanoonBlock(Material.BEETROOT_BLOCK, 3, true, Material.SOIL));
 
 		seeds2.put(Material.CACTUS, new CanoonBlock(Material.CACTUS, 0,false, Material.SAND));
-		seeds2.put(Material.INK_SACK, new CanoonBlock(Material.COCOA, 2, true, Material.LOG)); // a voir pour hardcoder à 100%
 		seeds2.put(Material.NETHER_STALK, new CanoonBlock(Material.NETHER_WARTS, 3, true, Material.SOUL_SAND));
 		seeds2.put(Material.CHORUS_FLOWER, new CanoonBlock(Material.CHORUS_FLOWER, 0,false, Material.ENDER_STONE));
 		seeds2.put(Material.SAPLING, new CanoonBlock(Material.SAPLING, 0, false, Material.GRASS, Material.DIRT));
@@ -144,9 +143,6 @@ public class HoeEvents implements Listener {
 				cb = getSeedBlock(litem.getType());
 				if(cb==null&&lvl==2){
 					cb = getSeed2Block(litem.getType());
-					if(cb!=null&&cb.material==Material.COCOA&&litem.getDurability()!=3){
-						cb = null;
-					}
 				}
 				if(cb!=null){
 					item = litem;
@@ -159,7 +155,6 @@ public class HoeEvents implements Listener {
 
 			byte data;
 			if(cb.material==Material.SAPLING)data = (byte) item.getDurability();
-			else if(cb.material==Material.COCOA)data = (byte) (Main.random.nextInt(4)+8);
 			else data = cb.maxdata;
 
 			Location loc = p.getLocation().add(0 ,1, 0).add(v);
@@ -187,19 +182,6 @@ public class HoeEvents implements Listener {
 					if (fb.getTicksLived() > 20 * 10) {
 						cancel();
 						fb.remove();
-					} else if (finalCb.material == Material.COCOA) {
-						if (fb.isValid()) {
-//							if(cocoaFBBreak(fb, e.getItem(), finalItem))cancel();
-						}else{
-							cancel();
-							Block b = fb.getLocation().getBlock();
-							if(b.getType()==Material.COCOA)b.setType(Material.AIR);
-							else ServerUtils.permMsg("log.bug", "§cPossible duplication trouvée pour le canon à graine (cacao). Infos :",
-							b.getLocation().toString(),
-							is.toString(),
-							p.getName());
-						}
-
 					} else {
 						if (!fb.isValid()) {
 							cancel();
@@ -220,52 +202,52 @@ public class HoeEvents implements Listener {
 		}
 	}
 
-	public static boolean cocoaFBBreak(FallingBlock fb, ItemStack hoeItem, ItemStack seedsItem){
-		Block lb;
-		boolean go = false;
-		Location loc = fb.getLocation();
-		for (Vector v : vectors) {
-			lb = loc.clone().add(v).getBlock();
-			if (lb.getType() == Material.LOG) {
-				if (TreeSpecies.getByData(lb.getData()) == TreeSpecies.JUNGLE) {
-					go = true;
-					break;
-				}
-			}
-		}
-		if (!go) return false;
-		fb.remove();
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				short amount = (short) seedsItem.getAmount();
-				Block lb, lb2;
-				for (Vector v : vectors) {
-					lb = loc.clone().add(v).getBlock();
-					if (lb.getType() == Material.AIR) {
-						for (Directions cd : Directions.values()) {
-							lb2 = lb.getRelative(cd.face);
-							if (lb2.getType() == Material.LOG) {
-								if (TreeSpecies.getByData(lb2.getData()) == TreeSpecies.JUNGLE) {
-									lb.setType(Material.COCOA);
-									lb.setData(cd.data);
-									amount -= 1;
-									if (amount == 0) break;
-									break;
-								}
-							}
-						}
-					}
-					if (amount == 0) break;
-				}
-				if (amount != seedsItem.getAmount()) {
-					seedsItem.setAmount(amount);
-					ItemUtils.damage(hoeItem, 1);
-				}
-			}
-		}.runTask(Main.main);
-		return true;
-	}
+//	public static boolean cocoaFBBreak(FallingBlock fb, ItemStack hoeItem, ItemStack seedsItem){
+//		Block lb;
+//		boolean go = false;
+//		Location loc = fb.getLocation();
+//		for (Vector v : vectors) {
+//			lb = loc.clone().add(v).getBlock();
+//			if (lb.getType() == Material.LOG) {
+//				if (TreeSpecies.getByData(lb.getData()) == TreeSpecies.JUNGLE) {
+//					go = true;
+//					break;
+//				}
+//			}
+//		}
+//		if (!go) return false;
+//		fb.remove();
+//		new BukkitRunnable() {
+//			@Override
+//			public void run() {
+//				short amount = (short) seedsItem.getAmount();
+//				Block lb, lb2;
+//				for (Vector v : vectors) {
+//					lb = loc.clone().add(v).getBlock();
+//					if (lb.getType() == Material.AIR) {
+//						for (Directions cd : Directions.values()) {
+//							lb2 = lb.getRelative(cd.face);
+//							if (lb2.getType() == Material.LOG) {
+//								if (TreeSpecies.getByData(lb2.getData()) == TreeSpecies.JUNGLE) {
+//									lb.setType(Material.COCOA);
+//									lb.setData(cd.data);
+//									amount -= 1;
+//									if (amount == 0) break;
+//									break;
+//								}
+//							}
+//						}
+//					}
+//					if (amount == 0) break;
+//				}
+//				if (amount != seedsItem.getAmount()) {
+//					seedsItem.setAmount(amount);
+//					ItemUtils.damage(hoeItem, 1);
+//				}
+//			}
+//		}.runTask(Main.main);
+//		return true;
+//	}
 
 	public static void fBBreak(FallingBlock fb, ItemStack hoeItem, ItemStack seedsItem, CanoonBlock exCb){
 
