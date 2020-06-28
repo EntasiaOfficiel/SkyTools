@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -216,6 +217,10 @@ public class OthersEvents implements Listener {
 			}
 			item.subtract();
 			EntityNBT.addNBT(e.getRightClicked(), new NBTComponent("{ConversionTime:60}"));
+		}else if(e.getRightClicked().getType()==EntityType.VILLAGER){
+			if(Main.random.nextInt(50)==0){
+				e.getPlayer().sendMessage("§bMerci à §3wishdrow§b pour les trades custom des PNJ ! :)");
+			}
 		}
 	}
 
