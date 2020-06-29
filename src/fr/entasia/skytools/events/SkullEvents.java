@@ -1,7 +1,7 @@
 package fr.entasia.skytools.events;
 
 import com.mojang.authlib.GameProfile;
-import fr.entasia.apis.ItemUtils;
+import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.objs.custom.CustomSkulls;
 import org.bukkit.GameMode;

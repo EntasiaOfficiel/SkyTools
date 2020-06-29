@@ -160,7 +160,6 @@ public class AirHooksTask extends BukkitRunnable {
 	}
 
 	public void stop() {
-		Bukkit.broadcastMessage("arret");
 		hook.remove();
 		armorStand.remove();
 		Utils.airHookTasks.remove(this);

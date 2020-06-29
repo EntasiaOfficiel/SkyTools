@@ -5,7 +5,6 @@ import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.tasks.AirHooksTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -88,7 +87,6 @@ public class SkyFisherEvents implements Listener {
 			for(AirHooksTask aht : Utils.airHookTasks){
 				if(aht.hook==e.getHook()){
 					if(aht.isTrapped()){
-						Bukkit.broadcastMessage("Poisson attrapé !");
 						ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
 						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
 

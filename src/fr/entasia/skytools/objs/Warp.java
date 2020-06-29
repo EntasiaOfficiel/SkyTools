@@ -1,6 +1,6 @@
 package fr.entasia.skytools.objs;
 
-import fr.entasia.apis.TextUtils;
+import fr.entasia.apis.utils.TextUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

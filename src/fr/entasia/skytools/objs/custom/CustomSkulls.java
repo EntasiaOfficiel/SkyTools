@@ -1,7 +1,7 @@
 package fr.entasia.skytools.objs.custom;
 
 import com.mojang.authlib.GameProfile;
-import fr.entasia.apis.ItemUtils;
+import fr.entasia.apis.utils.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

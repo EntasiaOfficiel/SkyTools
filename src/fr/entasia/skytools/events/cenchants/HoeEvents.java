@@ -1,7 +1,6 @@
 package fr.entasia.skytools.events.cenchants;
 
 import fr.entasia.apis.utils.ItemUtils;
-import fr.entasia.apis.utils.ServerUtils;
 import fr.entasia.skycore.apis.BaseAPI;
 import fr.entasia.skycore.apis.BaseIsland;
 import fr.entasia.skycore.apis.CooManager;
