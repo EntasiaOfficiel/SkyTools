@@ -86,7 +86,7 @@ public class SkullEvents implements Listener {
 								b = loc.getBlock();
 								if (b.getType() == Material.AIR) {
 									if (loc.clone().add(0, -1, 0).getBlock().getType() == Material.GRASS) {
-										int ra = Main.random.nextInt(10);
+										int ra = Main.r.nextInt(10);
 										if (ra == 0) {
 											b.setType(Material.SKULL);
 											b.setData((byte) 1);
@@ -125,7 +125,7 @@ public class SkullEvents implements Listener {
 
 							b = loc.getBlock();
 							if(isLeaves(b.getType())){
-								int ra = Main.random.nextInt(10);
+								int ra = Main.r.nextInt(10);
 								if (ra == 0) {
 									Block lb;
 									for(SkullDirections d : SkullDirections.values()){

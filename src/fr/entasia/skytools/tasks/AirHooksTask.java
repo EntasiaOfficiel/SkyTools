@@ -88,11 +88,11 @@ public class AirHooksTask extends BukkitRunnable {
 
 	public void init(){
 
-		counter = Main.random.nextInt(15*10)+4*10; // 10 pas 20 car periode de 2 ticks
+		counter = Main.r.nextInt(15*10)+4*10; // 10 pas 20 car periode de 2 ticks
 
 		corner = armorStand.getLocation().subtract(baserVector);
 
-		points = new Vector[Main.random.nextInt(2)+4];
+		points = new Vector[Main.r.nextInt(2)+4];
 		for(int i=0;i<points.length-1;i++){
 			points[i] = randomVector();
 		}

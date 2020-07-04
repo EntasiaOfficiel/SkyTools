@@ -44,7 +44,7 @@ public class LavaTask extends BukkitRunnable { // 10 ticks actuellement
 
 					}
 					if(list.size()!=0){
-						LavaItem litem = list.get(Main.random.nextInt(list.size()));
+						LavaItem litem = list.get(Main.r.nextInt(list.size()));
 						short n = (short) (litem.item.getDurability()-litem.i);
 						if(n<0)n=0;
 						litem.item.setDurability(n);

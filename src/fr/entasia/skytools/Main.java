@@ -41,14 +41,13 @@ public class Main extends JavaPlugin {
 
 	public static Main main;
 
-	public static Random random = new Random();
+	public static Random r = new Random();
 
 	public static File warpsfile;
 	public static FileConfiguration warpsconfig;
 
 	public static String guessWord = null;
 	public static boolean enableDev;
-
 
 	@Override
 	public void onEnable(){

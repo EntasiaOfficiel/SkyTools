@@ -12,10 +12,10 @@ public class SWTask extends BukkitRunnable {
 			if((n=Bukkit.getOnlinePlayers().size())<2)return;
 			StringBuilder a = new StringBuilder();
 			for(int i=0;i<7+n/3;i++){
-				if(Main.random.nextInt(4)==0){
-					a.append((char) (Main.random.nextInt(26) + 'A'));
+				if(Main.r.nextInt(4)==0){
+					a.append((char) (Main.r.nextInt(26) + 'A'));
 				}else{
-					a.append((char) (Main.random.nextInt(26) + 'a'));
+					a.append((char) (Main.r.nextInt(26) + 'a'));
 				}
 				if(i==15)break;
 			}

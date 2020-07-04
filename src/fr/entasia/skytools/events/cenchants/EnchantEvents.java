@@ -41,7 +41,7 @@ public class EnchantEvents implements Listener {
 			ItemStack item = p.getInventory().getItemInMainHand();
 			int l = CustomEnchants.VAMPIRE.getLevel(item);
 			if(l!=0){
-				int r = Main.random.nextInt(100);
+				int r = Main.r.nextInt(100);
 				if(r<PERCENT*l){
 					double heal = p.getHealth();
 					heal+=e.getDamage()/2f;

@@ -21,7 +21,7 @@ public class FWArrowTask extends BukkitRunnable {
 
 	public void run(){
 		if(ent.isValid()&&!ent.isOnGround()&&ent.getTicksLived()<500){
-			InstantFirework.explode(ent.getLocation(), Utils.metas[Main.random.nextInt(Utils.metas.length)]);
+			InstantFirework.explode(ent.getLocation(), Utils.metas[Main.r.nextInt(Utils.metas.length)]);
 		}else cancel();
 	}
 }
