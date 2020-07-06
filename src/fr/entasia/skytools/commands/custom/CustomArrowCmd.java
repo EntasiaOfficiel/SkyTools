@@ -22,7 +22,7 @@ public class CustomArrowCmd implements CommandExecutor {
 				ChatComponent cc;
 				for(CustomArrows ca : CustomArrows.values()){
 					cc = new ChatComponent("§c - "+ca.name()+" | ("+ca.name+")");
-					cc.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/customenchant "+ca.name()+" "));
+					cc.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/customarrow "+ca.name()+" "));
 					cc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponent.create("§cClique pour appliquer !")));
 					p.sendMessage(cc.create());
 				}

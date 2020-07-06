@@ -7,11 +7,7 @@ import org.bukkit.inventory.MerchantRecipe;
 public class Trade extends MerchantRecipe {
 
 	public Trade(ItemBuilder item){
-		this(item.build());
-	}
-
-	public Trade(ItemStack item) {
-		super(item, 99999);
+		super(item.build(), 10);
 	}
 
 	public Trade maxUses(int maxUses){
@@ -24,8 +20,8 @@ public class Trade extends MerchantRecipe {
 		return this;
 	}
 
-	public Trade need(ItemStack item){
-		addIngredient(item);
-		return this;
-	}
+//	public Trade need(ItemStack item){
+//		addIngredient(item);
+//		return this;
+//	}
 }

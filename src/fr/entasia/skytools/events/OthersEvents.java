@@ -64,21 +64,15 @@ public class OthersEvents implements Listener {
 			final float vec;
 			int life;
 			switch(meta.getPower()){
-				case 1:
-					life = 5;
-					vec = 1.5f;
-					break;
+				case 3:
 				case 2:
 					life = 10;
 					vec = 2.2f;
 					break;
-				case 3:
-					life = 15;
-					vec = 2.7f;
+				default: // et case 1 ducoup
+					life = 5;
+					vec = 1.5f;
 					break;
-				default:
-					vec = 0;
-					life = 0;
 			}
 			EntityNBT.addNBT(fw, new NBTComponent(String.format("{LifeTime:%s}", life)));
 			e.getPlayer().setPassenger(fw);
