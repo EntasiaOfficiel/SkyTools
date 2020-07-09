@@ -76,4 +76,8 @@ public enum CustomEnchants {
 		lore.add("§6§r§7"+name+" "+ RomanUtils.toRoman(Math.min(maxlvl, level)));
 		item.setLore(lore);
 	}
+
+	public String a(int lvl){
+		return "§6§r§7"+name+" "+RomanUtils.toRoman(lvl);
+	}
 }

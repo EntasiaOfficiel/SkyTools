@@ -39,7 +39,7 @@ public enum CustomArrows {
 	}
 
 	public String a(){
-		return "§7"+name;
+		return "§6§r§7"+name;
 	}
 
 }

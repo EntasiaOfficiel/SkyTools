@@ -10,6 +10,7 @@ import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.apis.utils.ServerUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.objs.custom.CustomArrows;
+import fr.entasia.skytools.objs.custom.CustomEnchants;
 import net.minecraft.server.v1_12_R1.IMerchant;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
@@ -30,7 +31,7 @@ import static org.bukkit.entity.Villager.Profession;
 
 public enum Villagers {
 
-	PRETRE(0, Profession.PRIEST, 25, 1, 2,
+	PRETRE(0, Profession.PRIEST, 1, 1, 2,
 		new TradeLevel(
 			new Trade(new ItemBuilder(Material.BREAD).name("§7Pain divin")).need(new ItemBuilder(Material.EMERALD)),
 			new Trade(new ItemBuilder(Material.EXP_BOTTLE, 5)).need(new ItemBuilder(Material.GOLD_INGOT, 2))
@@ -53,7 +54,7 @@ public enum Villagers {
 			new Trade(new ItemBuilder(Material.EXP_BOTTLE, 64)).need(new ItemBuilder(Material.GLASS_BOTTLE, 64)).need(new ItemBuilder(Material.LAPIS_ORE, 8))
 		)
 	),
-	FORGERON_OUTILS(1, Profession.BLACKSMITH, 25, 1, 2,
+	FORGERON_OUTILS(1, Profession.BLACKSMITH, 1, 1, 2,
 		new TradeLevel(
 			new Trade(new ItemBuilder(Material.IRON_PICKAXE)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT)),
 			new Trade(new ItemBuilder(Material.DIAMOND_PICKAXE)).need(new ItemBuilder(Material.EMERALD, 2)),
@@ -91,7 +92,7 @@ public enum Villagers {
 
 
 
-	GOOGLE_MAP(2, Profession.LIBRARIAN, 25, 1, 2,
+	GOOGLE_MAP(2, Profession.LIBRARIAN, 1, 1, 2,
 		new TradeLevel(
 				new Trade(new ItemBuilder(Material.PAPER, 24)).need(new ItemBuilder(Material.GOLD_INGOT)),
 				new Trade(new ItemBuilder(Material.PAPER, 24)).need(new ItemBuilder(Material.IRON_INGOT, 2))
@@ -114,7 +115,7 @@ public enum Villagers {
 				new Trade(new ItemBuilder(Material.EMERALD, 4)).need(new ItemBuilder(Material.EMPTY_MAP, 64))
 		)
 	),
-	FISHEMAN(3, Profession.FARMER, 25, 1, 2,
+	FISHEMAN(3, Profession.FARMER, 1, 1, 2,
 		new TradeLevel(
 				new Trade(new ItemBuilder(Material.RAW_FISH).damage(3)).need(new ItemBuilder(Material.EMERALD)),
 				new Trade(new ItemBuilder(Material.RAW_FISH).damage(2)).need(new ItemBuilder(Material.EMERALD, 2)),
@@ -144,7 +145,7 @@ public enum Villagers {
 				new Trade(new ItemBuilder(Material.EMERALD, 5)).need(new ItemBuilder(Material.RAW_FISH, 64).damage(3)).need(new ItemBuilder(Material.RAW_FISH, 64).damage(2))
 		)
 	),
-	CHASSEUR(4, Profession.BUTCHER, 0, 1, 2,
+	CHASSEUR(4, Profession.BUTCHER, 1, 1, 2,
 		new TradeLevel(
 				new Trade(new ItemBuilder(Material.LEATHER, 16)).need(new ItemBuilder(Material.EMERALD)),
 				new Trade(new ItemBuilder(Material.LEATHER, 16)).need(new ItemBuilder(Material.IRON_INGOT, 6)),
@@ -177,7 +178,7 @@ public enum Villagers {
 				new Trade(new ItemBuilder(Material.RABBIT_FOOT, 32)).need(new ItemBuilder(Material.EMERALD, 16))
 		)
 	),
-	CHARCUTIER(5, Profession.BUTCHER, 0, 1, 2,
+	CHARCUTIER(5, Profession.BUTCHER, 1, 1, 2,
 		new TradeLevel(
 				new Trade(new ItemBuilder(Material.COOKED_CHICKEN, 4)).need(new ItemBuilder(Material.RAW_CHICKEN, 8)),
 				new Trade(new ItemBuilder(Material.COOKED_RABBIT, 4)).need(new ItemBuilder(Material.RABBIT, 8)),
@@ -206,12 +207,12 @@ public enum Villagers {
 				new Trade(new ItemBuilder(Material.BAKED_POTATO).name("§6Frites McDo")).need(new ItemBuilder(Material.IRON_INGOT, 6))
 		)
 	),
-	FLECHIER(6, Profession.FARMER, 0, 1, 2,
+	FLECHIER(6, Profession.FARMER, 1, 1, 2,
 		new TradeLevel(
 				new Trade(new ItemBuilder(Material.BOW)).need(new ItemBuilder(Material.IRON_INGOT, 2)),
 				new Trade(new ItemBuilder(Material.ARROW, 32)).need(new ItemBuilder(Material.IRON_INGOT, 2))
 		),
-		new TradeLevel(
+			new TradeLevel(
 				new Trade(new ItemBuilder(Material.IRON_INGOT)).need(new ItemBuilder(Material.ARROW, 64)),
 				new Trade(new ItemBuilder(Material.BOW)).need(new ItemBuilder(Material.ARROW, 48))
 		),
@@ -243,14 +244,203 @@ public enum Villagers {
 		)
 	),
 
+	LIBRAIRE(6, Profession.LIBRARIAN, 1, 1, 2, // TODO A REFAIRE
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.PAPER, 24)).need(new ItemBuilder(Material.GOLD_INGOT, 1)),
+				new Trade(new ItemBuilder(Material.PAPER, 24)).need(new ItemBuilder(Material.IRON_INGOT, 2))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.BOOK, 16)).need(new ItemBuilder(Material.GOLD_INGOT, 2)),
+				new Trade(new ItemBuilder(Material.BOOK, 16)).need(new ItemBuilder(Material.IRON_INGOT, 4)),
+				new Trade(new ItemBuilder(Material.PAPER, 64)).need(new ItemBuilder(Material.GOLD_INGOT, 2)),
+				new Trade(new ItemBuilder(Material.PAPER, 64)).need(new ItemBuilder(Material.IRON_INGOT, 4))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.BOOK, 32)).need(new ItemBuilder(Material.GOLD_INGOT, 3)),
+				new Trade(new ItemBuilder(Material.BOOK, 32)).need(new ItemBuilder(Material.IRON_INGOT, 6))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.GOLD_INGOT, 2)).need(new ItemBuilder(Material.BOOK, 32)),
+				new Trade(new ItemBuilder(Material.IRON_INGOT)).need(new ItemBuilder(Material.PAPER, 64)),
+				new Trade(new ItemBuilder(Material.EXP_BOTTLE, 64)).need(new ItemBuilder(Material.EMERALD, 4))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.GOLD_INGOT, 2)).need(new ItemBuilder(Material.BOOK, 32)),
+				new Trade(new ItemBuilder(Material.IRON_INGOT)).need(new ItemBuilder(Material.PAPER, 64)),
+				new Trade(new ItemBuilder(Material.EXP_BOTTLE, 64)).need(new ItemBuilder(Material.EMERALD, 4))
+		)
+	),
+
+	ARMURIER(6, Profession.BLACKSMITH, 1, 1, 2,
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.IRON_HELMET)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT, 2)),
+				new Trade(new ItemBuilder(Material.IRON_CHESTPLATE)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT, 4)),
+				new Trade(new ItemBuilder(Material.IRON_LEGGINGS)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT, 3)),
+				new Trade(new ItemBuilder(Material.IRON_BOOTS)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT, 1)),
+
+				new Trade(new ItemBuilder(Material.DIAMOND_HELMET)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.DIAMOND_CHESTPLATE)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.DIAMOND_LEGGINGS)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.DIAMOND_BOOTS)).need(new ItemBuilder(Material.EMERALD, 2))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.IRON_HELMET)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT, 2)),
+				new Trade(new ItemBuilder(Material.IRON_CHESTPLATE)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT, 4)),
+				new Trade(new ItemBuilder(Material.IRON_LEGGINGS)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT, 3)),
+				new Trade(new ItemBuilder(Material.IRON_BOOTS)).need(new ItemBuilder(Material.COBBLESTONE, 64)).need(new ItemBuilder(Material.IRON_INGOT, 1)),
+
+				new Trade(new ItemBuilder(Material.DIAMOND_HELMET)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.DIAMOND_CHESTPLATE)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.DIAMOND_LEGGINGS)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.DIAMOND_BOOTS)).need(new ItemBuilder(Material.EMERALD, 2))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.DIAMOND_HELMET)).need(new ItemBuilder(Material.IRON_INGOT, 24)),
+				new Trade(new ItemBuilder(Material.DIAMOND_CHESTPLATE)).need(new ItemBuilder(Material.IRON_INGOT, 24)),
+				new Trade(new ItemBuilder(Material.DIAMOND_LEGGINGS)).need(new ItemBuilder(Material.IRON_INGOT, 24)),
+				new Trade(new ItemBuilder(Material.DIAMOND_BOOTS)).need(new ItemBuilder(Material.IRON_INGOT, 24)),
+
+				new Trade(new ItemBuilder(Material.DIAMOND_HELMET).enchant(Enchantment.DURABILITY, 1)).need(new ItemBuilder(Material.IRON_INGOT, 32)),
+				new Trade(new ItemBuilder(Material.DIAMOND_CHESTPLATE).enchant(Enchantment.DURABILITY, 1)).need(new ItemBuilder(Material.IRON_INGOT, 32)),
+				new Trade(new ItemBuilder(Material.DIAMOND_LEGGINGS).enchant(Enchantment.DURABILITY, 1)).need(new ItemBuilder(Material.IRON_INGOT, 32)),
+				new Trade(new ItemBuilder(Material.DIAMOND_BOOTS).enchant(Enchantment.DURABILITY, 1)).need(new ItemBuilder(Material.IRON_INGOT, 32))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.DIAMOND_HELMET).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.DIAMOND_CHESTPLATE).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.DIAMOND_LEGGINGS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.DIAMOND_BOOTS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+
+				new Trade(new ItemBuilder(Material.IRON_HELMET).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3).enchant(Enchantment.DURABILITY, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.IRON_CHESTPLATE).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3).enchant(Enchantment.DURABILITY, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.IRON_LEGGINGS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3).enchant(Enchantment.DURABILITY, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.IRON_BOOTS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3).enchant(Enchantment.DURABILITY, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.DIAMOND_HELMET).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).enchant(Enchantment.DURABILITY, 1)).need(new ItemBuilder(Material.EMERALD, 3)),
+				new Trade(new ItemBuilder(Material.DIAMOND_CHESTPLATE).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).enchant(Enchantment.DURABILITY, 1)).need(new ItemBuilder(Material.EMERALD, 3)),
+				new Trade(new ItemBuilder(Material.DIAMOND_LEGGINGS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).enchant(Enchantment.DURABILITY, 1)).need(new ItemBuilder(Material.EMERALD, 3)),
+				new Trade(new ItemBuilder(Material.DIAMOND_BOOTS).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).enchant(Enchantment.DURABILITY, 1)).need(new ItemBuilder(Material.EMERALD, 3)),
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.DIAMOND_HELMET)).need(new ItemBuilder(Material.EMERALD, 1)),
+				new Trade(new ItemBuilder(Material.DIAMOND_CHESTPLATE)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.DIAMOND_LEGGINGS)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.DIAMOND_BOOTS)).need(new ItemBuilder(Material.EMERALD, 1)),
+
+				new Trade(new ItemBuilder(Material.DIAMOND_HELMET)).need(new ItemBuilder(Material.IRON_INGOT, 32)),
+				new Trade(new ItemBuilder(Material.DIAMOND_CHESTPLATE)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.DIAMOND_LEGGINGS)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.DIAMOND_BOOTS)).need(new ItemBuilder(Material.IRON_INGOT, 32))
+		)
+	),
+
+	ARMES(6, Profession.BLACKSMITH, 1, 1, 2,
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.IRON_SWORD)).need(new ItemBuilder(Material.COBBLESTONE, 64)),
+				new Trade(new ItemBuilder(Material.DIAMOND_SWORD)).need(new ItemBuilder(Material.EMERALD, 2)),
+				new Trade(new ItemBuilder(Material.IRON_AXE)).need(new ItemBuilder(Material.COBBLESTONE, 64)),
+				new Trade(new ItemBuilder(Material.DIAMOND_AXE)).need(new ItemBuilder(Material.EMERALD, 2))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DURABILITY)).need(new ItemBuilder(Material.IRON_INGOT, 32)),
+				new Trade(new ItemBuilder(Material.DIAMOND_AXE).enchant(Enchantment.DURABILITY)).need(new ItemBuilder(Material.IRON_INGOT, 32)),
+				new Trade(new ItemBuilder(Material.DIAMOND_SWORD)).need(new ItemBuilder(Material.IRON_INGOT, 24)),
+				new Trade(new ItemBuilder(Material.DIAMOND_AXE)).need(new ItemBuilder(Material.IRON_INGOT, 24))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DAMAGE_ALL, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.DIAMOND_AXE).enchant(Enchantment.DAMAGE_ALL, 2)).need(new ItemBuilder(Material.IRON_INGOT, 48)),
+				new Trade(new ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DAMAGE_ALL, 3).enchant(Enchantment.DURABILITY, 2)).need(new ItemBuilder(Material.IRON_INGOT, 40)),
+				new Trade(new ItemBuilder(Material.DIAMOND_AXE).enchant(Enchantment.DAMAGE_ALL, 3).enchant(Enchantment.DURABILITY, 2)).need(new ItemBuilder(Material.IRON_INGOT, 40))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DAMAGE_ALL, 2).enchant(Enchantment.DURABILITY)).need(new ItemBuilder(Material.EMERALD, 3)),
+				new Trade(new ItemBuilder(Material.DIAMOND_AXE).enchant(Enchantment.DAMAGE_ALL, 2).enchant(Enchantment.DURABILITY)).need(new ItemBuilder(Material.EMERALD, 3))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.EMERALD)).need(new ItemBuilder(Material.DIAMOND_SWORD)),
+				new Trade(new ItemBuilder(Material.EMERALD)).need(new ItemBuilder(Material.DIAMOND_AXE)),
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 24)).need(new ItemBuilder(Material.DIAMOND_SWORD)),
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 24)).need(new ItemBuilder(Material.DIAMOND_AXE))
+		)
+	),
+
+	FERMIER(6, Profession.FARMER, 1, 1, 2,
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.WHEAT, 6)).need(new ItemBuilder(Material.SEEDS, 64)),
+				new Trade(new ItemBuilder(Material.MELON, 6)).need(new ItemBuilder(Material.MELON_SEEDS, 64)),
+				new Trade(new ItemBuilder(Material.PUMPKIN, 6)).need(new ItemBuilder(Material.PUMPKIN_SEEDS, 64)),
+				new Trade(new ItemBuilder(Material.BEETROOT, 6)).need(new ItemBuilder(Material.BEETROOT_SEEDS, 64)),
+				new Trade(new ItemBuilder(Material.SUGAR, 40)).need(new ItemBuilder(Material.SUGAR_CANE, 32))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 2)).need(new ItemBuilder(Material.WHEAT, 64)),
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 2)).need(new ItemBuilder(Material.MELON, 64)),
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 2)).need(new ItemBuilder(Material.PUMPKIN, 64)),
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 2)).need(new ItemBuilder(Material.BEETROOT_SEEDS, 64))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 2)).need(new ItemBuilder(Material.POTATO_ITEM, 64)),
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 2)).need(new ItemBuilder(Material.CARROT_ITEM, 64))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 4)).need(new ItemBuilder(Material.CHORUS_FRUIT, 64)),
+				new Trade(new ItemBuilder(Material.GOLD_INGOT, 2)).need(new ItemBuilder(Material.CHORUS_FRUIT, 64)),
+				new Trade(new ItemBuilder(Material.GOLD_INGOT)).need(new ItemBuilder(Material.CARROT_ITEM, 64))
+		),
+		new TradeLevel(
+				new Trade(new ItemBuilder(Material.IRON_INGOT, 2)).need(new ItemBuilder(Material.POISONOUS_POTATO, 32)),
+				new Trade(new ItemBuilder(Material.IRON_HOE).lore(CustomEnchants.AURA.a(Main.r.nextInt(2)+1))).need(new ItemBuilder(Material.EMERALD, 10)),
+				new Trade(new ItemBuilder(Material.IRON_HOE).lore(CustomEnchants.SEEDS_CANOON.a(Main.r.nextInt(2)+1))).need(new ItemBuilder(Material.EMERALD, 10)),
+		)
+	),
+
+	TERRORISTE(6, Profession.BLACKSMITH, 1, 1, 2,
+			new TradeLevel(
+					new Trade(new ItemBuilder(Material.SULPHUR, 32)).need(new ItemBuilder(Material.IRON_INGOT, 5)),
+					new Trade(new ItemBuilder(Material.FLINT, 32)).need(new ItemBuilder(Material.IRON_INGOT, 6)),
+					new Trade(new ItemBuilder(Material.FLINT, 32)).need(new ItemBuilder(Material.GOLD_INGOT, 3))
+			),
+			new TradeLevel(
+					new Trade(new ItemBuilder(Material.FLINT_AND_STEEL)).need(new ItemBuilder(Material.IRON_NUGGET, 5)).need(new ItemBuilder(Material.FLINT, 2)),
+					new Trade(new ItemBuilder(Material.TNT)).need(new ItemBuilder(Material.FIREWORK, 16)).need(new ItemBuilder(Material.REDSTONE, 4)),
+					new Trade(new ItemBuilder(Material.FIREWORK,20)).need(new ItemBuilder(Material.PAPER, 2)).need(new ItemBuilder(Material.SULPHUR)),
+					new Trade(new ItemBuilder(Material.FIREWORK,30)).need(new ItemBuilder(Material.PAPER)).need(new ItemBuilder(Material.SULPHUR, 2))
+			),
+			new TradeLevel(
+					new Trade(new ItemBuilder(Material.EMERALD)).need(new ItemBuilder(Material.TNT, 16)),
+					new Trade(new ItemBuilder(Material.GOLD_INGOT, 4)).need(new ItemBuilder(Material.TNT, 16)),
+					new Trade(new ItemBuilder(Material.IRON_INGOT, 8)).need(new ItemBuilder(Material.TNT, 16)),
+					new Trade(new ItemBuilder(Material.FIREWORK, 8)).need(new ItemBuilder(Material.FLINT_AND_STEEL))
+			),
+			new TradeLevel(
+					new Trade(new ItemBuilder(Material.REDSTONE, 64)).need(new ItemBuilder(Material.TNT, 16)),
+					new Trade(new ItemBuilder(Material.TNT, 12)).need(new ItemBuilder(Material.REDSTONE_BLOCK, 32)).need(new ItemBuilder(Material.REDSTONE, 64)),
+			),
+			new TradeLevel(
+					new Trade(new ItemBuilder(Material.ARROW, 16).lore(CustomArrows.EXPLOSION.a())).need(new ItemBuilder(Material.TNT, 48)).need(new ItemBuilder(Material.EMERALD, 4)),
+					new Trade(new ItemBuilder(Material.END_CRYSTAL)).need(new ItemBuilder(Material.REDSTONE_BLOCK, 32)).need(new ItemBuilder(Material.REDSTONE, 64)),
+			)
+	),
+
+	ARTISTE(6, Profession.PRIEST, 1, 1, 2,
+			new TradeLevel(
+					new Trade(new ItemBuilder(Material.SULPHUR, 32)).need(new ItemBuilder(Material.IRON_INGOT, 5)),
+					new Trade(new ItemBuilder(Material.FLINT, 32)).need(new ItemBuilder(Material.IRON_INGOT, 6)),
+					new Trade(new ItemBuilder(Material.FLINT, 32)).need(new ItemBuilder(Material.GOLD_INGOT, 3))
+			),
+
+
+
+
+
 	;
 
 	public static Randomiser r = new Randomiser(0, false);
 
 	static{
 		for(Villagers v : values())r.max+=v.chance;
-
-
 	}
 
 	public int id; // custom career
