@@ -64,8 +64,8 @@ public class EnchantEvents implements Listener {
 	public static Pair<String, String> parseEnchant(String s){
 		Pair<String, String> pair = new Pair<>();
 		String[] split = s.split(" ");
-		pair.a = String.join(" ", Arrays.copyOfRange(split, 0, split.length-1));
-		pair.b = split[split.length-1];
+		pair.key = String.join(" ", Arrays.copyOfRange(split, 0, split.length-1));
+		pair.value = split[split.length-1];
 		return pair;
 	}
 
@@ -89,7 +89,7 @@ public class EnchantEvents implements Listener {
 				if(pass)lore.add(line);
 				else if(line.startsWith("§6§r§7")){
 					pair = parseEnchant(line);
-					ench1.put(pair.a, new Mutable<>(pair.b));
+					ench1.put(pair.key, new Mutable<>(pair.value));
 				}else{
 					pass = true;
 					lore.add(line);
@@ -105,19 +105,19 @@ public class EnchantEvents implements Listener {
 			for (String line : temp) {
 				if (line.startsWith("§6§r§7")){
 					pair = parseEnchant(line);
-					lvl = ench1.get(pair.a);
-					if (lvl == null) ench1.put(pair.a, new Mutable<>(pair.b));
+					lvl = ench1.get(pair.key);
+					if (lvl == null) ench1.put(pair.key, new Mutable<>(pair.value));
 					else {
-						if (lvl.value.equals(pair.b)){
-							CustomEnchants ench = CustomEnchants.get(pair.a);
+						if (lvl.value.equals(pair.value)){
+							CustomEnchants ench = CustomEnchants.get(pair.key);
 							if(ench==null){
-								InternalAPI.warn("Enchantement invalide : "+pair.a.replace("§", "&")+" (lore ?)", false);
+								InternalAPI.warn("Enchantement invalide : "+pair.key.replace("§", "&")+" (lore ?)", false);
 								continue; // poof il disparait (pas sensé se produire)
 							}
 							int rlvl = RomanUtils.toInt(lvl.value)+1;
 							lvl.value = RomanUtils.toRoman(Math.min(rlvl, ench.maxlvl));
 						}else{
-							lvl.value = RomanUtils.max(lvl.value, pair.b);
+							lvl.value = RomanUtils.max(lvl.value, pair.value);
 						}
 					}
 				}else break;
