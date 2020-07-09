@@ -38,4 +38,8 @@ public enum CustomArrows {
 		item.setLore(lore);
 	}
 
+	public String a(){
+		return "§7"+name;
+	}
+
 }
