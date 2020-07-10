@@ -10,8 +10,6 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import java.awt.event.ItemEvent;
-
 public class TradeItem extends ItemBuilder {
 
 	public boolean rdAmount = true;
@@ -33,12 +31,6 @@ public class TradeItem extends ItemBuilder {
 	public TradeItem(Material m, int amount, boolean rdAmount, ItemMeta meta) {
 		super(m, amount, meta);
 		this.rdAmount = rdAmount;
-	}
-
-	@Deprecated
-	public TradeItem() {
-		super(Material.TIPPED_ARROW);
-		rdAmount = false;
 	}
 
 	public TradeItem rdDamage(){

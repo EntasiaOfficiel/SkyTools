@@ -25,12 +25,10 @@ import static org.bukkit.entity.Villager.Profession;
 public enum Villagers {
 
 
-	PRETRE(0, Profession.PRIEST, 1, 1, 2,
+	PRETRE(0, Profession.PRIEST, 10, 1, 0,
 		new TradeLevel(
 			new Trade(new TradeItem(Material.BREAD).name("§7Pain divin")).need(new TradeItem(Material.EMERALD)),
-			new Trade(new TradeItem(Material.EXP_BOTTLE, 5)).need(new TradeItem(Material.GOLD_INGOT, 2))
-		),
-		new TradeLevel(
+			new Trade(new TradeItem(Material.EXP_BOTTLE, 5)).need(new TradeItem(Material.GOLD_INGOT, 2)),
 			new Trade(new TradeItem(Material.BREWING_STAND_ITEM)).need(new TradeItem(Material.GLASS_BOTTLE, 64)).need(new TradeItem(Material.GOLD_INGOT, 24)),
 			new Trade(new TradeItem(Material.BLAZE_POWDER, 5)).need(new TradeItem(Material.BREAD, 64))
 		),
@@ -48,7 +46,7 @@ public enum Villagers {
 			new Trade(new TradeItem(Material.EXP_BOTTLE, 64)).need(new TradeItem(Material.GLASS_BOTTLE, 64)).need(new TradeItem(Material.LAPIS_ORE, 8))
 		)
 	),
-	FORGERON_OUTILS(1, Profession.BLACKSMITH, 1, 1, 2,
+	FORGERON_OUTILS(1, Profession.BLACKSMITH, 10, 1, 1,
 		new TradeLevel(
 			new Trade(new TradeItem(Material.IRON_PICKAXE)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT)),
 			new Trade(new TradeItem(Material.DIAMOND_PICKAXE)).need(new TradeItem(Material.EMERALD, 2)),
@@ -86,7 +84,7 @@ public enum Villagers {
 
 
 
-	GOOGLE_MAP(2, Profession.LIBRARIAN, 1, 1, 2,
+	GOOGLE_MAP(2, Profession.LIBRARIAN, 10, 1, 0,
 		new TradeLevel(
 				new Trade(new TradeItem(Material.PAPER, 24)).need(new TradeItem(Material.GOLD_INGOT)),
 				new Trade(new TradeItem(Material.PAPER, 24)).need(new TradeItem(Material.IRON_INGOT, 2))
@@ -109,7 +107,7 @@ public enum Villagers {
 				new Trade(new TradeItem(Material.EMERALD, 4)).need(new TradeItem(Material.EMPTY_MAP, 64))
 		)
 	),
-	FISHEMAN(3, Profession.FARMER, 1, 1, 2,
+	FISHEMAN(3, Profession.FARMER, 10, 1, 1,
 		new TradeLevel(
 				new Trade(new TradeItem(Material.RAW_FISH).damage(3)).need(new TradeItem(Material.EMERALD)),
 				new Trade(new TradeItem(Material.RAW_FISH).damage(2)).need(new TradeItem(Material.EMERALD, 2)),
@@ -139,7 +137,7 @@ public enum Villagers {
 				new Trade(new TradeItem(Material.EMERALD, 5)).need(new TradeItem(Material.RAW_FISH, 64).damage(3)).need(new TradeItem(Material.RAW_FISH, 64).damage(2))
 		)
 	),
-	CHASSEUR(4, Profession.BUTCHER, 1, 1, 2,
+	CHASSEUR(4, Profession.BUTCHER, 10, 1, 1,
 		new TradeLevel(
 				new Trade(new TradeItem(Material.LEATHER, 16)).need(new TradeItem(Material.EMERALD)),
 				new Trade(new TradeItem(Material.LEATHER, 16)).need(new TradeItem(Material.IRON_INGOT, 6)),
@@ -172,13 +170,11 @@ public enum Villagers {
 				new Trade(new TradeItem(Material.RABBIT_FOOT, 32)).need(new TradeItem(Material.EMERALD, 16))
 		)
 	),
-	CHARCUTIER(5, Profession.BUTCHER, 1, 1, 2,
+	CHARCUTIER(5, Profession.BUTCHER, 10, 1, 1,
 		new TradeLevel(
 				new Trade(new TradeItem(Material.COOKED_CHICKEN, 4)).need(new TradeItem(Material.RAW_CHICKEN, 8)),
 				new Trade(new TradeItem(Material.COOKED_RABBIT, 4)).need(new TradeItem(Material.RABBIT, 8)),
-				new Trade(new TradeItem(Material.COOKED_MUTTON, 4)).need(new TradeItem(Material.MUTTON, 8))
-		),
-		new TradeLevel(
+				new Trade(new TradeItem(Material.COOKED_MUTTON, 4)).need(new TradeItem(Material.MUTTON, 8)),
 				new Trade(new TradeItem(Material.COOKED_BEEF, 4)).need(new TradeItem(Material.RAW_BEEF, 8)),
 				new Trade(new TradeItem(Material.GRILLED_PORK, 4)).need(new TradeItem(Material.PORK, 8))
 		),
@@ -191,44 +187,42 @@ public enum Villagers {
 		),
 		new TradeLevel(
 				new Trade(new TradeItem(Material.COOKED_CHICKEN)).need(new TradeItem(Material.ROTTEN_FLESH, 64)),
-				new Trade(new TradeItem(Material.COOKED_BEEF)).need(new TradeItem(Material.ROTTEN_FLESH, 64)),
 				new Trade(new TradeItem(Material.COOKED_RABBIT)).need(new TradeItem(Material.ROTTEN_FLESH, 64)),
-				new Trade(new TradeItem(Material.GRILLED_PORK)).need(new TradeItem(Material.ROTTEN_FLESH, 64)),
 				new Trade(new TradeItem(Material.COOKED_MUTTON)).need(new TradeItem(Material.ROTTEN_FLESH, 64))
 		),
 		new TradeLevel(
+				new Trade(new TradeItem(Material.COOKED_BEEF)).need(new TradeItem(Material.ROTTEN_FLESH, 64)),
+				new Trade(new TradeItem(Material.GRILLED_PORK)).need(new TradeItem(Material.ROTTEN_FLESH, 64)),
 				new Trade(new TradeItem(Material.COOKED_CHICKEN).name("§6KFC")).need(new TradeItem(Material.IRON_INGOT, 6)),
 				new Trade(new TradeItem(Material.BAKED_POTATO).name("§6Frites McDo")).need(new TradeItem(Material.IRON_INGOT, 6))
 		)
 	),
-	FLECHIER(6, Profession.FARMER, 1, 1, 2,
+	FLECHIER(6, Profession.FARMER, 10, 1, 1,
 		new TradeLevel(
 				new Trade(new TradeItem(Material.BOW)).need(new TradeItem(Material.IRON_INGOT, 2)),
-				new Trade(new TradeItem(Material.ARROW, 32)).need(new TradeItem(Material.IRON_INGOT, 2))
-		),
-			new TradeLevel(
+				new Trade(new TradeItem(Material.ARROW, 32)).need(new TradeItem(Material.IRON_INGOT, 2)),
 				new Trade(new TradeItem(Material.IRON_INGOT)).need(new TradeItem(Material.ARROW, 64)),
 				new Trade(new TradeItem(Material.BOW)).need(new TradeItem(Material.ARROW, 48))
 		),
 		new TradeLevel(
-				new Trade(new TradeItem().effect(PotionType.INSTANT_DAMAGE)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.STRENGTH)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.WEAKNESS)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.INSTANT_HEAL)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.JUMP)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.SPEED)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.SLOWNESS)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4))
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.INSTANT_DAMAGE)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.STRENGTH)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.WEAKNESS)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.INSTANT_HEAL)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.JUMP)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.SPEED)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.SLOWNESS)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4))
 		),
 		new TradeLevel(
 				new Trade(new TradeItem(Material.SPECTRAL_ARROW)).need(new TradeItem(Material.GOLD_INGOT, 8)).need(new TradeItem(Material.ARROW, 64)),
 				new Trade(new TradeItem(Material.BOW)).need(new TradeItem(Material.ARROW, 48)),
-				new Trade(new TradeItem().effect(PotionType.NIGHT_VISION)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.INVISIBILITY)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.FIRE_RESISTANCE)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.POISON)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.REGEN)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.LUCK)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem().effect(PotionType.WATER_BREATHING)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4))
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.NIGHT_VISION)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.INVISIBILITY)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.FIRE_RESISTANCE)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.POISON)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.REGEN)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.LUCK)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4)),
+				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.WATER_BREATHING)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4))
 		),
 		new TradeLevel(
 				new Trade(new TradeItem(Material.ARROW, 16).lore(CustomArrows.FIREWORKS.a())).need(new TradeItem(Material.IRON_INGOT, 2)),
@@ -238,7 +232,7 @@ public enum Villagers {
 		)
 	),
 
-	LIBRAIRE(6, Profession.LIBRARIAN, 1, 1, 2, // TODO A REFAIRE
+	LIBRAIRE(7, Profession.LIBRARIAN, 10, 1, 1, // TODO A REFAIRE
 		new TradeLevel(
 				new Trade(new TradeItem(Material.PAPER, 24)).need(new TradeItem(Material.GOLD_INGOT, 1)),
 				new Trade(new TradeItem(Material.PAPER, 24)).need(new TradeItem(Material.IRON_INGOT, 2))
@@ -265,18 +259,7 @@ public enum Villagers {
 		)
 	),
 
-	ARMURIER(6, Profession.BLACKSMITH, 1, 1, 2,
-		new TradeLevel(
-				new Trade(new TradeItem(Material.IRON_HELMET)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT, 2)),
-				new Trade(new TradeItem(Material.IRON_CHESTPLATE)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT, 4)),
-				new Trade(new TradeItem(Material.IRON_LEGGINGS)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT, 3)),
-				new Trade(new TradeItem(Material.IRON_BOOTS)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT, 1)),
-
-				new Trade(new TradeItem(Material.DIAMOND_HELMET)).need(new TradeItem(Material.EMERALD, 2)),
-				new Trade(new TradeItem(Material.DIAMOND_CHESTPLATE)).need(new TradeItem(Material.EMERALD, 2)),
-				new Trade(new TradeItem(Material.DIAMOND_LEGGINGS)).need(new TradeItem(Material.EMERALD, 2)),
-				new Trade(new TradeItem(Material.DIAMOND_BOOTS)).need(new TradeItem(Material.EMERALD, 2))
-		),
+	ARMURIER(8, Profession.BLACKSMITH, 10, 1, 2,
 		new TradeLevel(
 				new Trade(new TradeItem(Material.IRON_HELMET)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT, 2)),
 				new Trade(new TradeItem(Material.IRON_CHESTPLATE)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT, 4)),
@@ -329,7 +312,7 @@ public enum Villagers {
 		)
 	),
 
-	ARMES(6, Profession.BLACKSMITH, 1, 1, 1,
+	ARMES(9, Profession.BLACKSMITH, 10, 1, 1, // TODO A REFAIRE
 		new TradeLevel(
 				new Trade(new TradeItem(Material.IRON_SWORD)).need(new TradeItem(Material.COBBLESTONE, 64)),
 				new Trade(new TradeItem(Material.DIAMOND_SWORD)).need(new TradeItem(Material.EMERALD, 2)),
@@ -360,7 +343,7 @@ public enum Villagers {
 		)
 	),
 
-	FERMIER(6, Profession.FARMER, 1, 1, 1,
+	FERMIER(10, Profession.FARMER, 10, 1, 1,
 		new TradeLevel(
 				new Trade(new TradeItem(Material.WHEAT, 6)).need(new TradeItem(Material.SEEDS, 64)),
 				new Trade(new TradeItem(Material.MELON, 6)).need(new TradeItem(Material.MELON_SEEDS, 64)),
@@ -376,62 +359,54 @@ public enum Villagers {
 		),
 		new TradeLevel(
 				new Trade(new TradeItem(Material.IRON_INGOT, 2)).need(new TradeItem(Material.POTATO_ITEM, 64)),
-				new Trade(new TradeItem(Material.IRON_INGOT, 2)).need(new TradeItem(Material.CARROT_ITEM, 64))
-		),
-		new TradeLevel(
+				new Trade(new TradeItem(Material.IRON_INGOT, 2)).need(new TradeItem(Material.CARROT_ITEM, 64)),
 				new Trade(new TradeItem(Material.IRON_INGOT, 4)).need(new TradeItem(Material.CHORUS_FRUIT, 64)),
-				new Trade(new TradeItem(Material.GOLD_INGOT, 2)).need(new TradeItem(Material.CHORUS_FRUIT, 64)),
-				new Trade(new TradeItem(Material.GOLD_INGOT)).need(new TradeItem(Material.CARROT_ITEM, 64))
+				new Trade(new TradeItem(Material.GOLD_INGOT, 2)).need(new TradeItem(Material.CHORUS_FRUIT, 64))
 		),
 		new TradeLevel(
+				new Trade(new TradeItem(Material.GOLD_INGOT)).need(new TradeItem(Material.CARROT_ITEM, 64)),
 				new Trade(new TradeItem(Material.IRON_INGOT, 2)).need(new TradeItem(Material.POISONOUS_POTATO, 32)),
 				new Trade(new TradeItem(Material.IRON_HOE).lore(CustomEnchants.AURA.a(Main.r.nextInt(2)+1))).need(new TradeItem(Material.EMERALD, 10)),
 				new Trade(new TradeItem(Material.IRON_HOE).lore(CustomEnchants.SEEDS_CANOON.a(Main.r.nextInt(2)+1))).need(new TradeItem(Material.EMERALD, 10))
 		)
 	),
 
-	TERRORISTE(6, Profession.BLACKSMITH, 1, 1, 1,
+	TERRORISTE(11, Profession.BLACKSMITH, 10, 1, 1,
 			new TradeLevel(
 					new Trade(new TradeItem(Material.SULPHUR, 32)).need(new TradeItem(Material.IRON_INGOT, 5)),
 					new Trade(new TradeItem(Material.FLINT, 32)).need(new TradeItem(Material.IRON_INGOT, 6)),
-					new Trade(new TradeItem(Material.FLINT, 32)).need(new TradeItem(Material.GOLD_INGOT, 3))
+					new Trade(new TradeItem(Material.FLINT, 32)).need(new TradeItem(Material.GOLD_INGOT, 3)),
+					new Trade(new TradeItem(Material.FLINT_AND_STEEL)).need(new TradeItem(Material.IRON_NUGGET, 5)).need(new TradeItem(Material.FLINT, 2))
 			),
 			new TradeLevel(
-					new Trade(new TradeItem(Material.FLINT_AND_STEEL)).need(new TradeItem(Material.IRON_NUGGET, 5)).need(new TradeItem(Material.FLINT, 2)),
 					new Trade(new TradeItem(Material.TNT)).need(new TradeItem(Material.FIREWORK, 16)).need(new TradeItem(Material.REDSTONE, 4)),
 					new Trade(new TradeItem(Material.FIREWORK,20)).need(new TradeItem(Material.PAPER, 2)).need(new TradeItem(Material.SULPHUR)),
-					new Trade(new TradeItem(Material.FIREWORK,30)).need(new TradeItem(Material.PAPER)).need(new TradeItem(Material.SULPHUR, 2))
+					new Trade(new TradeItem(Material.FIREWORK,30)).need(new TradeItem(Material.PAPER)).need(new TradeItem(Material.SULPHUR, 2)),
+					new Trade(new TradeItem(Material.EMERALD)).need(new TradeItem(Material.TNT, 16))
 			),
 			new TradeLevel(
-					new Trade(new TradeItem(Material.EMERALD)).need(new TradeItem(Material.TNT, 16)),
 					new Trade(new TradeItem(Material.GOLD_INGOT, 4)).need(new TradeItem(Material.TNT, 16)),
 					new Trade(new TradeItem(Material.IRON_INGOT, 8)).need(new TradeItem(Material.TNT, 16)),
-					new Trade(new TradeItem(Material.FIREWORK, 8)).need(new TradeItem(Material.FLINT_AND_STEEL))
+					new Trade(new TradeItem(Material.FIREWORK, 8)).need(new TradeItem(Material.FLINT_AND_STEEL)),
+					new Trade(new TradeItem(Material.REDSTONE, 64)).need(new TradeItem(Material.TNT, 16))
 			),
 			new TradeLevel(
-					new Trade(new TradeItem(Material.REDSTONE, 64)).need(new TradeItem(Material.TNT, 16)),
-					new Trade(new TradeItem(Material.TNT, 12)).need(new TradeItem(Material.REDSTONE_BLOCK, 32)).need(new TradeItem(Material.REDSTONE, 64))
-			),
-			new TradeLevel(
+					new Trade(new TradeItem(Material.TNT, 12)).need(new TradeItem(Material.REDSTONE_BLOCK, 32)).need(new TradeItem(Material.REDSTONE, 64)),
 					new Trade(new TradeItem(Material.ARROW, 16).lore(CustomArrows.EXPLOSION.a())).need(new TradeItem(Material.TNT, 48)).need(new TradeItem(Material.EMERALD, 4)),
 					new Trade(new TradeItem(Material.END_CRYSTAL)).need(new TradeItem(Material.REDSTONE_BLOCK, 32)).need(new TradeItem(Material.REDSTONE, 64))
 			)
 	),
 
-	ARTISTE(6, Profession.PRIEST, 10, 1, 1,
+	ARTISTE(12, Profession.PRIEST, 10, 1, 1,
 			new TradeLevel(
 					new Trade(new TradeItem(Material.PAINTING)).need(new TradeItem(Material.INK_SACK, 8).rdDamage()),
-					new Trade(new TradeItem(Material.BOOK)).need(new TradeItem(Material.IRON_INGOT))
-			),
-			new TradeLevel(
+					new Trade(new TradeItem(Material.BOOK)).need(new TradeItem(Material.IRON_INGOT)),
 					new Trade(new TradeItem(Material.BOOK).name("§7Livre dédicacé par iTrooz_")).need(new TradeItem(Material.BOOK, 8)),
 					new Trade(new TradeItem(Material.PAINTING).name("§7Peinture dédicacée par iTrooz_")).need(new TradeItem(Material.PAINTING, 8))
 			),
 			new TradeLevel(
 					new Trade(new TradeItem(Material.GOLD_INGOT, 2)).need(new TradeItem(Material.BOOK, 24)),
-					new Trade(new TradeItem(Material.GOLD_INGOT, 2)).need(new TradeItem(Material.PAINTING, 24))
-			),
-			new TradeLevel(
+					new Trade(new TradeItem(Material.GOLD_INGOT, 2)).need(new TradeItem(Material.PAINTING, 24)),
 					new Trade(new TradeItem(Material.BANNER, 1, false, Utils.bmeta)).need(new TradeItem(Material.BANNER)),
 					new Trade(new TradeItem(Material.IRON_INGOT)).need(new TradeItem(Material.INK_SACK, 32).rdDamage())
 			),
@@ -440,7 +415,7 @@ public enum Villagers {
 					new Trade(new TradeItem(Material.PAINTING)).need(new TradeItem(Material.EMERALD, 2))
 			)
 	),
-	MYSTERE(6, Profession.PRIEST, 1, 1, 0,
+	MYSTERE(13, Profession.PRIEST, 1, 1, 0,
 			new TradeLevel(
 					new Trade(new TradeItem(Material.GOLDEN_APPLE)).need(new TradeItem(Material.BREAD).name("§7Pain divin")),
 					new Trade(new TradeItem(Material.GOLDEN_APPLE).damage(1)).need(new TradeItem(Material.BREAD, 64).name("§7Pain divin"))
