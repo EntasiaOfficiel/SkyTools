@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -22,6 +23,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Utils {
+
+
+	public static BannerMeta bmeta; // pas chercher à comprendre
 
 
 	public static HashMap<UUID, ToolPlayer> playerCache = new HashMap<>();
