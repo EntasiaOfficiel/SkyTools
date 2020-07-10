@@ -74,11 +74,17 @@ public class TradeItem extends ItemBuilder {
 		ItemStack item = super.build();
 		if(rdAmount){
 			if(item.getAmount()>8){
-				item.setAmount(Trade.applyRandom(item.getAmount()));
+				item.setAmount(applyRandom(item.getAmount()));
 			}
 		}
 		if(rdDamage)item.setDurability((short) Main.r.nextInt(16));
 		return item;
+	}
+
+	private static int applyRandom(int a){
+		int b = (int) (a*(Main.r.nextInt(10)/10f+0.95));
+		if(b<=0||b>64)return a;
+		else return b;
 	}
 
 }
