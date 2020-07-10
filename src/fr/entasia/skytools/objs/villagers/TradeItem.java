@@ -82,9 +82,9 @@ public class TradeItem extends ItemBuilder {
 	}
 
 	private static int applyRandom(int a){
-		int b = (int) (a*(Main.r.nextInt(10)/10f+0.95));
+		double temp = Main.r.nextInt(10)/10f+0.5;
+		int b = (int) (a*temp);
 		if(b<=0||b>64)return a;
 		else return b;
 	}
-
 }

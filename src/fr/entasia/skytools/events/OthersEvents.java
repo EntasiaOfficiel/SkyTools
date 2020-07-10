@@ -12,10 +12,12 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.Warp;
 import fr.entasia.skytools.objs.villagers.Villagers;
+import net.minecraft.server.v1_12_R1.EntityVillager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftVillager;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -26,6 +28,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.VillagerAcquireTradeEvent;
+import org.bukkit.event.entity.VillagerReplenishTradeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -187,29 +190,23 @@ public class OthersEvents implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void a(VillagerAcquireTradeEvent e){
+	public void a(VillagerReplenishTradeEvent e){
 		e.setCancelled(true);
 		Villager v = e.getEntity();
-		if(v.getTicksLived()<20)return;
-		List<MetadataValue> list = e.getEntity().getMetadata("lastUpgrade");
 		NBTComponent nbt = EntityNBT.getNBT(v);
 		Object o = nbt.getValue(NBTTypes.Int, "CareerLevel");
 		int current;
 		if (o == null) current = 1;
 		else current = (int) o;
-		if(list.size()==0||list.get(0).asInt()<current) {
-			e.getEntity().setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, current));
-			Villagers vi = Villagers.getType(v);
-			if (vi == null) {
-				ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
-						" Infos :§6" + v.getLocation());
-				return;
-			}
+		Villagers vi = Villagers.getType(v);
+		if (vi == null) {
+			ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
+					" Infos :§6" + v.getLocation());
+		}else{
 			if (current >= vi.levels.length) return;
 			List<MerchantRecipe> list2 = new ArrayList<>(v.getRecipes());
-			vi.addToList(list2, current);
-			nbt.setValue(NBTTypes.Int, "CareelLevel", current + 1);
+			vi.addToList(list2, current+1);
+			nbt.setValue(NBTTypes.Int, "CareelLevel", current+1);
 			EntityNBT.setNBT(v, nbt);
 			v.setRecipes(list2);
 		}

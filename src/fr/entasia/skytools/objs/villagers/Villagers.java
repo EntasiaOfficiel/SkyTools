@@ -1,6 +1,8 @@
 package fr.entasia.skytools.objs.villagers;
 
 import fr.entasia.apis.other.Randomiser;
+import fr.entasia.errors.EntasiaException;
+import fr.entasia.skycore.others.SkyblockException;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomArrows;
@@ -417,8 +419,8 @@ public enum Villagers {
 	),
 	MYSTERE(13, Profession.PRIEST, 1, 1, 0,
 			new TradeLevel(
-					new Trade(new TradeItem(Material.GOLDEN_APPLE)).need(new TradeItem(Material.BREAD).name("§7Pain divin")),
-					new Trade(new TradeItem(Material.GOLDEN_APPLE).damage(1)).need(new TradeItem(Material.BREAD, 64).name("§7Pain divin"))
+					new Trade(new TradeItem(Material.GOLDEN_APPLE)).need(new TradeItem(Material.BREAD).name("§rPain divin")),
+					new Trade(new TradeItem(Material.GOLDEN_APPLE).damage(1)).need(new TradeItem(Material.BREAD, 64).name("§rPain divin"))
 			)
 	),
 
@@ -481,7 +483,7 @@ public enum Villagers {
 		for(Villagers v : values()){
 			if(r.isInNext(v.chance))return v;
 		}
-		return null;
+		throw new EntasiaException();
 	}
 
 	public void apply(Villager v){
@@ -495,7 +497,7 @@ public enum Villagers {
 
 	public void addToList(List<MerchantRecipe> list, int current){ // current 1-5 (max=5)
 		TradeLevel lvl = levels[current-1];
-		int max = lvl.min + Main.r.nextInt(lvl.random +1);
+		int max = lvl.min + Main.r.nextInt(lvl.random+1);
 		ArrayList<Trade> tempTrades = new ArrayList<>(Arrays.asList(lvl.trades));
 		for(int i=0;i<max;i++){
 			if(tempTrades.size()==0)break;
