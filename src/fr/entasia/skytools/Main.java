@@ -1,5 +1,6 @@
 package fr.entasia.skytools;
 
+import fr.entasia.skytools.commands.CosmCmd;
 import fr.entasia.skytools.commands.SWCmd;
 import fr.entasia.skytools.commands.SkyToolsCmd;
 import fr.entasia.skytools.commands.WarpCmd;
@@ -80,6 +81,7 @@ public class Main extends JavaPlugin {
 			getCommand("skytools").setExecutor(new SkyToolsCmd());
 			getCommand("speedwriter").setExecutor(new SWCmd());
 			getCommand("warp").setExecutor(new WarpCmd());
+			getCommand("cosmetiques").setExecutor(new CosmCmd());
 
 			getCommand("customarrow").setExecutor(new CustomArrowCmd());
 			getCommand("customenchant").setExecutor(new CustomEnchantCmd());

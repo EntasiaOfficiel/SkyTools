@@ -17,3 +17,6 @@ commands:
 
   customenchant:
     aliases: [customenchants]
+
+  cosmetiques:
+    aliases: [cosm,cosmetique,pet,pets,particules]
