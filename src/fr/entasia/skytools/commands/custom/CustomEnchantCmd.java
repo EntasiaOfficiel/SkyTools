@@ -38,8 +38,11 @@ public class CustomEnchantCmd implements CommandExecutor {
 							if(level<1||level>5)throw new NumberFormatException();
 						}
 						CustomEnchants ca = CustomEnchants.valueOf(args[0].toUpperCase());
-						ca.enchant(item, level);
-						p.sendMessage("§aEnchantement fait avec succès !");
+						if(ca.enchant(item, level)){
+							p.sendMessage("§aEnchantement fait avec succès !");
+						}else{
+							p.sendMessage("§cNiveau maximal possible : "+ca.maxlvl);
+						}
 					}catch(NumberFormatException e) {
 						p.sendMessage("§cNiveau "+args[1]+" invalide !");
 					}catch(IllegalArgumentException e) {

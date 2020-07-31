@@ -70,11 +70,13 @@ public enum CustomEnchants {
 		return 0;
 	}
 
-	public void enchant(ItemStack item, int level){
+	public boolean enchant(ItemStack item, int level){
+		if(maxlvl<level)return false;
 		List<String> lore = item.getLore();
 		if(lore==null)lore = new ArrayList<>();
 		lore.add("§6§r§7"+name+" "+ RomanUtils.toRoman(Math.min(maxlvl, level)));
 		item.setLore(lore);
+		return true;
 	}
 
 	public String a(int lvl){
