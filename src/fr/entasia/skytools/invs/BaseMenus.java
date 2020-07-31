@@ -72,8 +72,11 @@ public class BaseMenus {
 	}
 
 	private static List<String> getDesc(String warp){
-		Warp a = Warp.getWarp(warp);
-		if(a==null)return Collections.singletonList("§cProblème de chargement de ce warp !");
-		else return a.desc;
+		if(warp.equals("spawn"))return Collections.singletonList("§aLe spawn du Skyblock, tout simplement");
+		else{
+			Warp a = Warp.getWarp(warp);
+			if(a==null)return Collections.singletonList("§cProblème de chargement de ce warp !");
+			else return a.desc;
+		}
 	}
 }

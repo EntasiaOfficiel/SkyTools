@@ -2,7 +2,6 @@ package fr.entasia.skytools.objs.villagers;
 
 import fr.entasia.apis.other.Randomiser;
 import fr.entasia.errors.EntasiaException;
-import fr.entasia.skycore.others.SkyblockException;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomArrows;
