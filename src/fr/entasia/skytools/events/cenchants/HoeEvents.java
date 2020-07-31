@@ -162,6 +162,7 @@ public class HoeEvents implements Listener {
 			fb.setHurtEntities(false);
 			fb.setInvulnerable(true);
 			fb.setVelocity(v);
+			fb.setMetadata("canoonShoot", new FixedMetadataValue(Main.main, true));
 
 			ItemStack finalItem = item;
 			CanoonBlock finalCb = cb;
@@ -196,8 +197,8 @@ public class HoeEvents implements Listener {
 	public void a(EntityChangeBlockEvent e) {
 		if (e.getEntityType() == EntityType.FALLING_BLOCK) {
 			FallingBlock fb = (FallingBlock) e.getEntity();
-			if(seeds.containsKey(fb.getMaterial()))e.setCancelled(true);
-			else if(seeds2.containsKey(fb.getMaterial()))e.setCancelled(true);
+			System.out.println(fb.getMetadata("canoonShoot").size());
+			if(fb.hasMetadata("canoonShoot"))e.setCancelled(true);
 		}
 	}
 
