@@ -4,6 +4,7 @@ import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skycore.apis.BaseAPI;
 import fr.entasia.skycore.apis.BaseIsland;
 import fr.entasia.skycore.apis.CooManager;
+import fr.entasia.skycore.apis.OthersAPI;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.*;
@@ -129,7 +130,7 @@ public class HoeEvents implements Listener {
 			}else return;
 
 			BaseIsland is = BaseAPI.getIsland(CooManager.getIslandID(p.getLocation()));
-			if(is.getMember(p.getUniqueId())==null){
+			if(is.getMember(p.getUniqueId())==null&&!OthersAPI.isMasterEdit(p)){
 				p.sendMessage("§cTu n'es pas membre de cette île !");
 				return;
 			}
