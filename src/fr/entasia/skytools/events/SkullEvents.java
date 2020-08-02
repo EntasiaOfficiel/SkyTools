@@ -11,6 +11,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -59,7 +60,7 @@ public class SkullEvents implements Listener {
 	}
 
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void a(PlayerInteractEvent e){
 		if(e.getHand()==EquipmentSlot.HAND&&e.getAction()==Action.RIGHT_CLICK_BLOCK&&e.getItem()!=null&&e.getItem().getType()==Material.INK_SACK&&e.getItem().getDurability()==15){
 			if(e.getClickedBlock().getType()==Material.GRASS) {
@@ -150,7 +151,7 @@ public class SkullEvents implements Listener {
 		b.setData(face.data);
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void b(PlayerInteractEvent e){
 		if(e.getHand()== EquipmentSlot.HAND&&e.getAction()==Action.RIGHT_CLICK_BLOCK&&e.getItem()!=null&&e.getItem().getType()==Material.APPLE){
 			SkullDirections d = SkullDirections.get(e.getBlockFace());
@@ -164,7 +165,7 @@ public class SkullEvents implements Listener {
 		}
 	}
 
-	@EventHandler(ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void b(BlockBreakEvent e){
 		if(e.getPlayer().getGameMode()== GameMode.SURVIVAL&&e.getBlock().getType()==Material.SKULL){
 			GameProfile profile = ItemUtils.getProfile(e.getBlock());

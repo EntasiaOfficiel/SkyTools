@@ -226,7 +226,6 @@ public class OthersEvents implements Listener {
 		}
 	}
 
-
 	@EventHandler
 	public void a(PlayerInteractEntityEvent e) {
 		if(e.getHand()!= EquipmentSlot.HAND)return;
