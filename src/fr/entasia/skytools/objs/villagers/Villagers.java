@@ -1,5 +1,8 @@
 package fr.entasia.skytools.objs.villagers;
 
+import fr.entasia.apis.nbt.EntityNBT;
+import fr.entasia.apis.nbt.NBTComponent;
+import fr.entasia.apis.nbt.NBTTypes;
 import fr.entasia.apis.other.Randomiser;
 import fr.entasia.errors.EntasiaException;
 import fr.entasia.skytools.Main;
@@ -15,6 +18,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
@@ -486,22 +490,29 @@ public enum Villagers {
 	}
 
 	public void apply(Villager v){
+		v.setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
+//		System.out.println("meta set");
+		v.addScoreboardTag("npctype-"+id);
 		List<MerchantRecipe> list = new ArrayList<>();
-		addToList(list, 1);
+		addToList(list, 0);
 		v.setRecipes(list);
 		v.setProfession(p);
 //		EntityNBT.addNBT(v, new NBTComponent(String.format("{Career:%s}", id))); // est override par le jeu quand upgrade
-		v.addScoreboardTag("npctype-"+id);
+		NBTComponent nbt = EntityNBT.getNBT(v);
+		nbt.setValue(NBTTypes.Int, "CareelLevel", 0);
+		EntityNBT.setNBT(v, nbt);
 	}
 
-	public void addToList(List<MerchantRecipe> list, int current){ // current 1-5 (max=5)
-		TradeLevel lvl = levels[current-1];
+	public void addToList(List<MerchantRecipe> list, int from){ // current 1-5 (max=5)
+		TradeLevel lvl = levels[from];
 		int max = lvl.min + Main.r.nextInt(lvl.random+1);
 		ArrayList<Trade> tempTrades = new ArrayList<>(Arrays.asList(lvl.trades));
+//		System.out.println("adding to list");
 		for(int i=0;i<max;i++){
 			if(tempTrades.size()==0)break;
 			Trade t = tempTrades.remove(Main.r.nextInt(tempTrades.size()));
 			list.add(t.buildOne());
+//			System.out.println("added "+t.result.item.getType());
 		}
 	}
 

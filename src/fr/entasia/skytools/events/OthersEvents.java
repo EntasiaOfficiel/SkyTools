@@ -25,6 +25,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.entity.VillagerReplenishTradeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -33,6 +34,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -185,10 +188,35 @@ public class OthersEvents implements Listener {
 		}
 	}
 
-	public void a(VillagerReplenishTradeEvent e){
+	@EventHandler
+	public void a(VillagerAcquireTradeEvent e){
+//		System.out.println("\naquire");
 		e.setCancelled(true);
-		Villager v = e.getEntity();
+		if(e.getEntity().getTicksLived()<20)return;
+		testUpgrade(e.getEntity());
+	}
+
+	@EventHandler
+	public void a(VillagerReplenishTradeEvent e) {
+//		System.out.println("\nreplenish");
+		e.setCancelled(true);
+		testUpgrade(e.getEntity());
+	}
+
+	public static void testUpgrade(Villager v){
 		NBTComponent nbt = EntityNBT.getNBT(v);
+
+		List<MetadataValue> meta = v.getMetadata("lastUpgrade");
+//		System.out.println("test upgrade");
+		if(meta.size()!=0){
+//			System.out.println("not 0");
+			if(System.currentTimeMillis()-meta.get(0).asLong()<1000){
+//				System.out.println("cancelled");
+				return;
+			}
+		}
+		v.setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
+//		System.out.println("upgrading...");
 		Object o = nbt.getValue(NBTTypes.Int, "CareerLevel");
 		int current;
 		if (o == null) current = 1;
@@ -204,6 +232,7 @@ public class OthersEvents implements Listener {
 			nbt.setValue(NBTTypes.Int, "CareelLevel", current+1);
 			EntityNBT.setNBT(v, nbt);
 			v.setRecipes(list2);
+//			System.out.println("upgraded !");
 		}
 	}
 
