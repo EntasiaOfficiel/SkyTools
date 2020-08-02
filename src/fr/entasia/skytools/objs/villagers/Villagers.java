@@ -55,7 +55,7 @@ public enum Villagers {
 		new TradeLevel(
 			new Trade(new TradeItem(Material.IRON_PICKAXE)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT)),
 			new Trade(new TradeItem(Material.DIAMOND_PICKAXE)).need(new TradeItem(Material.EMERALD, 2)),
-			new Trade(new TradeItem(Material.IRON_SPADE)).need(new TradeItem(Material.COBBLESTONE, 64)),
+			new Trade(new TradeItem(Material.IRON_SPADE)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT)),
 			new Trade(new TradeItem(Material.DIAMOND_SPADE)).need(new TradeItem(Material.EMERALD, 2))
 		),
 		new TradeLevel(
@@ -319,9 +319,9 @@ public enum Villagers {
 
 	ARMES(9, Profession.BLACKSMITH, 10, 1, 1, // TODO A REFAIRE
 		new TradeLevel(
-				new Trade(new TradeItem(Material.IRON_SWORD)).need(new TradeItem(Material.COBBLESTONE, 64)),
+				new Trade(new TradeItem(Material.IRON_SWORD)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT)),
 				new Trade(new TradeItem(Material.DIAMOND_SWORD)).need(new TradeItem(Material.EMERALD, 2)),
-				new Trade(new TradeItem(Material.IRON_AXE)).need(new TradeItem(Material.COBBLESTONE, 64)),
+				new Trade(new TradeItem(Material.IRON_AXE)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT)),
 				new Trade(new TradeItem(Material.DIAMOND_AXE)).need(new TradeItem(Material.EMERALD, 2))
 		),
 		new TradeLevel(
