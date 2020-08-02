@@ -198,7 +198,6 @@ public class HoeEvents implements Listener {
 	public void a(EntityChangeBlockEvent e) {
 		if (e.getEntityType() == EntityType.FALLING_BLOCK) {
 			FallingBlock fb = (FallingBlock) e.getEntity();
-			System.out.println(fb.getMetadata("canoonShoot").size());
 			if(fb.hasMetadata("canoonShoot"))e.setCancelled(true);
 		}
 	}
