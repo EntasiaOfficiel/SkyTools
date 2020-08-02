@@ -55,7 +55,7 @@ public enum Villagers {
 		new TradeLevel(
 			new Trade(new TradeItem(Material.IRON_PICKAXE)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT)),
 			new Trade(new TradeItem(Material.DIAMOND_PICKAXE)).need(new TradeItem(Material.EMERALD, 2)),
-			new Trade(new TradeItem(Material.IRON_SPADE)).need(new TradeItem(Material.COBBLESTONE, 64)).need(new TradeItem(Material.IRON_INGOT)),
+			new Trade(new TradeItem(Material.IRON_SPADE)).need(new TradeItem(Material.COBBLESTONE, 64, false)),
 			new Trade(new TradeItem(Material.DIAMOND_SPADE)).need(new TradeItem(Material.EMERALD, 2))
 		),
 		new TradeLevel(

@@ -12,7 +12,7 @@ import static org.bukkit.event.EventPriority.HIGHEST;
 
 public class ChatEvents implements Listener {
 
-	@EventHandler(priority = HIGHEST, ignoreCancelled = true)
+	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e){
 		if(Main.guessWord!=null&&e.getMessage().equals(Main.guessWord)) {
 			e.setCancelled(true);
@@ -38,7 +38,7 @@ public class ChatEvents implements Listener {
 					e.getPlayer().getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
 					break;
 				default:
-					e.getPlayer().sendMessage("§cHeu... Oops , je n'arrive pas à te donner la récompense , tu peux contacter un membre du staff ? ^^");
+					e.getPlayer().sendMessage("§cHeu... Oops , je n'arrive pas à te donner la récompense, tu peux contacter un membre du staff ? ^^");
 
 			}
 		}
