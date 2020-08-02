@@ -3,6 +3,7 @@ package fr.entasia.skytools.events;
 import fr.entasia.apis.nbt.EntityNBT;
 import fr.entasia.apis.nbt.ItemNBT;
 import fr.entasia.apis.nbt.NBTComponent;
+import fr.entasia.apis.nbt.NBTTypes;
 import fr.entasia.apis.other.InstantFirework;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
@@ -51,8 +52,8 @@ public class FireworksEvents implements Listener {
 			}
 			if (nbt != null) {
 				NBTComponent injected = new NBTComponent();
-				injected.setKeyString("type", Character.toString(type));
-				injected.setKeyString("id", "minecraft:fireworks");
+				injected.setValue(NBTTypes.String, "type", Character.toString(type));
+				injected.setValue(NBTTypes.String, "id", "minecraft:fireworks");
 				injected.fusion(new NBTComponent("{Count:1b,Damage:0s}"));
 				injected.setComponent("tag", nbt);
 
@@ -77,7 +78,9 @@ public class FireworksEvents implements Listener {
 				List<MetadataValue> list = p.getMetadata("cdFirework");
 				if(list.size()==0||System.currentTimeMillis()-list.get(0).asLong()>500){
 					p.setMetadata("cdFirework", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
-					Utils.fireworks.put(pr, ItemNBT.getNBTSafe(item).getComponent("entasia"));
+					NBTComponent nbt = ItemNBT.getNBTSafe(item).getComponent("entasia");
+					if(nbt==null)return;
+					Utils.fireworks.put(pr, nbt);
 				}else e.setCancelled(true);
 			}
 		}
@@ -93,7 +96,7 @@ public class FireworksEvents implements Listener {
 				NBTComponent nbt = EntityNBT.getNBT(fw);
 				nbt.setComponent("FireworksItem", inject);
 				EntityNBT.setNBT(fw, nbt);
-				if("1".equals(inject.getKeyString("type"))){
+				if("1".equals(inject.getValue(NBTTypes.String, "type"))){
 					InstantFirework.explode(fw);
 				}
 			}
