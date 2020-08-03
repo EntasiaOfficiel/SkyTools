@@ -9,11 +9,13 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.objs.custom.RomanUtils;
 import fr.entasia.skytools.tasks.LavaTask;
+import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -69,14 +71,18 @@ public class EnchantEvents implements Listener {
 		return pair;
 	}
 
+	private boolean a(ItemStack a){
+		return a == null || a.getType() == Material.AIR;
+	}
+
 	@EventHandler
 	public void a(PrepareAnvilEvent e) { // gngn ca s'éxecute 3 fois
 		ItemStack item1 = e.getInventory().getItem(0);
-		if (item1 == null) return;
+		if (a(item1)) return;
 		ItemStack item2 = e.getInventory().getItem(1);
-		if (item2 == null) return;
+		if (a(item2)) return;
 		ItemStack result = e.getResult();
-		if (result == null) return;
+		if (a(result)) return;
 
 		List<String> lore = new ArrayList<>();
 		Map<String, Mutable<String>> ench1 = new HashMap<>();
@@ -99,6 +105,7 @@ public class EnchantEvents implements Listener {
 
 
 		temp = item2.getLore();
+		System.out.println(temp.getClass());
 		Mutable<String> lvl;
 		if (temp == null)temp = new ArrayList<>();
 		else{
@@ -128,6 +135,13 @@ public class EnchantEvents implements Listener {
 			temp.add(entry.getKey() + " " + entry.getValue().value);
 		}
 		temp.addAll(lore);
+		System.out.println(result);
+		System.out.println(result.getType());
 		result.setLore(temp);
 	}
+
+
+//	public void a(EnchantItemEvent e){
+//		e.getExpLevelCost()
+//	}
 }
