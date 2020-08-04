@@ -79,7 +79,7 @@ public enum CustomEnchants {
 		return true;
 	}
 
-	public String a(int lvl){
+	public String str(int lvl){
 		return "§6§r§7"+name+" "+RomanUtils.toRoman(lvl);
 	}
 }
