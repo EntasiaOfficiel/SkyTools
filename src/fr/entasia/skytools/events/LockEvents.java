@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
@@ -35,13 +36,18 @@ public class LockEvents implements Listener {
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
 	public void a(PlayerInteractEvent e){
+		if(!e.hasBlock())return;
 		Player p = e.getPlayer();
 		if(isChest(e.getClickedBlock().getType())){
 			String s = isLockChest(e.getClickedBlock(), true);
 			if(s==null)return;
 			if(!p.getName().equals(s)){
 				e.setCancelled(true);
-				p.sendMessage("§cTu ne peux pas ouvrir ce coffre !");
+				if(e.getAction()==Action.LEFT_CLICK_BLOCK){
+					p.sendMessage("§cTu ne peux pas casser ce coffre !");
+				}else{
+					p.sendMessage("§cTu ne peux pas ouvrir ce coffre !");
+				}
 			}
 		}
 	}
