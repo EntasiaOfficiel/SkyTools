@@ -27,6 +27,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.entity.VillagerReplenishTradeEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -197,13 +198,13 @@ public class OthersEvents implements Listener {
 	}
 
 	@EventHandler
-	public void a(VillagerReplenishTradeEvent e) {
+	public void a(VillagerReplenishTradeEvent e) throws ReflectiveOperationException {
 //		System.out.println("\nreplenish");
 		e.setCancelled(true);
 		testUpgrade(e.getEntity());
 	}
 
-	public static void testUpgrade(Villager v){
+	public static void testUpgrade(Villager v) {
 		NBTComponent nbt = EntityNBT.getNBT(v);
 
 		List<MetadataValue> meta = v.getMetadata("lastUpgrade");
@@ -232,7 +233,6 @@ public class OthersEvents implements Listener {
 			nbt.setValue(NBTTypes.Int, "CareelLevel", current+1);
 			EntityNBT.setNBT(v, nbt);
 			v.setRecipes(list2);
-//			System.out.println("upgraded !");
 		}
 	}
 
@@ -271,5 +271,28 @@ public class OthersEvents implements Listener {
 				e.getPlayer().sendMessage("§bMerci à §3wishdrow§b pour les trades custom des PNJ ! :)");
 			}
 		}
+	}
+
+	@EventHandler
+	public void a(InventoryOpenEvent e) throws ReflectiveOperationException {
+//		e.setCancelled(true);
+
+//		InventoryMerchant a = new InventoryMerchant((EntityPlayer)ReflectionUtils.getEntityPlayer(e.getPlayer()))
+
+
+		// vive mc
+//		Inventory inv = e.getInventory();
+//		InventoryMerchant mcinv = (InventoryMerchant) (((CraftInventory)inv).getInventory());
+//		EntityPlayer ep = (EntityPlayer) ReflectionUtils.getEntityPlayer((Player)e.getPlayer());
+//		int counter = ep.nextContainerCounter();
+//		ep.playerConnection.sendPacket(new PacketPlayOutOpenWindow(counter, "minecraft:villager", ichatbasecomponent, mcinv.getSize()));
+//		MerchantRecipeList merchantrecipelist = imerchant.getOffers(this);
+//		if(merchantrecipelist != null)
+//		{
+//			PacketDataSerializer packetdataserializer = new PacketDataSerializer(Unpooled.buffer());
+//			packetdataserializer.writeInt(counter);
+//			merchantrecipelist.a(packetdataserializer);
+//			ep.playerConnection.sendPacket(new PacketPlayOutCustomPayload("MC|TrList", packetdataserializer));
+//		}
 	}
 }
