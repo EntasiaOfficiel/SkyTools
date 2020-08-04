@@ -38,14 +38,17 @@ public class LockEvents implements Listener {
 	public void a(PlayerInteractEvent e){
 		if(!e.hasBlock())return;
 		Player p = e.getPlayer();
-		if(isChest(e.getClickedBlock().getType())){
+		if(isChest(e.getClickedBlock().getType())) {
 			String s = isLockChest(e.getClickedBlock(), true);
-			if(s==null)return;
-			if(!p.getName().equals(s)){
+			if (s==null) {
+				s = isLockSign(e.getClickedBlock());
+				if (s == null) return;
+			}
+			if (!p.getName().equals(s)) {
 				e.setCancelled(true);
-				if(e.getAction()==Action.LEFT_CLICK_BLOCK){
+				if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 					p.sendMessage("§cTu ne peux pas casser ce coffre !");
-				}else{
+				} else {
 					p.sendMessage("§cTu ne peux pas ouvrir ce coffre !");
 				}
 			}

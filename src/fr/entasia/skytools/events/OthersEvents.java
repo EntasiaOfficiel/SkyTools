@@ -127,6 +127,8 @@ public class OthersEvents implements Listener {
 				}
 				break;
 			}
+			case "bin":
+			case "[bin]":
 			case "poubelle":
 			case "[poubelle]": {
 				e.setLine(0, "§8[§7Poubelle§8]");
