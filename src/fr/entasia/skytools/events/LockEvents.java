@@ -38,19 +38,23 @@ public class LockEvents implements Listener {
 	public void a(PlayerInteractEvent e){
 		if(!e.hasBlock())return;
 		Player p = e.getPlayer();
+
+		String s = null;
 		if(isChest(e.getClickedBlock().getType())) {
-			String s = isLockChest(e.getClickedBlock(), true);
-			if (s==null) {
+			s = isLockChest(e.getClickedBlock(), true);
+		}
+		if (s==null) {
+			if(e.getClickedBlock().getType()==Material.SIGN_POST||e.getClickedBlock().getType()==Material.WALL_SIGN){
 				s = isLockSign(e.getClickedBlock());
 				if (s == null) return;
 			}
-			if (!p.getName().equals(s)) {
-				e.setCancelled(true);
-				if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-					p.sendMessage("§cTu ne peux pas casser ce coffre !");
-				} else {
-					p.sendMessage("§cTu ne peux pas ouvrir ce coffre !");
-				}
+		}
+		if (!p.getName().equals(s)) {
+			e.setCancelled(true);
+			if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+				p.sendMessage("§cTu ne peux pas casser ce coffre !");
+			} else {
+				p.sendMessage("§cTu ne peux pas ouvrir ce coffre !");
 			}
 		}
 	}
@@ -76,8 +80,8 @@ public class LockEvents implements Listener {
 		}else return null;
 	}
 
-	private static String isLockSign(Block b){
-		Sign s = (Sign)b.getState();
+	private static String isLockSign(Block base){ // assuming base is sign
+		Sign s = (Sign)base.getState();
 		if(s.getLine(0).equals("§9[§3Protection§9]")){
 			return s.getLine(1);
 		}else return null;
