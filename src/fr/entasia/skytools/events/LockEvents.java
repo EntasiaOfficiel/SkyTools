@@ -46,8 +46,8 @@ public class LockEvents implements Listener {
 		if (s==null) {
 			if(e.getClickedBlock().getType()==Material.SIGN_POST||e.getClickedBlock().getType()==Material.WALL_SIGN){
 				s = isLockSign(e.getClickedBlock());
-				if (s == null) return;
 			}
+			if (s == null) return;
 		}
 		if (!p.getName().equals(s)) {
 			e.setCancelled(true);
