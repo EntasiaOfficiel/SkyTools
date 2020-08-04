@@ -104,7 +104,6 @@ public class EnchantEvents implements Listener {
 
 
 		temp = item2.getLore();
-		System.out.println(temp.getClass());
 		Mutable<String> lvl;
 		if (temp == null)temp = new ArrayList<>();
 		else{
@@ -134,8 +133,6 @@ public class EnchantEvents implements Listener {
 			temp.add(entry.getKey() + " " + entry.getValue().value);
 		}
 		temp.addAll(lore);
-		System.out.println(result);
-		System.out.println(result.getType());
 		result.setLore(temp);
 	}
 

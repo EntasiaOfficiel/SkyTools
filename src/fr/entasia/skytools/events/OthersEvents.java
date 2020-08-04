@@ -191,15 +191,13 @@ public class OthersEvents implements Listener {
 
 	@EventHandler
 	public void a(VillagerAcquireTradeEvent e){
-//		System.out.println("\naquire");
 		e.setCancelled(true);
 		if(e.getEntity().getTicksLived()<20)return;
 		testUpgrade(e.getEntity());
 	}
 
 	@EventHandler
-	public void a(VillagerReplenishTradeEvent e) throws ReflectiveOperationException {
-//		System.out.println("\nreplenish");
+	public void a(VillagerReplenishTradeEvent e) {
 		e.setCancelled(true);
 		testUpgrade(e.getEntity());
 	}
@@ -208,11 +206,8 @@ public class OthersEvents implements Listener {
 		NBTComponent nbt = EntityNBT.getNBT(v);
 
 		List<MetadataValue> meta = v.getMetadata("lastUpgrade");
-//		System.out.println("test upgrade");
 		if(meta.size()!=0){
-//			System.out.println("not 0");
 			if(System.currentTimeMillis()-meta.get(0).asLong()<1000){
-//				System.out.println("cancelled");
 				return;
 			}
 		}
@@ -273,14 +268,13 @@ public class OthersEvents implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void a(InventoryOpenEvent e) throws ReflectiveOperationException {
+//	@EventHandler
+//	public void a(InventoryOpenEvent e) throws ReflectiveOperationException {
 //		e.setCancelled(true);
-
+//
 //		InventoryMerchant a = new InventoryMerchant((EntityPlayer)ReflectionUtils.getEntityPlayer(e.getPlayer()))
-
-
-		// vive mc
+//
+////		 vive mc
 //		Inventory inv = e.getInventory();
 //		InventoryMerchant mcinv = (InventoryMerchant) (((CraftInventory)inv).getInventory());
 //		EntityPlayer ep = (EntityPlayer) ReflectionUtils.getEntityPlayer((Player)e.getPlayer());
@@ -294,5 +288,5 @@ public class OthersEvents implements Listener {
 //			merchantrecipelist.a(packetdataserializer);
 //			ep.playerConnection.sendPacket(new PacketPlayOutCustomPayload("MC|TrList", packetdataserializer));
 //		}
-	}
+//	}
 }
