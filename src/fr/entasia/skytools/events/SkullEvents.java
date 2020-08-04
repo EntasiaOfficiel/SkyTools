@@ -3,13 +3,13 @@ package fr.entasia.skytools.events;
 import com.mojang.authlib.GameProfile;
 import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
+import fr.entasia.skytools.objs.DirectionUtils;
 import fr.entasia.skytools.objs.custom.CustomSkulls;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,38 +18,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 public class SkullEvents implements Listener {
-
-	public static enum SkullDirections {
-
-		// attention : metas inversés
-		DOWN(new Vector(0, -1, 0), 1),
-		NORTH(new Vector(0, 0, -1), 2),
-		EAST(new Vector(1, 0, 0), 5),
-		SOUTH(new Vector(0, 0, 1), 3),
-		WEST(new Vector(-1, 0, 0), 4),
-
-		;
-
-		public Vector vector;
-		public byte data;
-
-		SkullDirections(Vector v, int data) {
-			this.vector = v;
-			this.data = (byte) data;
-		}
-
-		public static SkullDirections get(BlockFace bf) {
-			for (SkullDirections d : SkullDirections.values()) {
-				if (bf.getModX() == (int) d.vector.getX() && bf.getModY() == (int) d.vector.getY() && bf.getModZ() == (int) d.vector.getZ()) {
-					return d;
-				}
-			}
-			return null;
-		}
-	}
 
 	public static boolean isLeaves(Material m){
 		return m==Material.LEAVES||m==Material.LEAVES_2;
@@ -129,7 +99,7 @@ public class SkullEvents implements Listener {
 								int ra = Main.r.nextInt(10);
 								if (ra == 0) {
 									Block lb;
-									for(SkullDirections d : SkullDirections.values()){
+									for(DirectionUtils d : DirectionUtils.values()){
 										lb = b.getLocation().clone().add(d.vector).getBlock();
 										if(lb.getType()==Material.AIR){
 											place(lb, d, CustomSkulls.POMME);
@@ -145,7 +115,7 @@ public class SkullEvents implements Listener {
 		}
 	}
 
-	public static void place(Block b, SkullDirections face, CustomSkulls skull){
+	public static void place(Block b, DirectionUtils face, CustomSkulls skull){
 		b.setType(Material.SKULL);
 		ItemUtils.setTexture(b, skull.profile);
 		b.setData(face.data);
@@ -154,7 +124,7 @@ public class SkullEvents implements Listener {
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void b(PlayerInteractEvent e){
 		if(e.getHand()== EquipmentSlot.HAND&&e.getAction()==Action.RIGHT_CLICK_BLOCK&&e.getItem()!=null&&e.getItem().getType()==Material.APPLE){
-			SkullDirections d = SkullDirections.get(e.getBlockFace());
+			DirectionUtils d = DirectionUtils.get(e.getBlockFace());
 			if(d!=null){
 				Block b = e.getClickedBlock().getLocation().add(d.vector).getBlock();
 				if(b.getType()==Material.AIR){

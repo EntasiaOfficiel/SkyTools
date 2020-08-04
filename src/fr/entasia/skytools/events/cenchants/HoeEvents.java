@@ -60,25 +60,6 @@ public class HoeEvents implements Listener {
 		}
 	}
 
-	public enum Directions {
-
-		NORTH(BlockFace.NORTH, 2),
-		EAST(BlockFace.EAST, 3),
-		SOUTH(BlockFace.SOUTH, 0),
-		WEST(BlockFace.WEST, 1),
-
-
-		;
-
-		public BlockFace face;
-		public byte data;
-
-		Directions(BlockFace face, int data) {
-			this.face = face;
-			this.data = (byte) data;
-		}
-	}
-
 	static{
 		seeds.put(Material.SEEDS, new CanoonBlock(Material.CROPS, 7,true, Material.SOIL));
 		seeds.put(Material.CARROT_ITEM, new CanoonBlock(Material.CARROT, 7, true, Material.SOIL));

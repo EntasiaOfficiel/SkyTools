@@ -21,13 +21,13 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.entity.VillagerReplenishTradeEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -114,17 +114,33 @@ public class OthersEvents implements Listener {
 
 	@EventHandler
 	public static void onSignChange(SignChangeEvent e) {
-		if(e.getLine(0).equalsIgnoreCase("warp")||e.getLine(0).equalsIgnoreCase("[warp]")) {
-			if (Warp.getWarp(e.getLine(1).toLowerCase()) == null) {
-				e.getPlayer().sendMessage("§cErreur §7» §cCe warp n'existe pas !");
-				e.getBlock().setType(Material.AIR);
-				e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.SIGN));
-			} else {
-				e.setLine(0, "§9[§7Warp§9]");
-				e.setLine(1, "§e" + TextUtils.firstLetterUpper(e.getLine(1)));
+		switch (e.getLine(0).toLowerCase()) {
+			case "warp":
+			case "[warp]": {
+				if (Warp.getWarp(e.getLine(1).toLowerCase()) == null) {
+					e.getPlayer().sendMessage("§cErreur §7» §cCe warp n'existe pas !");
+					e.getBlock().setType(Material.AIR);
+					e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.SIGN));
+				} else {
+					e.setLine(0, "§9[§7Warp§9]");
+					e.setLine(1, "§e" + TextUtils.firstLetterUpper(e.getLine(1)));
+				}
+				break;
 			}
-		}else if(e.getLine(0).equalsIgnoreCase("poubelle")||e.getLine(0).equalsIgnoreCase("[poubelle]"))
-			e.setLine(0, "§8[§7Poubelle§8]");
+			case "poubelle":
+			case "[poubelle]": {
+				e.setLine(0, "§8[§7Poubelle§8]");
+				break;
+			}
+			case "lock":
+			case "[lock]":
+			case "protection":
+			case "[protection]": {
+				e.setLine(0, "§9[§3Protection§9]");
+				e.setLine(1, e.getPlayer().getName());
+				break;
+			}
+		}
 	}
 
 	// TODO A VOIR POUR SUPPR OU NON
@@ -231,17 +247,17 @@ public class OthersEvents implements Listener {
 		}
 	}
 
-	@EventHandler
-	public void clickEvent(PlayerInteractEvent e){
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+	public void netherWart(PlayerInteractEvent e) {
 		ItemStack i = e.getItem();
 		Player p = e.getPlayer();
-		if(e.getAction() == Action.RIGHT_CLICK_BLOCK){
-			if(e.getClickedBlock().getType() == Material.NETHER_WARTS){
-				if(i != null && i.getType() == Material.BLAZE_POWDER){
+		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			if (e.getClickedBlock().getType() == Material.NETHER_WARTS) {
+				if (i != null && i.getType() == Material.BLAZE_POWDER) {
 					byte b = e.getClickedBlock().getData();
-					if(b != 3){
-						e.getClickedBlock().setData((byte) (b+1));
-						if(p.getGameMode() != GameMode.CREATIVE){
+					if (b != 3) {
+						e.getClickedBlock().setData((byte) (b + 1));
+						if (p.getGameMode() != GameMode.CREATIVE) {
 							p.getInventory().getItemInMainHand().subtract(1);
 						}
 					}
@@ -249,6 +265,7 @@ public class OthersEvents implements Listener {
 			}
 		}
 	}
+
 
 	@EventHandler
 	public void a(PlayerInteractEntityEvent e) {

@@ -77,6 +77,7 @@ public class Main extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new HoeEvents(), this);
 			getServer().getPluginManager().registerEvents(new SkyFisherEvents(), this);
 			getServer().getPluginManager().registerEvents(new ArrowEvents(), this);
+			getServer().getPluginManager().registerEvents(new LockEvents(), this);
 
 			getCommand("skytools").setExecutor(new SkyToolsCmd());
 			getCommand("speedwriter").setExecutor(new SWCmd());
