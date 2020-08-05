@@ -1,5 +1,9 @@
 package fr.entasia.skytools.objs.custom;
 
+import fr.entasia.skytools.events.cenchants.EnchantEvents;
+import net.minecraft.server.v1_12_R1.ItemFireworks;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -36,6 +40,8 @@ public enum CustomArrows {
 		if(lore==null)lore = new ArrayList<>();
 		lore.add(str());
 		item.setLore(lore);
+		item.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		item.addUnsafeEnchantment(Enchantment.LUCK, 1);
 	}
 
 	public String str(){

@@ -169,7 +169,7 @@ public class EnchantEvents implements Listener {
 		entries.add(new EnchantEntry(CustomEnchants.JUMP, 13, 35, 2, ItemCategory.BOOTS));
 		entries.add(new EnchantEntry(CustomEnchants.LAVA_EATER, 15, 30, 1, ItemCategory.ARMORS));
 		entries.add(new EnchantEntry(CustomEnchants.WITHER, 18, 30, 1, ItemCategory.SWORDS));
-		entries.add(new EnchantEntry(CustomEnchants.SKY_FISHER, 30, 100, 1, Material.FISHING_ROD));
+		entries.add(new EnchantEntry(CustomEnchants.SKY_FISHER, 30, 50, 1, Material.FISHING_ROD));
 	}
 	
 	public static class EnchantEntry{
