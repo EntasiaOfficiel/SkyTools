@@ -12,14 +12,10 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.Warp;
 import fr.entasia.skytools.objs.villagers.Villagers;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import fr.entasia.skytools.tasks.SquidTask;
+import org.bukkit.*;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,6 +27,7 @@ import org.bukkit.event.entity.VillagerReplenishTradeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
@@ -38,6 +35,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -308,4 +306,15 @@ public class OthersEvents implements Listener {
 //			ep.playerConnection.sendPacket(new PacketPlayOutCustomPayload("MC|TrList", packetdataserializer));
 //		}
 //	}
+
+
+	@EventHandler
+	public void a(WeatherChangeEvent e){
+		if(e.toWeatherState()){
+			SquidTask.start();
+		}else{
+			SquidTask.stop();
+		}
+	}
+
 }
