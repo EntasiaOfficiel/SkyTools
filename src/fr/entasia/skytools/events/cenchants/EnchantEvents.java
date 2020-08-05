@@ -1,6 +1,7 @@
 package fr.entasia.skytools.events.cenchants;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
+import fr.entasia.apis.other.ItemCategory;
 import fr.entasia.apis.other.Mutable;
 import fr.entasia.apis.other.Pair;
 import fr.entasia.skycore.apis.InternalAPI;
@@ -9,7 +10,9 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.objs.custom.RomanUtils;
 import fr.entasia.skytools.tasks.LavaTask;
+import net.minecraft.server.v1_12_R1.ItemSword;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -138,27 +141,58 @@ public class EnchantEvents implements Listener {
 	}
 
 
+	@EventHandler
 	public void a(EnchantItemEvent e){
-//		e.getExpLevelCost()
+		System.out.println("event");
+		for(EnchantEntry entry : entries){
+			System.out.println(entry.enchant);
+			if(e.getExpLevelCost()<entry.neededLvl)continue;
+			if(!entry.items.contains(e.getItem().getType()))continue;
+			int lvl = 0;
+			System.out.println("ok");
+			for(int i=0;i<entry.maxlvl;i++){
+				if(entry.percent==100||Main.r.nextInt(100)<entry.percent){
+					lvl++;
+				}else break;
+			}
+			System.out.println("lvl="+lvl);
+			if(lvl==0)continue;
+			entry.enchant.enchant(e.getItem(), lvl);
+		}
 	}
 
 	public static ArrayList<EnchantEntry> entries = new ArrayList<>();
 
 	static{
-		
+		entries.add(new EnchantEntry(CustomEnchants.VISION, 13, 35, 2, ItemCategory.HELMETS));
+		entries.add(new EnchantEntry(CustomEnchants.SPEED, 13, 35, 2, ItemCategory.BOOTS));
+		entries.add(new EnchantEntry(CustomEnchants.JUMP, 13, 35, 2, ItemCategory.BOOTS));
+		entries.add(new EnchantEntry(CustomEnchants.LAVA_EATER, 15, 30, 1, ItemCategory.ARMORS));
+		entries.add(new EnchantEntry(CustomEnchants.WITHER, 18, 30, 1, ItemCategory.SWORDS));
+		entries.add(new EnchantEntry(CustomEnchants.SKY_FISHER, 30, 100, 1, Material.FISHING_ROD));
 	}
 	
 	public static class EnchantEntry{
 		public CustomEnchants enchant;
-		public int neededExp;
+		public int neededLvl;
 		public int percent;
 		public int maxlvl;
+		public HashSet<Material> items;
 
-		public EnchantEntry(CustomEnchants enchant, int neededExp, int percent, int maxlvl){
+		public EnchantEntry(CustomEnchants enchant, int neededLvl, int percent, int maxlvl, ItemCategory cat){
 			this.enchant = enchant;
-			this.neededExp = neededExp;
+			this.neededLvl = neededLvl;
 			this.percent = percent;
 			this.maxlvl = maxlvl;
+			this.items = cat.content;
+		}
+
+		public EnchantEntry(CustomEnchants enchant, int neededLvl, int percent, int maxlvl, Material... items){
+			this.enchant = enchant;
+			this.neededLvl = neededLvl;
+			this.percent = percent;
+			this.maxlvl = maxlvl;
+			this.items = new HashSet<>(Arrays.asList(items));
 		}
 	}
 	
