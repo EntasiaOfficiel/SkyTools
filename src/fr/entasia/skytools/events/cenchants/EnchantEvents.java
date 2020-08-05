@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -137,7 +138,28 @@ public class EnchantEvents implements Listener {
 	}
 
 
-//	public void a(EnchantItemEvent e){
+	public void a(EnchantItemEvent e){
 //		e.getExpLevelCost()
-//	}
+	}
+
+	public static ArrayList<EnchantEntry> entries = new ArrayList<>();
+
+	static{
+		
+	}
+	
+	public static class EnchantEntry{
+		public CustomEnchants enchant;
+		public int neededExp;
+		public int percent;
+		public int maxlvl;
+
+		public EnchantEntry(CustomEnchants enchant, int neededExp, int percent, int maxlvl){
+			this.enchant = enchant;
+			this.neededExp = neededExp;
+			this.percent = percent;
+			this.maxlvl = maxlvl;
+		}
+	}
+	
 }

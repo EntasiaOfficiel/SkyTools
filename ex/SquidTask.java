@@ -21,7 +21,7 @@ public class SquidTask extends BukkitRunnable {
 	public static BukkitTask task;
 
 	public static void start(){
-		task = new SquidTask().runTaskTimer(Main.main, 100, 20);
+		task = new SquidTask().runTaskTimer(Main.main, 100, 100);
 	}
 
 	public static void stop(){
@@ -40,7 +40,7 @@ public class SquidTask extends BukkitRunnable {
 
 		for (Chunk c : Dimensions.OVERWORLD.world.getLoadedChunks()) {
 			i++;
-			if (i % 10 != offset) continue;
+			if (i % 25 != offset) continue;
 			int r = Main.r.nextInt(256);
 			l.setX((c.getX() * 16 + r / 16) + 0.5); // tkt
 			l.setZ((c.getZ() * 16 + r % 16) + 0.5);
@@ -49,6 +49,6 @@ public class SquidTask extends BukkitRunnable {
 			ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 99999, 1));
 		}
 		offset++;
-		if (offset == 10) offset = 0;
+		if (offset == 25) offset = 0;
 	}
 }

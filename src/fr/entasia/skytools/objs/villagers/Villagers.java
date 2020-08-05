@@ -230,10 +230,10 @@ public enum Villagers {
 				new Trade(new TradeItem(Material.TIPPED_ARROW).effect(PotionType.WATER_BREATHING)).need(new TradeItem(Material.ARROW, 8)).need(new TradeItem(Material.IRON_INGOT, 4))
 		),
 		new TradeLevel(
-				new Trade(new TradeItem(Material.ARROW, 16).lore(CustomArrows.FIREWORKS.a())).need(new TradeItem(Material.IRON_INGOT, 2)),
-				new Trade(new TradeItem(Material.ARROW, 4).lore(CustomArrows.EXPLOSION.a())).need(new TradeItem(Material.GOLD_INGOT, 1)),
-				new Trade(new TradeItem(Material.ARROW, 5).lore(CustomArrows.FIRE.a())).need(new TradeItem(Material.EMERALD, 1)),
-				new Trade(new TradeItem(Material.ARROW, 5).lore(CustomArrows.DRAGON.a())).need(new TradeItem(Material.EMERALD, 1))
+				new Trade(new TradeItem(Material.ARROW, 16).lore(CustomArrows.FIREWORKS.str())).need(new TradeItem(Material.IRON_INGOT, 2)),
+				new Trade(new TradeItem(Material.ARROW, 4).lore(CustomArrows.EXPLOSION.str())).need(new TradeItem(Material.GOLD_INGOT, 1)),
+				new Trade(new TradeItem(Material.ARROW, 5).lore(CustomArrows.FIRE.str())).need(new TradeItem(Material.EMERALD, 1)),
+				new Trade(new TradeItem(Material.ARROW, 5).lore(CustomArrows.DRAGON.str())).need(new TradeItem(Material.EMERALD, 1))
 		)
 	),
 
@@ -397,7 +397,7 @@ public enum Villagers {
 			),
 			new TradeLevel(
 					new Trade(new TradeItem(Material.TNT, 12)).need(new TradeItem(Material.REDSTONE_BLOCK, 32)).need(new TradeItem(Material.REDSTONE, 64)),
-					new Trade(new TradeItem(Material.ARROW, 16).lore(CustomArrows.EXPLOSION.a())).need(new TradeItem(Material.TNT, 48)).need(new TradeItem(Material.EMERALD, 4)),
+					new Trade(new TradeItem(Material.ARROW, 16).lore(CustomArrows.EXPLOSION.str())).need(new TradeItem(Material.TNT, 48)).need(new TradeItem(Material.EMERALD, 4)),
 					new Trade(new TradeItem(Material.END_CRYSTAL)).need(new TradeItem(Material.REDSTONE_BLOCK, 32)).need(new TradeItem(Material.REDSTONE, 64))
 			)
 	),

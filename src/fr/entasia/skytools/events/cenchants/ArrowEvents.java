@@ -28,10 +28,10 @@ public class ArrowEvents implements Listener {
 			if(CustomArrows.FIREWORKS.hasEnchant(e.getArrowItem())) {
 				FWArrowTask.start(e.getProjectile());
 			}
-
 			if(CustomArrows.FIRE.hasEnchant(e.getArrowItem())) {
 				e.getProjectile().setCustomName("$fire");
-			}else if(CustomArrows.DRAGON.hasEnchant(e.getArrowItem())) {
+			}
+			if(CustomArrows.DRAGON.hasEnchant(e.getArrowItem())) {
 				e.getProjectile().setCustomName("$dragon");
 			}
 		}
@@ -71,8 +71,8 @@ public class ArrowEvents implements Listener {
 				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
 				for (LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 4.5, 4.5, 4.5)) {
 					if (!(ent instanceof Player)) {
-						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4*20, 1));
-						ent.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0));
+						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4*20, 2));
+						ent.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 1));
 					}
 					break;
 				}

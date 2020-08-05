@@ -70,16 +70,16 @@ public enum CustomEnchants {
 		return 0;
 	}
 
-	public boolean enchant(ItemStack item, int level){
-		if(maxlvl<level)return false;
+	public boolean enchant(ItemStack item, int lvl){
+		if(maxlvl<lvl)return false;
 		List<String> lore = item.getLore();
 		if(lore==null)lore = new ArrayList<>();
-		lore.add("§6§r§7"+name+" "+ RomanUtils.toRoman(Math.min(maxlvl, level)));
+		lore.add(str(lvl));
 		item.setLore(lore);
 		return true;
 	}
 
 	public String str(int lvl){
-		return "§6§r§7"+name+" "+RomanUtils.toRoman(lvl);
+		return "§6§r§7"+name+" "+RomanUtils.toRoman(Math.min(maxlvl, lvl));
 	}
 }

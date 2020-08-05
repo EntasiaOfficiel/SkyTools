@@ -12,10 +12,14 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.Warp;
 import fr.entasia.skytools.objs.villagers.Villagers;
-import fr.entasia.skytools.tasks.SquidTask;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -27,7 +31,6 @@ import org.bukkit.event.entity.VillagerReplenishTradeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
@@ -35,7 +38,6 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -238,10 +240,11 @@ public class OthersEvents implements Listener {
 			ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
 					" Infos :§6" + v.getLocation());
 		}else{
-			if (current >= vi.levels.length) return;
+			int newLvl = current+1;
+			if (newLvl >= vi.levels.length) return;
 			List<MerchantRecipe> list2 = new ArrayList<>(v.getRecipes());
-			vi.addToList(list2, current+1);
-			nbt.setValue(NBTTypes.Int, "CareelLevel", current+1);
+			vi.addToList(list2, newLvl);
+			nbt.setValue(NBTTypes.Int, "CareelLevel", newLvl);
 			EntityNBT.setNBT(v, nbt);
 			v.setRecipes(list2);
 		}
@@ -308,13 +311,13 @@ public class OthersEvents implements Listener {
 //	}
 
 
-	@EventHandler
-	public void a(WeatherChangeEvent e){
-		if(e.toWeatherState()){
-			SquidTask.start();
-		}else{
-			SquidTask.stop();
-		}
-	}
+//	@EventHandler
+//	public void a(WeatherChangeEvent e){
+//		if(e.toWeatherState()){
+//			SquidTask.start();
+//		}else{
+//			SquidTask.stop();
+//		}
+//	}
 
 }

@@ -25,7 +25,7 @@ public enum CustomArrows {
 		List<String> list = item.getLore();
 		if(list==null)return false;
 		for(String s : list){
-			if(("§7"+name).equals(s))return true;
+			if(("§6§r§7"+name).equals(s))return true;
 		}
 		return false;
 	}
@@ -34,11 +34,11 @@ public enum CustomArrows {
 		if(item==null)return;
 		List<String> lore = item.getLore();
 		if(lore==null)lore = new ArrayList<>();
-		lore.add("§7"+name);
+		lore.add(str());
 		item.setLore(lore);
 	}
 
-	public String a(){
+	public String str(){
 		return "§6§r§7"+name;
 	}
 
