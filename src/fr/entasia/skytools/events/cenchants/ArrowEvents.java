@@ -69,10 +69,10 @@ public class ArrowEvents implements Listener {
 			if (name == null||!name.startsWith("$")) return;
 			if(name.equals("$explode")) {
 				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
+				pr.getWorld().createExplosion(pr, 2.5f, false, false);
 				for (LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 4.5, 4.5, 4.5)) {
 					if (!(ent instanceof Player)) {
-						ent.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4*20, 2));
-						ent.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 1));
+						ent.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 3));
 					}
 					break;
 				}
