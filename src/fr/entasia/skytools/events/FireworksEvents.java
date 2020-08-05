@@ -147,12 +147,14 @@ public class FireworksEvents implements Listener {
 						e.setCancelled(true);
 						helmet = e.getCurrentItem();
 					}else{
-						if(e.getCurrentItem().getItemMeta().equals(helmet.getItemMeta())){
+						if(e.getCurrentItem().isSimilar(helmet)){
 							// cas 2 du système de reste
+							int total = e.getWhoClicked().getInventory().getHelmet().getAmount();
+							if(total==64)return;
 							e.setCancelled(true);
-							int total = e.getWhoClicked().getInventory().getHelmet().getAmount()+e.getCurrentItem().getAmount();
+							total += e.getCurrentItem().getAmount();
 							if(total>64){
-								reste = e.getCurrentItem().clone();
+								reste = e.getCurrentItem();
 								reste.setAmount(total-64);
 								helmet.setAmount(64);
 							}else{

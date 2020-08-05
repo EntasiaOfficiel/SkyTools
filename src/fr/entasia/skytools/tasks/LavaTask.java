@@ -26,7 +26,6 @@ public class LavaTask extends BukkitRunnable { // 10 ticks actuellement
 
 	public static boolean isLava(Material m){
 		return m==Material.LAVA||m==Material.STATIONARY_LAVA;
-
 	}
 
 	@Override
