@@ -1,6 +1,6 @@
 package fr.entasia.skytools.tasks;
 
-import fr.entasia.skycore.others.enums.Dimensions;
+import fr.entasia.skycore.objs.enums.Dimensions;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.Bukkit;
