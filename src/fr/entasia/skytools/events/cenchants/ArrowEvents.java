@@ -68,6 +68,7 @@ public class ArrowEvents implements Listener {
 			String name = pr.getCustomName();
 			if (name == null||!name.startsWith("$")) return;
 			if(name.equals("$explode")) {
+				pr.setCustomName(""); // wtf ?
 				InstantFirework.explode(pr.getLocation(), Utils.blackmeta);
 				pr.getWorld().createExplosion(pr, 2.5f, false, false);
 				for (LivingEntity ent : pr.getLocation().getNearbyEntitiesByType(LivingEntity.class, 4.5, 4.5, 4.5)) {
@@ -98,6 +99,7 @@ public class ArrowEvents implements Listener {
 							a.setReapplicationDelay(5);
 						}else return;
 						a.setCustomName(name);
+						pr.setCustomName(""); // wtf ?
 
 					}
 				}.runTaskLater(Main.main, 1);

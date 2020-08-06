@@ -143,19 +143,16 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler
 	public void a(EnchantItemEvent e){
-		System.out.println("event");
 		for(EnchantEntry entry : entries){
 			System.out.println(entry.enchant);
 			if(e.getExpLevelCost()<entry.neededLvl)continue;
 			if(!entry.items.contains(e.getItem().getType()))continue;
 			int lvl = 0;
-			System.out.println("ok");
 			for(int i=0;i<entry.maxlvl;i++){
 				if(entry.percent==100||Main.r.nextInt(100)<entry.percent){
 					lvl++;
 				}else break;
 			}
-			System.out.println("lvl="+lvl);
 			if(lvl==0)continue;
 			entry.enchant.enchant(e.getItem(), lvl);
 		}
