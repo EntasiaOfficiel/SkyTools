@@ -4,6 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import fr.entasia.apis.other.ItemCategory;
 import fr.entasia.apis.other.Mutable;
 import fr.entasia.apis.other.Pair;
+import fr.entasia.apis.utils.ServerUtils;
 import fr.entasia.skycore.apis.InternalAPI;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
@@ -120,7 +121,7 @@ public class EnchantEvents implements Listener {
 						if (lvl.value.equals(pair.value)){
 							CustomEnchants ench = CustomEnchants.get(pair.key);
 							if(ench==null){
-								InternalAPI.warn("Enchantement invalide : "+pair.key.replace("§", "&")+" (lore ?)", false);
+								ServerUtils.permMsg("log.skytools","Enchantement invalide : "+pair.key.replace("§", "&")+" (lore ?)");
 								continue; // poof il disparait (pas sensé se produire)
 							}
 							int rlvl = RomanUtils.toInt(lvl.value)+1;
