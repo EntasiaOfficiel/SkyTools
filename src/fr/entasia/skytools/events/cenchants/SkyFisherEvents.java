@@ -113,7 +113,7 @@ public class SkyFisherEvents implements Listener {
 							}
 						}
 						assert ent != null;
-						Vector v = e.getPlayer().getLocation().subtract(aht.centerLoc()).toVector().multiply(0.1).add(new Vector(0, 0.2, 0));
+						Vector v = e.getPlayer().getLocation().subtract(aht.centerLoc()).toVector().multiply(1/8f).add(new Vector(0, 0.3, 0));
 						ent.setVelocity(v);
 					}
 					aht.stop();
