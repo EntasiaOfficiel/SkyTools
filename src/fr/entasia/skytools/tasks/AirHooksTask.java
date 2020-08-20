@@ -255,20 +255,20 @@ public class AirHooksTask extends BukkitRunnable {
 			CustomArrows.FIRE.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(5)){
-		    ItemStack item = new ItemStack(Material.STONE_SWORD);
+			ItemStack item = new ItemStack(Material.STONE_SWORD);
 			item.setDurability((short) (Randomiser.random.nextInt(60)+40));
-		    CustomEnchants.WITHER.enchant(item, 1);
-		    return w.dropItem(centerLoc(), item);
+			CustomEnchants.WITHER.enchant(item, 1);
+			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(2)){
-		    ItemStack item = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-		    item.setDurability((short) (Randomiser.random.nextInt(100)+50));
-		    CustomEnchants.LAVA_EATER.enchant(item, 1);
-		    return w.dropItem(centerLoc(), item);
-		}else if(r.isInNext(2)){
-		    ItemStack item = new ItemStack(Material.IRON_CHESTPLATE);
+			ItemStack item = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
 			item.setDurability((short) (Randomiser.random.nextInt(100)+50));
-		    CustomEnchants.LAVA_EATER.enchant(item, 1);
-		    return w.dropItem(centerLoc(), item);
+			CustomEnchants.LAVA_EATER.enchant(item, 1);
+			return w.dropItem(centerLoc(), item);
+		}else if(r.isInNext(2)){
+			ItemStack item = new ItemStack(Material.IRON_CHESTPLATE);
+			item.setDurability((short) (Randomiser.random.nextInt(100)+50));
+			CustomEnchants.LAVA_EATER.enchant(item, 1);
+			return w.dropItem(centerLoc(), item);
 		}else{
 			if(r.number%2==0) return w.dropItem(centerLoc(), new ItemStack(Material.GLOWSTONE));
 			else return w.dropItem(centerLoc(), new ItemStack(Material.NETHERRACK));

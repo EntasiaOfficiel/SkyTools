@@ -20,3 +20,12 @@ commands:
 
   cosmetiques:
     aliases: [cosm,cosmetique,pet,pets,particules]
+
+  tpa:
+    aliases: [tpas]
+
+  tpaccept:
+    aliases: [tpyes]
+
+  tpdeny:
+    aliases: [tpno, tpadeny]

@@ -40,7 +40,7 @@ public class Utils {
 		blackmeta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).build());
 	}
 
-	public static ToolPlayer getPlayer(Player p){
+	public static ToolPlayer getToolPlayer(Player p){
 		ToolPlayer tp = playerCache.get(p.getUniqueId());
 		if(tp==null){
 			tp = new ToolPlayer(p);
@@ -50,7 +50,7 @@ public class Utils {
 	}
 
 	public static void updateEffects(Player p){
-		ToolPlayer tp = getPlayer(p);
+		ToolPlayer tp = getToolPlayer(p);
 		PlayerInventory inv = p.getInventory();
 
 		updateEffect(p, tp.vision, inv.getHelmet(), CustomEnchants.VISION, PotionEffectType.NIGHT_VISION);

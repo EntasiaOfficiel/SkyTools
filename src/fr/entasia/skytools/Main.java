@@ -1,9 +1,6 @@
 package fr.entasia.skytools;
 
-import fr.entasia.skytools.commands.CosmCmd;
-import fr.entasia.skytools.commands.SWCmd;
-import fr.entasia.skytools.commands.SkyToolsCmd;
-import fr.entasia.skytools.commands.WarpCmd;
+import fr.entasia.skytools.commands.*;
 import fr.entasia.skytools.commands.custom.CustomArrowCmd;
 import fr.entasia.skytools.commands.custom.CustomEnchantCmd;
 import fr.entasia.skytools.events.*;
@@ -86,6 +83,9 @@ public class Main extends JavaPlugin {
 
 			getCommand("customarrow").setExecutor(new CustomArrowCmd());
 			getCommand("customenchant").setExecutor(new CustomEnchantCmd());
+			getCommand("tpa").setExecutor(new TpaCmd());
+			getCommand("tpaccept").setExecutor(new TpacceptCmd());
+			getCommand("tpdeny").setExecutor(new TpdenyCmd());
 
 			new SWTask().runTaskTimerAsynchronously(this, 0, 10*60*20);
 			new CleanUpTask().runTaskTimerAsynchronously(this, 0, 5*60*20);
