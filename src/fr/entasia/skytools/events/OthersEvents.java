@@ -31,6 +31,7 @@ import org.bukkit.event.entity.VillagerReplenishTradeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
@@ -49,6 +50,11 @@ public class OthersEvents implements Listener {
 	public void a(PlayerJoinEvent e){
 		ToolPlayer tp = Utils.playerCache.get(e.getPlayer().getUniqueId());
 		if(tp!=null)tp.p = e.getPlayer();
+	}
+
+	@EventHandler
+	public void a(PlayerQuitEvent e){
+		Utils.playerCache.remove(e.getPlayer().getUniqueId());
 	}
 
 	@EventHandler

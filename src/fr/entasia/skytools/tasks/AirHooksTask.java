@@ -171,28 +171,29 @@ public class AirHooksTask extends BukkitRunnable {
 		return corner.clone().add(baserVector);
 	}
 
-	// Merci Narcos pour les loots !
+	// Merci Narcos/Samourai_Mouton pour les loots !
+
+	private int r(int max){
+		return Main.r.nextInt(max)+1;
+	}
 
 	public Entity owLoot(){
 		Randomiser r = new Randomiser(80);
 		if(r.isInNext(15)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.FEATHER));
+			return w.dropItem(centerLoc(), new ItemStack(Material.FEATHER, r(10)));
 		}else if(r.isInNext(8)) {
 			return w.dropItem(centerLoc(), new ItemStack(Material.ARROW));
 		}else if(r.isInNext(5)) {
 			ItemStack item = new ItemStack(Material.ELYTRA);
-			item.setDurability((short) (Randomiser.random.nextInt(300)+75));
-			return w.dropItem(centerLoc(), item);
-		}else if(r.isInNext(10)) {
-			ItemStack item = new ItemStack(Material.ARROW);
+			item.setDurability((short) (Main.r.nextInt(300) + 75));
 			return w.dropItem(centerLoc(), item);
 		}
 
 		if(r.isInNext(8)) {
 			return w.spawnEntity(centerLoc(), EntityType.PARROT);
-		}else if(r.isInNext(3)) {
+		}else if(r.isInNext(5)) {
 			return w.spawnEntity(centerLoc(), EntityType.CHICKEN);
-		}else if(r.isInNext(1)) {
+		}else if(r.isInNext(2)) {
 			if(w.hasStorm()){
 				return w.spawnEntity(centerLoc(), EntityType.LIGHTNING);
 			}else{
@@ -204,20 +205,21 @@ public class AirHooksTask extends BukkitRunnable {
 				return w.dropItem(centerLoc(), item);
 			}
 		}
+
 		if(r.isInNext(10)) {
-			ItemStack item = new ItemStack(Material.ARROW);
+			ItemStack item = new ItemStack(Material.ARROW, r(7));
 			CustomArrows.EXPLOSION.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(10)) {
-			ItemStack item = new ItemStack(Material.ARROW);
+			ItemStack item = new ItemStack(Material.ARROW, r(7));
 			CustomArrows.FIREWORKS.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else{
-			ItemStack item = new ItemStack(Material.FIREWORK);
+			ItemStack item = new ItemStack(Material.FIREWORK, r(10));
 			FireworkMeta meta = (FireworkMeta) item.getItemMeta();
 			meta.addEffect(FireworkEffect.builder().withColor(org.bukkit.Color.RED, org.bukkit.Color.PURPLE).build());
 			meta.setPower(2);
-			return w.dropItem(centerLoc(), new ItemStack(Material.FIREWORK));
+			return w.dropItem(centerLoc(), new ItemStack(Material.FIREWORK, r(15)));
 		}
 	}
 
@@ -305,12 +307,12 @@ public class AirHooksTask extends BukkitRunnable {
 		}
 
 		if(r.isInNext(10)){
-			ItemStack item = new ItemStack(Material.ARROW);
+			ItemStack item = new ItemStack(Material.ARROW, r(5));
 			CustomArrows.DRAGON.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(5)){
 			ItemStack item = new ItemStack(Material.IRON_SWORD);
-			CustomEnchants.VAMPIRE.enchant(item, Randomiser.random.nextInt(2)+1);
+			CustomEnchants.VAMPIRE.enchant(item, r(2));
 			return w.dropItem(centerLoc(), item);
 		}else{
 			if(r.number%2==0) return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT));
