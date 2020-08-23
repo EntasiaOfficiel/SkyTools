@@ -173,27 +173,34 @@ public class AirHooksTask extends BukkitRunnable {
 
 	// Merci Narcos/Samourai_Mouton pour les loots !
 
-	private int r(int max){
+	private int rand(int max){
 		return Main.r.nextInt(max)+1;
 	}
 
 	public Entity owLoot(){
-		Randomiser r = new Randomiser(80);
+		Randomiser r = new Randomiser(100);
 		if(r.isInNext(15)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.FEATHER, r(10)));
-		}else if(r.isInNext(8)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.ARROW));
+			return w.dropItem(centerLoc(), new ItemStack(Material.RAW_FISH, rand(4) + 2));
+		}else if(r.isInNext(10)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.RAW_FISH, rand(2) + 2, (short)1));
+		}else if(r.isInNext(10)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.RAW_FISH, rand(2), (short)2));
+
+		}else if(r.isInNext(7)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.ARROW, rand(8) + 12));
+		}else if(r.isInNext(5)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.FEATHER, rand(2)));
 		}else if(r.isInNext(5)) {
 			ItemStack item = new ItemStack(Material.ELYTRA);
 			item.setDurability((short) (Main.r.nextInt(300) + 75));
 			return w.dropItem(centerLoc(), item);
 		}
 
-		if(r.isInNext(8)) {
+		if(r.isInNext(10)) {
 			return w.spawnEntity(centerLoc(), EntityType.PARROT);
-		}else if(r.isInNext(5)) {
+		}else if(r.isInNext(7)) {
 			return w.spawnEntity(centerLoc(), EntityType.CHICKEN);
-		}else if(r.isInNext(2)) {
+		}else if(r.isInNext(1)) {
 			if(w.hasStorm()){
 				return w.spawnEntity(centerLoc(), EntityType.LIGHTNING);
 			}else{
@@ -207,34 +214,40 @@ public class AirHooksTask extends BukkitRunnable {
 		}
 
 		if(r.isInNext(10)) {
-			ItemStack item = new ItemStack(Material.ARROW, r(7));
+			ItemStack item = new ItemStack(Material.ARROW, rand(8)+8);
 			CustomArrows.EXPLOSION.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(10)) {
-			ItemStack item = new ItemStack(Material.ARROW, r(7));
+			ItemStack item = new ItemStack(Material.ARROW, rand(8)+8);
 			CustomArrows.FIREWORKS.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else{
-			ItemStack item = new ItemStack(Material.FIREWORK, r(10));
+			ItemStack item = new ItemStack(Material.FIREWORK, rand(5)+5);
 			FireworkMeta meta = (FireworkMeta) item.getItemMeta();
-			meta.addEffect(FireworkEffect.builder().withColor(org.bukkit.Color.RED, org.bukkit.Color.PURPLE).build());
+			meta.addEffect(FireworkEffect.builder().withColor(org.bukkit.Color.RED, org.bukkit.Color.PURPLE)
+					.build());
 			meta.setPower(2);
-			return w.dropItem(centerLoc(), new ItemStack(Material.FIREWORK, r(15)));
+			item.setItemMeta(meta);
+			return w.dropItem(centerLoc(), item);
 		}
 	}
 
 	public Entity netherLoot(){
-		Randomiser r = new Randomiser(80);
+		Randomiser r = new Randomiser(100);
 
-		if(r.isInNext(20)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.SOUL_SAND));
-		}else if(r.isInNext(15)){
-			return w.dropItem(centerLoc(), new ItemStack(Material.BLAZE_ROD));
-		}else if(r.isInNext(15)) {
+		if(r.isInNext(10)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.GLOWSTONE_DUST, rand(16)+16));
+		}else if(r.isInNext(10)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.GLOWSTONE, rand(8)+8));
+		}else if(r.isInNext(10)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.SOUL_SAND, rand(6)+4));
+		}else if(r.isInNext(5)){
+			return w.dropItem(centerLoc(), new ItemStack(Material.BLAZE_ROD, rand(4)+4));
+		}else if(r.isInNext(5)) {
 			return w.dropItem(centerLoc(), new ItemStack(Material.FIREBALL));
 		}else if(r.isInNext(5)) {
 			ItemStack item = new ItemStack(Material.ELYTRA);
-			item.setDurability((short) (Randomiser.random.nextInt(300)+75));
+			item.setDurability((short) (rand(300)+75));
 			return w.dropItem(centerLoc(), item);
 		}
 
@@ -251,40 +264,45 @@ public class AirHooksTask extends BukkitRunnable {
 		}
 
 		if(r.isInNext(10)) {
-			ItemStack item = new ItemStack(Material.ARROW);
+			ItemStack item = new ItemStack(Material.ARROW, rand(8)+8);
 			CustomArrows.FIRE.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(5)){
 			ItemStack item = new ItemStack(Material.STONE_SWORD);
-			item.setDurability((short) (Randomiser.random.nextInt(60)+40));
+			item.setDurability((short) (rand(60)+40));
 			CustomEnchants.WITHER.enchant(item, 1);
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(2)){
 			ItemStack item = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-			item.setDurability((short) (Randomiser.random.nextInt(100)+50));
+			item.setDurability((short) (rand(100)+50));
 			CustomEnchants.LAVA_EATER.enchant(item, 1);
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(2)){
 			ItemStack item = new ItemStack(Material.IRON_CHESTPLATE);
-			item.setDurability((short) (Randomiser.random.nextInt(100)+50));
+			item.setDurability((short) (rand(100)+50));
 			CustomEnchants.LAVA_EATER.enchant(item, 1);
 			return w.dropItem(centerLoc(), item);
 		}else{
-			if(r.number%2==0) return w.dropItem(centerLoc(), new ItemStack(Material.GLOWSTONE));
-			else return w.dropItem(centerLoc(), new ItemStack(Material.NETHERRACK));
+			return w.dropItem(centerLoc(), new ItemStack(Material.NETHERRACK));
 		}
 	}
 
 	public Entity endLoot(){
-		Randomiser r = new Randomiser(80);
+		Randomiser r = new Randomiser(100);
 
 
-		if(r.isInNext(20)){
-			return w.dropItem(centerLoc(), new ItemStack(Material.ENDER_PEARL));
+		if(r.isInNext(15)){
+			return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT, rand(6)+4));
+		}else if(r.isInNext(15)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT_POPPED, rand(8) + 8));
+		}else if(r.isInNext(14)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.ENDER_PEARL, rand(4)+4));
 		}else if(r.isInNext(5)) {
 			ItemStack item = new ItemStack(Material.ELYTRA);
-			item.setDurability((short) (Randomiser.random.nextInt(300)+75));
+			item.setDurability((short) (rand(300)+75));
 			return w.dropItem(centerLoc(), item);
+		}else if(r.isInNext(5)) {
+			return w.dropItem(centerLoc(), new ItemStack(Material.DRAGONS_BREATH, rand(4)+4));
 		}
 
 		if(r.isInNext(5)) {
@@ -298,27 +316,26 @@ public class AirHooksTask extends BukkitRunnable {
 			lp.setItem(item);
 
 			return lp;
-		}else if(r.isInNext(2)){
+		}else if(r.isInNext(8)){
 			return w.spawnEntity(centerLoc(), EntityType.ENDERMITE);
-		}else if(r.isInNext(1)){
+		}else if(r.isInNext(6)){
 			return w.spawnEntity(centerLoc(), EntityType.ENDERMAN);
+		}else if(r.isInNext(6)){
+			return w.spawnEntity(centerLoc(), EntityType.SHULKER_BULLET);
 		}else if(r.isInNext(1)) {
-			return w.spawnEntity(centerLoc(), EntityType.ENDER_DRAGON);
+			return w.spawnEntity(centerLoc(), EntityType.ENDER_DRAGON); // TODO CHECK S'IL EST DEJA LA
 		}
 
 		if(r.isInNext(10)){
-			ItemStack item = new ItemStack(Material.ARROW, r(5));
+			ItemStack item = new ItemStack(Material.ARROW, rand(8)+8);
 			CustomArrows.DRAGON.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(5)){
 			ItemStack item = new ItemStack(Material.IRON_SWORD);
-			CustomEnchants.VAMPIRE.enchant(item, r(2));
+			CustomEnchants.VAMPIRE.enchant(item, rand(2));
 			return w.dropItem(centerLoc(), item);
 		}else{
-			if(r.number%2==0) return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT));
-			else return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT_POPPED));
+			return w.dropItem(centerLoc(), new ItemStack(Material.ENDER_STONE, rand(4)+4));
 		}
 	}
-
-
 }
