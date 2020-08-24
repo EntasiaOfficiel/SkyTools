@@ -1,21 +1,30 @@
 package fr.entasia.skytools.events.cenchants;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
+import fr.entasia.apis.nbt.ItemNBT;
+import fr.entasia.apis.nbt.NBTComponent;
+import fr.entasia.apis.nbt.NBTTypes;
+import fr.entasia.apis.other.ItemBuilder;
 import fr.entasia.apis.other.ItemCategory;
 import fr.entasia.apis.other.Mutable;
 import fr.entasia.apis.other.Pair;
 import fr.entasia.apis.utils.ServerUtils;
+import fr.entasia.apis.utils.TextUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.objs.custom.RomanUtils;
 import fr.entasia.skytools.tasks.LavaTask;
 import org.bukkit.Material;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
@@ -28,7 +37,7 @@ import java.util.*;
 
 public class EnchantEvents implements Listener {
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void a(PlayerItemDamageEvent e) {
 		if(LavaTask.isLava(e.getPlayer().getLocation().getBlock().getType())){
 			if(CustomEnchants.LAVA_EATER.hasEnchant(e.getItem())) e.setCancelled(true);
@@ -62,6 +71,42 @@ public class EnchantEvents implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void a(PlayerArmorChangeEvent e) {
 		Utils.updateEffects(e.getPlayer());
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void a(BlockBreakEvent e) {
+		e.setExpToDrop(0);
+		e.setDropItems(false);
+		if(e.getBlock().getType()==Material.MOB_SPAWNER){
+			CreatureSpawner cs = (CreatureSpawner) e.getBlock().getState();
+			StringBuilder sb = new StringBuilder();
+			for(String s : cs.getSpawnedType().name().split("_")){
+				sb.append(TextUtils.firstLetterUpper(s)).append(" ");
+			}
+
+			NBTComponent nbt = new NBTComponent();
+			nbt.setValue(NBTTypes.String, "Entity", cs.getSpawnedType().name());
+			ItemStack item = new ItemBuilder(Material.MOB_SPAWNER).lore("§7Mob : "+sb).build();
+			ItemNBT.setNBT(item, nbt);
+
+			e.getBlock().setType(Material.AIR);
+			e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), item);
+		}
+	}
+
+	@EventHandler
+	public void a(BlockPlaceEvent e) {
+		NBTComponent nbt = ItemNBT.getNBTSafe(e.getItemInHand());
+		EntityType ent;
+		try{
+			ent = EntityType.valueOf((String) nbt.getValue(NBTTypes.String, "Entity"));
+		}catch(IllegalArgumentException e2){
+			e2.printStackTrace();
+			e.getPlayer().sendMessage("§cUne erreur est survenue ! Préviens un membre du Staff");
+			return;
+		}
+		CreatureSpawner cs = (CreatureSpawner) e.getBlockPlaced().getState();
+		cs.setSpawnedType(ent);
 	}
 
 	public static Pair<String, String> parseEnchant(String s){
@@ -163,7 +208,9 @@ public class EnchantEvents implements Listener {
 		entries.add(new EnchantEntry(CustomEnchants.SPEED, 13, 35, 2, ItemCategory.BOOTS));
 		entries.add(new EnchantEntry(CustomEnchants.JUMP, 13, 35, 2, ItemCategory.BOOTS));
 		entries.add(new EnchantEntry(CustomEnchants.LAVA_EATER, 15, 30, 1, ItemCategory.ARMORS));
+
 		entries.add(new EnchantEntry(CustomEnchants.WITHER, 18, 30, 1, ItemCategory.SWORDS));
+
 		entries.add(new EnchantEntry(CustomEnchants.SKY_FISHER, 30, 50, 1, Material.FISHING_ROD));
 	}
 	

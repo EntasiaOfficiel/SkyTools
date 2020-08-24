@@ -27,7 +27,7 @@ public enum CustomArrows {
 		List<String> list = item.getLore();
 		if(list==null)return false;
 		for(String s : list){
-			if(("§6§r§7"+name).equals(s))return true;
+			if((str()).equals(s))return true;
 		}
 		return false;
 	}
