@@ -491,7 +491,6 @@ public enum Villagers {
 
 	public void apply(Villager v){
 		v.setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
-//		System.out.println("meta set");
 		v.addScoreboardTag("npctype-"+id);
 		List<MerchantRecipe> list = new ArrayList<>();
 		addToList(list, 0);
@@ -507,12 +506,10 @@ public enum Villagers {
 		TradeLevel lvl = levels[from];
 		int max = lvl.min + Main.r.nextInt(lvl.random+1);
 		ArrayList<Trade> tempTrades = new ArrayList<>(Arrays.asList(lvl.trades));
-//		System.out.println("adding to list");
 		for(int i=0;i<max;i++){
 			if(tempTrades.size()==0)break;
 			Trade t = tempTrades.remove(Main.r.nextInt(tempTrades.size()));
 			list.add(t.buildOne());
-//			System.out.println("added "+t.result.item.getType());
 		}
 	}
 

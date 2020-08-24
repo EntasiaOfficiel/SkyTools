@@ -32,6 +32,7 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -86,20 +87,27 @@ public class EnchantEvents implements Listener {
 
 			NBTComponent nbt = new NBTComponent();
 			nbt.setValue(NBTTypes.String, "Entity", cs.getSpawnedType().name());
-			ItemStack item = new ItemBuilder(Material.MOB_SPAWNER).lore("§7Mob : "+sb).build();
-			ItemNBT.setNBT(item, nbt);
+			ItemStack item = new ItemBuilder(Material.MOB_SPAWNER).nbt(nbt).lore("§7Mob : "+sb).build();
 
 			e.getBlock().setType(Material.AIR);
-			e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), item);
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), item);
+				}
+			}.runTask(Main.main);
 		}
 	}
 
 	@EventHandler
 	public void a(BlockPlaceEvent e) {
+		if(e.getItemInHand().getType() != Material.MOB_SPAWNER)return;
 		NBTComponent nbt = ItemNBT.getNBTSafe(e.getItemInHand());
+		String s = (String) nbt.getValue(NBTTypes.String, "Entity");
+		if(s.equals(""))return;
 		EntityType ent;
 		try{
-			ent = EntityType.valueOf((String) nbt.getValue(NBTTypes.String, "Entity"));
+			ent = EntityType.valueOf(s);
 		}catch(IllegalArgumentException e2){
 			e2.printStackTrace();
 			e.getPlayer().sendMessage("§cUne erreur est survenue ! Préviens un membre du Staff");
@@ -107,6 +115,7 @@ public class EnchantEvents implements Listener {
 		}
 		CreatureSpawner cs = (CreatureSpawner) e.getBlockPlaced().getState();
 		cs.setSpawnedType(ent);
+		cs.update();
 	}
 
 	public static Pair<String, String> parseEnchant(String s){
@@ -187,7 +196,6 @@ public class EnchantEvents implements Listener {
 	@EventHandler
 	public void a(EnchantItemEvent e){
 		for(EnchantEntry entry : entries){
-			System.out.println(entry.enchant);
 			if(e.getExpLevelCost()<entry.neededLvl)continue;
 			if(!entry.items.contains(e.getItem().getType()))continue;
 			int lvl = 0;

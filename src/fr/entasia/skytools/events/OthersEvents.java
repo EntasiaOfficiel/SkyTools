@@ -94,8 +94,9 @@ public class OthersEvents implements Listener {
 		}
 	}
 
+	@EventHandler
 	public void a(EntityDamageEvent e){
-		if(e.getEntity() instanceof Player){
+		if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL){
 			List<MetadataValue> m = e.getEntity().getMetadata("fwJump");
 			if(m.size()==0)return;
 			if(System.currentTimeMillis()-m.get(0).asLong()<20000){
@@ -249,7 +250,6 @@ public class OthersEvents implements Listener {
 			}
 		}
 		v.setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
-//		System.out.println("upgrading...");
 		Object o = nbt.getValue(NBTTypes.Int, "CareerLevel");
 		int current;
 		if (o == null) current = 1;
