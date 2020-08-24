@@ -76,26 +76,28 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void a(BlockBreakEvent e) {
-		e.setExpToDrop(0);
-		e.setDropItems(false);
 		if(e.getBlock().getType()==Material.MOB_SPAWNER){
-			CreatureSpawner cs = (CreatureSpawner) e.getBlock().getState();
-			StringBuilder sb = new StringBuilder();
-			for(String s : cs.getSpawnedType().name().split("_")){
-				sb.append(TextUtils.firstLetterUpper(s)).append(" ");
-			}
-
-			NBTComponent nbt = new NBTComponent();
-			nbt.setValue(NBTTypes.String, "Entity", cs.getSpawnedType().name());
-			ItemStack item = new ItemBuilder(Material.MOB_SPAWNER).nbt(nbt).lore("§7Mob : "+sb).build();
-
-			e.getBlock().setType(Material.AIR);
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), item);
+			if(CustomEnchants.SPAWNER_BREAKER.hasEnchant(e.getPlayer().getInventory().getItemInMainHand())){
+				e.setExpToDrop(0);
+				e.setDropItems(false);
+				CreatureSpawner cs = (CreatureSpawner) e.getBlock().getState();
+				StringBuilder sb = new StringBuilder();
+				for(String s : cs.getSpawnedType().name().split("_")){
+					sb.append(TextUtils.firstLetterUpper(s)).append(" ");
 				}
-			}.runTask(Main.main);
+
+				NBTComponent nbt = new NBTComponent();
+				nbt.setValue(NBTTypes.String, "Entity", cs.getSpawnedType().name());
+				ItemStack item = new ItemBuilder(Material.MOB_SPAWNER).nbt(nbt).lore("§7Mob : "+sb).build();
+
+				e.getBlock().setType(Material.AIR);
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), item);
+					}
+				}.runTask(Main.main);
+			}
 		}
 	}
 

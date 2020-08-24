@@ -371,7 +371,7 @@ public enum Villagers {
 		new TradeLevel(
 				new Trade(new TradeItem(Material.GOLD_INGOT)).need(new TradeItem(Material.CARROT_ITEM, 64)),
 				new Trade(new TradeItem(Material.IRON_INGOT, 2)).need(new TradeItem(Material.POISONOUS_POTATO, 32)),
-				new Trade(new TradeItem(Material.IRON_HOE).lore(CustomEnchants.AURA.str(Main.r.nextInt(2)+1))).need(new TradeItem(Material.EMERALD, 10)),
+				new Trade(new TradeItem(Material.IRON_HOE).lore(CustomEnchants.TONDEUSE.str(Main.r.nextInt(2)+1))).need(new TradeItem(Material.EMERALD, 10)),
 				new Trade(new TradeItem(Material.IRON_HOE).lore(CustomEnchants.SEEDS_CANOON.str(1))).need(new TradeItem(Material.EMERALD, 24))
 		)
 	),

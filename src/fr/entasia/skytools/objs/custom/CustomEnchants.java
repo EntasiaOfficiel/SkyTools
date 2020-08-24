@@ -26,7 +26,7 @@ public enum CustomEnchants {
 	SPAWNER_BREAKER("Casseur de spawners", 1),
 
 	// houe
-	AURA("Aura", 3),
+	TONDEUSE("Tondeuse", 3),
 	SEEDS_CANOON("Canon", 2),
 
 	// canne à pêche

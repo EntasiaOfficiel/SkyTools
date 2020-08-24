@@ -283,7 +283,7 @@ public class HoeEvents implements Listener {
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void a(BlockBreakEvent e){
 		ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
-		int lvl = CustomEnchants.AURA.getLevel(item);
+		int lvl = CustomEnchants.TONDEUSE.getLevel(item);
 		if(lvl==0)return;
 		Material m = e.getBlock().getType();
 		boolean nop = true;
