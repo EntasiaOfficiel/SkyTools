@@ -25,6 +25,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.entity.VillagerReplenishTradeEvent;
@@ -87,8 +88,20 @@ public class OthersEvents implements Listener {
 			new BukkitRunnable() {
 				public void run() {
 					e.getPlayer().setVelocity(new Vector(0, vec, 0));
+					e.getPlayer().setMetadata("fwJump", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
 				}
 			}.runTask(Main.main);
+		}
+	}
+
+	public void a(EntityDamageEvent e){
+		if(e.getEntity() instanceof Player){
+			List<MetadataValue> m = e.getEntity().getMetadata("fwJump");
+			if(m.size()==0)return;
+			if(System.currentTimeMillis()-m.get(0).asLong()<20000){
+				e.setCancelled(true);
+			}
+			e.getEntity().removeMetadata("fwJump", Main.main);
 		}
 	}
 
