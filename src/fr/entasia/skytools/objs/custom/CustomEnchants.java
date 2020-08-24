@@ -17,6 +17,7 @@ public enum CustomEnchants {
 	// bottes
 	JUMP("Saut", 3), // basic
 	SPEED("Vitesse", 3), // basic
+	GREENER("Bottes vertes", 1),
 
 	// épée
 	VAMPIRE("Vampire", 4),
@@ -27,7 +28,6 @@ public enum CustomEnchants {
 
 	// houe
 	TONDEUSE("Tondeuse", 3),
-	SEEDS_CANOON("Canon", 2),
 
 	// canne à pêche
 	SKY_FISHER("Pécheur du ciel", 3),

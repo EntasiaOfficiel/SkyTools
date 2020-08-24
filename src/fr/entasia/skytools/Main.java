@@ -6,7 +6,7 @@ import fr.entasia.skytools.commands.custom.CustomEnchantCmd;
 import fr.entasia.skytools.events.*;
 import fr.entasia.skytools.events.cenchants.ArrowEvents;
 import fr.entasia.skytools.events.cenchants.EnchantEvents;
-import fr.entasia.skytools.events.cenchants.HoeEvents;
+import fr.entasia.skytools.events.cenchants.FarmEvents;
 import fr.entasia.skytools.events.cenchants.SkyFisherEvents;
 import fr.entasia.skytools.objs.Warp;
 import fr.entasia.skytools.objs.custom.CustomArrows;
@@ -71,7 +71,7 @@ public class Main extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new FireworksEvents(), this);
 			getServer().getPluginManager().registerEvents(new SkullEvents(), this);
 			getServer().getPluginManager().registerEvents(new EnchantEvents(), this);
-			getServer().getPluginManager().registerEvents(new HoeEvents(), this);
+			getServer().getPluginManager().registerEvents(new FarmEvents(), this);
 			getServer().getPluginManager().registerEvents(new SkyFisherEvents(), this);
 			getServer().getPluginManager().registerEvents(new ArrowEvents(), this);
 			getServer().getPluginManager().registerEvents(new LockEvents(), this);
