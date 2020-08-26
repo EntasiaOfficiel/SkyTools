@@ -36,7 +36,8 @@ public class SkyCrates {
 		loot = new CrateLoot(10, "32 nether wart", new ItemStack(Material.NETHER_STALK, 32));
 		ct.addLoot(loot);
 
-		loot = new CrateLoot(10, "une houe en diamant u3", new ItemStack(Material.DIAMOND_HOE));
+		loot = new CrateLoot(10, "une houe en diamant u3",
+				new ItemBuilder(Material.DIAMOND_HOE).enchant(Enchantment.DURABILITY, 3).build());
 		ct.addLoot(loot);
 
 		ItemStack item = new ItemStack(Material.IRON_HOE);

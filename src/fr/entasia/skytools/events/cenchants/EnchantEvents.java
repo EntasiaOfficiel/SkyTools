@@ -15,7 +15,10 @@ import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.objs.custom.RomanUtils;
 import fr.entasia.skytools.tasks.LavaTask;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -197,6 +200,7 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler
 	public void a(EnchantItemEvent e){
+
 		for(EnchantEntry entry : entries){
 			if(e.getExpLevelCost()<entry.neededLvl)continue;
 			if(!entry.items.contains(e.getItem().getType()))continue;
@@ -209,6 +213,16 @@ public class EnchantEvents implements Listener {
 			if(lvl==0)continue;
 			entry.enchant.enchant(e.getItem(), lvl);
 		}
+
+		Location loc = e.getEnchantBlock().getLocation().add(0.5, 0, 0.5);
+		loc.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, loc, 500, 0.2, 0.2, 0.2, 2.5);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				loc.getWorld().spawnParticle(Particle.SPELL_WITCH, loc.add(0, 0.5, 0), 300, 0.1, 0.1, 0.1);
+			}
+		}.runTaskLater(Main.main, 37);
+
 	}
 
 	public static ArrayList<EnchantEntry> entries = new ArrayList<>();

@@ -116,7 +116,7 @@ public class FireworksEvents implements Listener {
 							e.getWhoClicked().getInventory().setHelmet(e.getCursor());
 							e.setCursor(new ItemStack(Material.AIR));
 						}else{
-							if(e.getCursor().getItemMeta().equals(e.getWhoClicked().getInventory().getHelmet().getItemMeta())){
+							if(e.getCursor().isSimilar(e.getWhoClicked().getInventory().getHelmet())){
 								// mise en place du système de reste
 								int total = e.getCursor().getAmount()+e.getWhoClicked().getInventory().getHelmet().getAmount();
 								ItemStack helmet = e.getWhoClicked().getInventory().getHelmet();
