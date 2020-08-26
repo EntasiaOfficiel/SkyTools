@@ -41,8 +41,7 @@ public class SkyCrates {
 
 		ItemStack item = new ItemStack(Material.IRON_HOE);
 		CustomEnchants.TONDEUSE.enchant(item, Main.r.nextInt(2)+1);
-		loot = new CrateLoot(10, "une houe en fer §7Tondeuse",
-				new ItemBuilder(Material.IRON_HOE).enchant(Enchantment.DURABILITY, 3).build());
+		loot = new CrateLoot(10, "une houe en fer §7Tondeuse", item);
 		ct.addLoot(loot);
 
 		CratesAPI.registerCrateType(ct);
