@@ -73,17 +73,22 @@ public class OthersEvents implements Listener {
 			int life;
 			switch(meta.getPower()){
 				case 3:
+					life = 15;
+					vec = 3.7f;
+					break;
 				case 2:
 					life = 10;
-					vec = 2.2f;
+					vec = 2.4f;
 					break;
 				default: // et case 1 ducoup
 					life = 5;
-					vec = 1.5f;
+					vec = 1.7f;
 					break;
 			}
-			EntityNBT.addNBT(fw, new NBTComponent(String.format("{LifeTime:%s}", life)));
-			e.getPlayer().setPassenger(fw);
+			NBTComponent nbt = new NBTComponent();
+			nbt.setValue(NBTTypes.Int, "LifeTime", life);
+			EntityNBT.addNBT(fw, nbt);
+			e.getPlayer().addPassenger(fw);
 
 			new BukkitRunnable() {
 				public void run() {
