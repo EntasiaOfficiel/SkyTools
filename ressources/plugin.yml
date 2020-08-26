@@ -1,7 +1,8 @@
 name: SkyTools
 depend: [Libraries, SkyCore]
 softdepend: [Multiverse-Core]
-version: '1.0'
+loadbefore: [Crates]
+version: '-1'
 main: fr.entasia.skytools.Main
 commands:
 

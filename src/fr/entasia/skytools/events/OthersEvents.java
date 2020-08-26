@@ -63,7 +63,7 @@ public class OthersEvents implements Listener {
 		if(e.getPlayer().isSneaking()&&e.getPlayer().getInventory().getHelmet() != null && e.getPlayer().getInventory().getHelmet().getType()==Material.FIREWORK){
 			ItemStack a = e.getPlayer().getInventory().getHelmet();
 			FireworkMeta meta = (FireworkMeta) a.getItemMeta();
-			a.setAmount(a.getAmount()-1);
+			a.subtract();
 			e.getPlayer().getInventory().setHelmet(a);
 
 			Firework fw = e.getPlayer().getWorld().spawn(e.getPlayer().getLocation(), Firework.class);

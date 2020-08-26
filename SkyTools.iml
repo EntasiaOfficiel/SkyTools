@@ -10,7 +10,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="spigot-1.12.2-2" level="project" />
     <orderEntry type="library" name="Libraries" level="project" />
-    <orderEntry type="library" name="SkyCore" level="project" />
     <orderEntry type="library" name="Cosmetiques" level="project" />
+    <orderEntry type="library" name="SkyCore" level="project" />
+    <orderEntry type="library" name="Crates" level="project" />
   </component>
 </module>

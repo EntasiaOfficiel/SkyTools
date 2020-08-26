@@ -123,7 +123,7 @@ public class FarmEvents implements Listener {
 						if(i==null||i.getType()==Material.AIR)continue;
 						for(Map.Entry<Material, SeedBlock> en : seeds.entrySet()){
 							if(i.getType()==en.getKey()&&m==en.getValue().growBlock){
-								i.setAmount(i.getAmount()-1);
+								i.subtract();
 								b.setType(en.getValue().material);
 								return;
 							}

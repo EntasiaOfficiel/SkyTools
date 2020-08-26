@@ -8,6 +8,7 @@ import fr.entasia.skytools.events.cenchants.ArrowEvents;
 import fr.entasia.skytools.events.cenchants.EnchantEvents;
 import fr.entasia.skytools.events.cenchants.FarmEvents;
 import fr.entasia.skytools.events.cenchants.SkyFisherEvents;
+import fr.entasia.skytools.objs.SkyCrates;
 import fr.entasia.skytools.objs.Warp;
 import fr.entasia.skytools.objs.custom.CustomArrows;
 import fr.entasia.skytools.tasks.CleanUpTask;
@@ -63,6 +64,8 @@ public class Main extends JavaPlugin {
 
 			registerRecipes();
 			registerFW();
+
+			SkyCrates.registerCrates();
 
 			getServer().getPluginManager().registerEvents(new ChatEvents(), this);
 			getServer().getPluginManager().registerEvents(new MiniEvents(), this);
