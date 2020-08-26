@@ -80,7 +80,7 @@ public class OthersEvents implements Listener {
 					life = 10;
 					vec = 2.4f;
 					break;
-				default: // et case 1 ducoup
+				default:
 					life = 5;
 					vec = 1.7f;
 					break;
