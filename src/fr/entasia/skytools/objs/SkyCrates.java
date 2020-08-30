@@ -6,7 +6,6 @@ import fr.entasia.crates.CratesAPI;
 import fr.entasia.crates.utils.CrateLoot;
 import fr.entasia.crates.utils.CrateType;
 import fr.entasia.skytools.Main;
-import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
