@@ -73,13 +73,13 @@ public class FireworksEvents implements Listener {
 		if (pr.getType() == EntityType.SNOWBALL&&pr.getShooter() instanceof Player) {
 			ItemStack item = ((Player) pr.getShooter()).getInventory().getItemInMainHand();
 			if(item.getType()==Material.SNOW_BALL){
-				Player p = (Player)pr.getShooter();
+				NBTComponent nbt = ItemNBT.getNBTSafe(item).getComponent("entasia");
+				if(nbt==null)return;
 
+				Player p = (Player)pr.getShooter();
 				List<MetadataValue> list = p.getMetadata("cdFirework");
 				if(list.size()==0||System.currentTimeMillis()-list.get(0).asLong()>500){
 					p.setMetadata("cdFirework", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
-					NBTComponent nbt = ItemNBT.getNBTSafe(item).getComponent("entasia");
-					if(nbt==null)return;
 					Utils.fireworks.put(pr, nbt);
 				}else e.setCancelled(true);
 			}
