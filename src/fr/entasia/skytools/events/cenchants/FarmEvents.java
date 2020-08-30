@@ -4,7 +4,6 @@ import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skycore.apis.BaseAPI;
 import fr.entasia.skycore.apis.BaseIsland;
 import fr.entasia.skycore.apis.CooManager;
-import fr.entasia.skycore.apis.OthersAPI;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.*;

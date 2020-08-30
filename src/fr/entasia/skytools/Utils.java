@@ -1,6 +1,7 @@
 package fr.entasia.skytools;
 
 import fr.entasia.apis.nbt.NBTComponent;
+import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.objs.ToolPlayer;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.tasks.AirHooksTask;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -38,6 +40,14 @@ public class Utils {
 	static{
 		blackmeta = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK);
 		blackmeta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).build());
+	}
+
+	public static ItemStack getSkull(ItemStack item, String uuidstr, String texture){
+		SkullMeta smeta = (SkullMeta)item.getItemMeta();
+		ItemUtils.setTexture(smeta, ItemUtils.genProfile(uuidstr, texture));
+		item.setItemMeta(smeta);
+		return item;
+
 	}
 
 	public static ToolPlayer getToolPlayer(Player p){
