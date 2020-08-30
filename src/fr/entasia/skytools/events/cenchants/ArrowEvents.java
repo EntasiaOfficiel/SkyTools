@@ -33,7 +33,8 @@ public class ArrowEvents implements Listener {
 			}
 			if(CustomArrows.DRAGON.hasEnchant(e.getArrowItem())) {
 				e.getProjectile().setCustomName("$dragon");
-			}
+			}else return;
+			e.setConsumeArrow(true);
 		}
 	}
 
