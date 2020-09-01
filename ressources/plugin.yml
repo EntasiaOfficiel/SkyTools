@@ -1,5 +1,5 @@
 name: SkyTools
-depend: [Libraries, SkyCore, Multiverse-Core, Cosmetiques]
+depend: [Libraries, SkyCore, Multiverse-Core, Cosmetics]
 loadbefore: [Crates]
 version: '-1'
 main: fr.entasia.skytools.Main

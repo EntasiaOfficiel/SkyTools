@@ -1,6 +1,6 @@
 package fr.entasia.skytools.commands;
 
-import fr.entasia.cosmetiques.utils.CosmAPI;
+import fr.entasia.cosmetics.utils.CosmAPI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

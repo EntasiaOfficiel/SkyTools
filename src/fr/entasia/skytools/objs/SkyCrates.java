@@ -1,7 +1,7 @@
 package fr.entasia.skytools.objs;
 
 import fr.entasia.apis.other.ItemBuilder;
-import fr.entasia.cosmetiques.utils.pets.PetsUtils;
+import fr.entasia.cosmetics.utils.pets.PetsUtils;
 import fr.entasia.crates.CratesAPI;
 import fr.entasia.crates.utils.CrateLoot;
 import fr.entasia.crates.utils.CrateType;
