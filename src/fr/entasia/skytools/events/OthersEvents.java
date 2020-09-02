@@ -7,6 +7,8 @@ import fr.entasia.apis.nbt.NBTTypes;
 import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.apis.utils.ServerUtils;
 import fr.entasia.apis.utils.TextUtils;
+import fr.entasia.skycore.apis.BaseAPI;
+import fr.entasia.skycore.apis.ISPLink;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
@@ -25,10 +27,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.entity.VillagerAcquireTradeEvent;
-import org.bukkit.event.entity.VillagerReplenishTradeEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -56,6 +55,22 @@ public class OthersEvents implements Listener {
 	@EventHandler
 	public void a(PlayerQuitEvent e){
 		Utils.playerCache.remove(e.getPlayer().getUniqueId());
+	}
+
+	@EventHandler
+	public void a(EntityDamageByEntityEvent e){
+		if(e.getDamager() instanceof Player){
+			Player p = (Player) e.getDamager();
+			boolean canDoIt = false;
+			for(ISPLink link : BaseAPI.getIsland(e.getEntity().getLocation()).getMembers()){
+				if(link.sp.equals(BaseAPI.getSkyPlayer(p.getUniqueId()))) canDoIt=true;
+			}
+			if(!canDoIt){
+				p.sendMessage("§7Tu ne peux pas frapper une entité dans une ile dont tu n'es pas membre !");
+				e.setCancelled(true);
+			}
+
+		}
 	}
 
 	@EventHandler
