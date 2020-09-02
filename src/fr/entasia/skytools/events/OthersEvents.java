@@ -9,6 +9,7 @@ import fr.entasia.apis.utils.ServerUtils;
 import fr.entasia.apis.utils.TextUtils;
 import fr.entasia.skycore.apis.BaseAPI;
 import fr.entasia.skycore.apis.ISPLink;
+import fr.entasia.skycore.apis.OthersAPI;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.ToolPlayer;
@@ -65,8 +66,8 @@ public class OthersEvents implements Listener {
 			for(ISPLink link : BaseAPI.getIsland(e.getEntity().getLocation()).getMembers()){
 				if(link.sp.equals(BaseAPI.getSkyPlayer(p.getUniqueId()))) canDoIt=true;
 			}
-			if(!canDoIt){
-				p.sendMessage("§7Tu ne peux pas frapper une entité dans une ile dont tu n'es pas membre !");
+			if(!canDoIt&&!OthersAPI.isMasterEdit(p) && !p.getWorld().getName().equalsIgnoreCase("spawn")){
+				p.sendMessage("§cTu n'es pas membre de cette ile !");
 				e.setCancelled(true);
 			}
 
