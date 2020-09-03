@@ -77,11 +77,11 @@ public class SkyCrates {
 		ct2.addLoot(loot);
 
 
-		ItemStack iteme = new ItemStack(Material.MONSTER_EGG,1,(short) 1);
-		ItemMeta meta = iteme.getItemMeta();
+		item = new ItemStack(Material.MONSTER_EGGS,1,(short) 1);
+		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName("Gnobo's stone");
 		item.setItemMeta(meta);
-		loot = new CrateLoot(20,"Gnobo's stone", iteme);
+		loot = new CrateLoot(20,"Gnobo's stone", item);
 		ct2.addLoot(loot);
 
 		loot = new CrateLoot(20,"1 cobblestone", new ItemStack(Material.COBBLESTONE));
@@ -92,7 +92,7 @@ public class SkyCrates {
 
 
 
-		loot = new CrateLoot(10,"Sainte pioche", new ItemBuilder(Material.DIAMOND_PICKAXE).enchant(Enchantment.DIG_SPEED,5).enchant(Enchantment.DURABILITY,5).enchant(Enchantment.LOOT_BONUS_BLOCKS,5).damage(5).build());
+		loot = new CrateLoot(10,"Sainte pioche", new ItemBuilder(Material.DIAMOND_PICKAXE).enchant(Enchantment.DIG_SPEED,5).enchant(Enchantment.DURABILITY,5).enchant(Enchantment.LOOT_BONUS_BLOCKS,5).damage(1556).build());
 		ct2.addLoot(loot);
 
 		CratesAPI.registerCrateType(ct2);
