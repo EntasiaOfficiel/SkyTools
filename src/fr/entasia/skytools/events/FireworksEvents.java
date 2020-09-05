@@ -36,15 +36,15 @@ public class FireworksEvents implements Listener {
 		Recipe r = e.getRecipe();
 		if(r==null)return;
 		ItemStack item = r.getResult();
-		if (item.getType() == Material.SNOW_BALL) {
+		if (item.getType() == Material.SNOWBALL) {
 			char type = '0';
 			NBTComponent nbt = null;
 			for (ItemStack i : e.getInventory().getContents()) {
-				if (i.getType() == Material.FIREWORK_CHARGE) {
+				if (i.getType() == Material.FIREWORK_STAR) {
 					nbt = new NBTComponent("{Fireworks:{Explosions:[" + ItemNBT.getNBTSafe(i).getComponent("Explosion") + "]}}");
 					type = '1';
 					break;
-				} else if (i.getType() == Material.FIREWORK) {
+				} else if (i.getType() == Material.FIREWORK_ROCKET) {
 					nbt = ItemNBT.getNBTSafe(i);
 					type = '0';
 					break;
@@ -72,7 +72,7 @@ public class FireworksEvents implements Listener {
 		Projectile pr = e.getEntity();
 		if (pr.getType() == EntityType.SNOWBALL&&pr.getShooter() instanceof Player) {
 			ItemStack item = ((Player) pr.getShooter()).getInventory().getItemInMainHand();
-			if(item.getType()==Material.SNOW_BALL){
+			if(item.getType()==Material.SNOWBALL){
 				NBTComponent nbt = ItemNBT.getNBTSafe(item).getComponent("entasia");
 				if(nbt==null)return;
 
@@ -110,7 +110,7 @@ public class FireworksEvents implements Listener {
 		if(e.getWhoClicked().getOpenInventory().getType() == InventoryType.CRAFTING){
 			if(e.getClick()== ClickType.LEFT||e.getClick()==ClickType.RIGHT) {
 				if (e.getSlot() == 39){
-					if(e.getCursor().getType() == Material.FIREWORK){
+					if(e.getCursor().getType() == Material.FIREWORK_ROCKET){
 						e.setCancelled(true);
 						if(e.getWhoClicked().getInventory().getHelmet()==null){ // aucun item en casque , on set juste le curseur
 							e.getWhoClicked().getInventory().setHelmet(e.getCursor());
@@ -139,7 +139,7 @@ public class FireworksEvents implements Listener {
 					}
 				}
 			}else if(e.getClick()==ClickType.SHIFT_LEFT) {
-				if (e.getCurrentItem()!=null&&e.getCurrentItem().getType() == Material.FIREWORK && e.getSlot() != 39){
+				if (e.getCurrentItem()!=null&&e.getCurrentItem().getType() == Material.FIREWORK_ROCKET && e.getSlot() != 39){
 					// mise en place du système de reste ( geant size )
 					ItemStack helmet = e.getWhoClicked().getInventory().getHelmet();
 					ItemStack reste = new ItemStack(Material.AIR);

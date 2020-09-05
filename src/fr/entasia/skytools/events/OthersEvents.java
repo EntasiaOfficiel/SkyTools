@@ -15,11 +15,10 @@ import fr.entasia.skytools.objs.villagers.Villagers;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.block.data.Ageable;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -60,7 +59,7 @@ public class OthersEvents implements Listener {
 
 	@EventHandler
 	public static void onJump(PlayerJumpEvent e){
-		if(e.getPlayer().isSneaking()&&e.getPlayer().getInventory().getHelmet() != null && e.getPlayer().getInventory().getHelmet().getType()==Material.FIREWORK){
+		if(e.getPlayer().isSneaking()&&e.getPlayer().getInventory().getHelmet() != null && e.getPlayer().getInventory().getHelmet().getType()==Material.FIREWORK_ROCKET){
 			ItemStack a = e.getPlayer().getInventory().getHelmet();
 			FireworkMeta meta = (FireworkMeta) a.getItemMeta();
 			a.subtract();
@@ -114,7 +113,8 @@ public class OthersEvents implements Listener {
 	@EventHandler
 	public static void onInteract(PlayerInteractEvent e) {
 		if(e.hasBlock()){
-			if(e.getClickedBlock().getType()==Material.SIGN_POST||e.getClickedBlock().getType()==Material.WALL_SIGN){
+
+			if(Tag.SIGNS.isTagged(e.getClickedBlock().getType())){
 				Player p = e.getPlayer();
 				Sign s = (Sign)e.getClickedBlock().getState();
 				if(s.getLine(0).equals("§9[§7Warp§9]")) {
@@ -122,7 +122,7 @@ public class OthersEvents implements Listener {
 					if (w == null) {
 						p.sendMessage("§cCe warp n'existe plus !");
 						e.getClickedBlock().setType(Material.AIR);
-						e.getClickedBlock().getWorld().dropItem(e.getClickedBlock().getLocation(), new ItemStack(Material.SIGN));
+						e.getClickedBlock().getWorld().dropItem(e.getClickedBlock().getLocation(), new ItemStack(e.getClickedBlock().getType()));
 					} else {
 						if(e.getAction()== Action.RIGHT_CLICK_BLOCK) w.teleport(p, true);
 						else if(e.getAction()== Action.LEFT_CLICK_BLOCK){
@@ -145,7 +145,7 @@ public class OthersEvents implements Listener {
 				if (Warp.getWarp(e.getLine(1).toLowerCase()) == null) {
 					e.getPlayer().sendMessage("§cErreur §7» §cCe warp n'existe pas !");
 					e.getBlock().setType(Material.AIR);
-					e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.SIGN));
+					e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(e.getBlock().getType()));
 				} else {
 					e.setLine(0, "§9[§7Warp§9]");
 					e.setLine(1, "§e" + TextUtils.firstLetterUpper(e.getLine(1)));
@@ -245,7 +245,7 @@ public class OthersEvents implements Listener {
 		testUpgrade(e.getEntity());
 	}
 
-	public static void testUpgrade(Villager v) {
+	public static void testUpgrade(AbstractVillager v) {
 		NBTComponent nbt = EntityNBT.getNBT(v);
 
 		List<MetadataValue> meta = v.getMetadata("lastUpgrade");
@@ -279,11 +279,13 @@ public class OthersEvents implements Listener {
 		ItemStack i = e.getItem();
 		Player p = e.getPlayer();
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if (e.getClickedBlock().getType() == Material.NETHER_WARTS) {
+			if (e.getClickedBlock().getType() == Material.NETHER_WART) {
 				if (i != null && i.getType() == Material.BLAZE_POWDER) {
-					byte b = e.getClickedBlock().getData();
-					if (b != 3) {
-						e.getClickedBlock().setData((byte) (b + 1));
+					Ageable age = (Ageable) e.getClickedBlock().getBlockData();
+					int a = age.getAge();
+					if (a != 3){
+						age.setAge(a+1);
+						e.getClickedBlock().setBlockData(age);
 						if (p.getGameMode() != GameMode.CREATIVE) {
 							p.getInventory().getItemInMainHand().subtract(1);
 						}

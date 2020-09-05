@@ -13,7 +13,6 @@ import org.bukkit.potion.PotionType;
 public class TradeItem extends ItemBuilder {
 
 	public boolean rdAmount = true;
-	public boolean rdDamage = false;
 
 	public TradeItem(Material m) {
 		super(m);
@@ -33,20 +32,10 @@ public class TradeItem extends ItemBuilder {
 		this.rdAmount = rdAmount;
 	}
 
-	public TradeItem rdDamage(){
-		rdAmount = true;
-		return this;
-	}
-
 	public TradeItem effect(PotionType type){
 		PotionMeta pmeta = (PotionMeta) meta;
 		pmeta.setBasePotionData(new PotionData(type));
 		return this;
-	}
-
-	@Override
-	public TradeItem damage(int damage) {
-		return (TradeItem) super.damage(damage);
 	}
 
 	@Override
@@ -77,7 +66,6 @@ public class TradeItem extends ItemBuilder {
 				item.setAmount(applyRandom(item.getAmount()));
 			}
 		}
-		if(rdDamage)item.setDurability((short) Main.r.nextInt(16));
 		return item;
 	}
 

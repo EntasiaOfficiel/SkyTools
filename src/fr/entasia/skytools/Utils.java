@@ -38,7 +38,7 @@ public class Utils {
 	public static HashMap<Entity, NBTComponent> fireworks = new HashMap<>();
 
 	static{
-		blackmeta = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK);
+		blackmeta = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK_ROCKET);
 		blackmeta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).build());
 	}
 

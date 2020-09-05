@@ -24,16 +24,11 @@ public class LavaTask extends BukkitRunnable { // 10 ticks actuellement
 		}
 	}
 
-	public static boolean isLava(Material m){
-		return m==Material.LAVA||m==Material.STATIONARY_LAVA;
-	}
-
 	@Override
 	public void run() {
 		for(Player p : Bukkit.getOnlinePlayers()){
 			if(Dimensions.isIslandWorld(p.getWorld())){
-				Material m = p.getLocation().getBlock().getType();
-				if(isLava(m)){
+				if(p.getLocation().getBlock().getType()==Material.LAVA){
 					ArrayList<LavaItem> list = new ArrayList<>();
 					int l;
 					for(ItemStack item : p.getInventory().getContents()){

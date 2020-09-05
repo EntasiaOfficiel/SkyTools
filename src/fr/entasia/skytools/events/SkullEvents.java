@@ -5,11 +5,10 @@ import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.objs.DirectionUtils;
 import fr.entasia.skytools.objs.custom.CustomSkulls;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,20 +18,31 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-public class SkullEvents implements Listener {
+import java.util.ArrayList;
 
-	public static boolean isLeaves(Material m){
-		return m==Material.LEAVES||m==Material.LEAVES_2;
-	}
+public class SkullEvents implements Listener {
 
 	public static void particle(Location loc){
 		loc.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, loc.getX()+0.5, loc.getY()+0.5, loc.getZ()+0.5, 25, 0.4, 0.4, 0.4, 10);
 	}
 
+	public static ArrayList<BlockFace> a = new ArrayList<>();
+
+	static{
+		a.add(BlockFace.SOUTH);
+		a.add(BlockFace.NORTH);
+		a.add(BlockFace.EAST);
+		a.add(BlockFace.WEST);
+		a.add(BlockFace.NORTH_EAST);
+		a.add(BlockFace.NORTH_WEST);
+		a.add(BlockFace.SOUTH_EAST);
+		a.add(BlockFace.SOUTH_WEST);
+	}
+
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void a(PlayerInteractEvent e){
-		if(e.getHand()==EquipmentSlot.HAND&&e.getAction()==Action.RIGHT_CLICK_BLOCK&&e.getItem()!=null&&e.getItem().getType()==Material.INK_SACK&&e.getItem().getDurability()==15){
+		if(e.getHand()==EquipmentSlot.HAND&&e.getAction()==Action.RIGHT_CLICK_BLOCK&&e.getItem()!=null&&e.getItem().getType()==Material.BONE_MEAL){
 			if(e.getClickedBlock().getType()==Material.GRASS) {
 				if (e.getClickedBlock().getLocation().add(0, 1, 0).getBlock().getType() == Material.AIR) {
 					e.getItem().subtract();
@@ -58,24 +68,28 @@ public class SkullEvents implements Listener {
 								if (b.getType() == Material.AIR) {
 									if (loc.clone().add(0, -1, 0).getBlock().getType() == Material.GRASS) {
 										int ra = Main.r.nextInt(10);
+										GameProfile profile;
 										if (ra == 0) {
-											b.setType(Material.SKULL);
-											b.setData((byte) 1);
-											ItemUtils.setTexture(b, CustomSkulls.SALADE.profile);
-											particle(b.getLocation());
+											profile = CustomSkulls.SALADE.profile;
 										} else if (ra == 1) {
-											b.setType(Material.SKULL);
-											b.setData((byte) 1);
-											ItemUtils.setTexture(b, CustomSkulls.TOMATE.profile);
-											particle(b.getLocation());
-										}
+											profile = CustomSkulls.TOMATE.profile;
+										}else return;
+
+										b.setType(Material.PLAYER_HEAD);
+										ItemUtils.setTexture(b, profile);
+
+										Rotatable data = (Rotatable) b.getBlockData();
+										data.setRotation(a.get(Main.r.nextInt(a.size())));
+										b.setBlockData(data);
+
+										particle(b.getLocation());
 									}
 								}
 							}
 						}
 					}
 				}
-			}else if(isLeaves(e.getClickedBlock().getType())){
+			}else if(Tag.LEAVES.isTagged(e.getClickedBlock().getType())){
 				e.getItem().subtract();
 				Location loc = e.getClickedBlock().getLocation();
 				int minx = loc.getBlockX() - 3;
@@ -95,7 +109,7 @@ public class SkullEvents implements Listener {
 							loc.setZ(z);
 
 							b = loc.getBlock();
-							if(isLeaves(b.getType())){
+							if(Tag.LEAVES.isTagged(b.getType())){
 								int ra = Main.r.nextInt(10);
 								if (ra == 0) {
 									Block lb;
@@ -116,9 +130,13 @@ public class SkullEvents implements Listener {
 	}
 
 	public static void place(Block b, DirectionUtils face, CustomSkulls skull){
-		b.setType(Material.SKULL);
+		b.setType(Material.PLAYER_HEAD);
+
+		Rotatable r = (Rotatable) b.getBlockData();
+		r.setRotation(face.face);
+		b.setBlockData(r);
+
 		ItemUtils.setTexture(b, skull.profile);
-		b.setData(face.data);
 	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -137,7 +155,7 @@ public class SkullEvents implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void b(BlockBreakEvent e){
-		if(e.getPlayer().getGameMode()== GameMode.SURVIVAL&&e.getBlock().getType()==Material.SKULL){
+		if(e.getPlayer().getGameMode()== GameMode.SURVIVAL&&e.getBlock().getType()==Material.PLAYER_HEAD){
 			GameProfile profile = ItemUtils.getProfile(e.getBlock());
 			if(profile==null)return;
 			CustomSkulls cs = CustomSkulls.getByUUID(profile.getId());

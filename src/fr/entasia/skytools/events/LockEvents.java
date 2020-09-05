@@ -1,6 +1,7 @@
 package fr.entasia.skytools.events;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.DoubleChest;
@@ -44,7 +45,7 @@ public class LockEvents implements Listener {
 			s = isLockChest(e.getClickedBlock(), true);
 		}
 		if (s==null) {
-			if(e.getClickedBlock().getType()==Material.SIGN_POST||e.getClickedBlock().getType()==Material.WALL_SIGN){
+			if(Tag.SIGNS.isTagged(e.getClickedBlock().getType())){
 				s = isLockSign(e.getClickedBlock());
 			}
 			if (s == null) return;
@@ -66,7 +67,7 @@ public class LockEvents implements Listener {
 		String s;
 		for(BlockFace bf : faces){
 			b = base.getRelative(bf);
-			if(b.getType()==Material.WALL_SIGN){
+			if(Tag.WALL_SIGNS.isTagged(b.getType())){
 				s = isLockSign(b);
 				if(s!=null)return s;
 			}else if(b.getType()==base.getType()&&checkDouble){
@@ -75,7 +76,7 @@ public class LockEvents implements Listener {
 			}
 		}
 		b = base.getRelative(BlockFace.UP);
-		if(b.getType()==Material.SIGN_POST){
+		if(Tag.STANDING_SIGNS.isTagged(b.getType())){
 			return isLockSign(b);
 		}else return null;
 	}

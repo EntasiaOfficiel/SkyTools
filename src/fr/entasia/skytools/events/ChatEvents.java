@@ -18,7 +18,7 @@ public class ChatEvents implements Listener {
 			Main.guessWord = null;
 			switch (Main.r.nextInt(6)) {
 				case 0:
-					e.getPlayer().getInventory().addItem(new ItemStack(Material.EXP_BOTTLE, 32));
+					e.getPlayer().getInventory().addItem(new ItemStack(Material.EXPERIENCE_BOTTLE, 32));
 					break;
 				case 1:
 					e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));

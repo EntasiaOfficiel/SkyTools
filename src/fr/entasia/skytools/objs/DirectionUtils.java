@@ -6,20 +6,20 @@ import org.bukkit.util.Vector;
 public enum DirectionUtils {
 
 	// attention : metas inversés
-	DOWN(new Vector(0, -1, 0), 1),
-	NORTH(new Vector(0, 0, -1), 2),
-	EAST(new Vector(1, 0, 0), 5),
-	SOUTH(new Vector(0, 0, 1), 3),
-	WEST(new Vector(-1, 0, 0), 4),
+	DOWN(new Vector(0, -1, 0), BlockFace.DOWN),
+	NORTH(new Vector(0, 0, -1), BlockFace.NORTH),
+	EAST(new Vector(1, 0, 0), BlockFace.EAST),
+	SOUTH(new Vector(0, 0, 1), BlockFace.SOUTH),
+	WEST(new Vector(-1, 0, 0), BlockFace.WEST),
 
 	;
 
 	public Vector vector;
-	public byte data;
+	public BlockFace face;
 
-	DirectionUtils(Vector v, int data) {
+	DirectionUtils(Vector v, BlockFace face) {
 		this.vector = v;
-		this.data = (byte) data;
+		this.face = face;
 	}
 
 	public static DirectionUtils get(BlockFace bf) {

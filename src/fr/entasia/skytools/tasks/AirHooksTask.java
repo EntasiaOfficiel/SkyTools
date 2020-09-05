@@ -180,11 +180,11 @@ public class AirHooksTask extends BukkitRunnable {
 	public Entity owLoot(){
 		Randomiser r = new Randomiser(100);
 		if(r.isInNext(15)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.RAW_FISH, rand(4) + 2));
+			return w.dropItem(centerLoc(), new ItemStack(Material.COD, rand(4) + 2));
 		}else if(r.isInNext(10)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.RAW_FISH, rand(2) + 2, (short)1));
+			return w.dropItem(centerLoc(), new ItemStack(Material.SALMON, rand(2) + 2));
 		}else if(r.isInNext(10)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.RAW_FISH, rand(2), (short)2));
+			return w.dropItem(centerLoc(), new ItemStack(Material.PUFFERFISH, rand(2)));
 
 		}else if(r.isInNext(7)) {
 			return w.dropItem(centerLoc(), new ItemStack(Material.ARROW, rand(8) + 12));
@@ -222,7 +222,7 @@ public class AirHooksTask extends BukkitRunnable {
 			CustomArrows.FIREWORKS.enchant(item);
 			return w.dropItem(centerLoc(), item);
 		}else{
-			ItemStack item = new ItemStack(Material.FIREWORK, rand(5)+5);
+			ItemStack item = new ItemStack(Material.FIREWORK_ROCKET, rand(5)+5);
 			FireworkMeta meta = (FireworkMeta) item.getItemMeta();
 			meta.addEffect(FireworkEffect.builder().withColor(org.bukkit.Color.RED, org.bukkit.Color.PURPLE)
 					.build());
@@ -244,7 +244,7 @@ public class AirHooksTask extends BukkitRunnable {
 		}else if(r.isInNext(5)){
 			return w.dropItem(centerLoc(), new ItemStack(Material.BLAZE_ROD, rand(4)+4));
 		}else if(r.isInNext(5)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.FIREBALL));
+			return w.dropItem(centerLoc(), new ItemStack(Material.FIRE_CHARGE));
 		}else if(r.isInNext(5)) {
 			ItemStack item = new ItemStack(Material.ELYTRA);
 			item.setDurability((short) (rand(300)+75));
@@ -294,7 +294,7 @@ public class AirHooksTask extends BukkitRunnable {
 		if(r.isInNext(15)){
 			return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT, rand(6)+4));
 		}else if(r.isInNext(15)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.CHORUS_FRUIT_POPPED, rand(8) + 8));
+			return w.dropItem(centerLoc(), new ItemStack(Material.POPPED_CHORUS_FRUIT, rand(8) + 8));
 		}else if(r.isInNext(14)) {
 			return w.dropItem(centerLoc(), new ItemStack(Material.ENDER_PEARL, rand(4)+4));
 		}else if(r.isInNext(5)) {
@@ -302,20 +302,20 @@ public class AirHooksTask extends BukkitRunnable {
 			item.setDurability((short) (rand(300)+75));
 			return w.dropItem(centerLoc(), item);
 		}else if(r.isInNext(5)) {
-			return w.dropItem(centerLoc(), new ItemStack(Material.DRAGONS_BREATH, rand(4)+4));
+			return w.dropItem(centerLoc(), new ItemStack(Material.DRAGON_BREATH, rand(4)+4));
 		}
 
 		if(r.isInNext(5)) {
-			LingeringPotion lp = (LingeringPotion)w.spawnEntity(centerLoc(), EntityType.LINGERING_POTION);
+			ThrownPotion potion = (ThrownPotion)w.spawnEntity(centerLoc(), EntityType.SPLASH_POTION);
 
 			ItemStack item = new ItemStack(Material.LINGERING_POTION);
 			PotionMeta meta = (PotionMeta) item.getItemMeta();
 			meta.addCustomEffect(new PotionEffect(PotionEffectType.HARM,1, 1), true);
 			item.setItemMeta(meta);
 
-			lp.setItem(item);
+			potion.setItem(item);
 
-			return lp;
+			return potion;
 		}else if(r.isInNext(8)){
 			return w.spawnEntity(centerLoc(), EntityType.ENDERMITE);
 		}else if(r.isInNext(6)){
@@ -335,7 +335,7 @@ public class AirHooksTask extends BukkitRunnable {
 			CustomEnchants.VAMPIRE.enchant(item, rand(2));
 			return w.dropItem(centerLoc(), item);
 		}else{
-			return w.dropItem(centerLoc(), new ItemStack(Material.ENDER_STONE, rand(4)+4));
+			return w.dropItem(centerLoc(), new ItemStack(Material.END_STONE, rand(4)+4));
 		}
 	}
 }

@@ -14,7 +14,6 @@ import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.objs.custom.RomanUtils;
-import fr.entasia.skytools.tasks.LavaTask;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -42,7 +41,7 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void a(PlayerItemDamageEvent e) {
-		if(LavaTask.isLava(e.getPlayer().getLocation().getBlock().getType())){
+		if(e.getPlayer().getLocation().getBlock().getType()==Material.LAVA){
 			if(CustomEnchants.LAVA_EATER.hasEnchant(e.getItem())) e.setCancelled(true);
 		}
 	}
@@ -66,7 +65,7 @@ public class EnchantEvents implements Listener {
 			}
 			l = CustomEnchants.WITHER.getLevel(item);
 			if(l!=0){
-				((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, l-1), true);
+				((LivingEntity) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, l-1));
 			}
 		}
 	}
@@ -78,7 +77,7 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void a(BlockBreakEvent e) {
-		if(e.getBlock().getType()==Material.MOB_SPAWNER){
+		if(e.getBlock().getType()==Material.SPAWNER){
 			if(CustomEnchants.SPAWNER_BREAKER.hasEnchant(e.getPlayer().getInventory().getItemInMainHand())){
 				e.setExpToDrop(0);
 				e.setDropItems(false);
@@ -90,7 +89,7 @@ public class EnchantEvents implements Listener {
 
 				NBTComponent nbt = new NBTComponent();
 				nbt.setValue(NBTTypes.String, "Entity", cs.getSpawnedType().name());
-				ItemStack item = new ItemBuilder(Material.MOB_SPAWNER).nbt(nbt).lore("§7Mob : "+sb).build();
+				ItemStack item = new ItemBuilder(Material.SPAWNER).nbt(nbt).lore("§7Mob : "+sb).build();
 
 				e.getBlock().setType(Material.AIR);
 				new BukkitRunnable() {
@@ -105,7 +104,7 @@ public class EnchantEvents implements Listener {
 
 	@EventHandler
 	public void a(BlockPlaceEvent e) {
-		if(e.getItemInHand().getType() != Material.MOB_SPAWNER)return;
+		if(e.getItemInHand().getType() != Material.SPAWNER)return;
 		NBTComponent nbt = ItemNBT.getNBTSafe(e.getItemInHand());
 		String s = (String) nbt.getValue(NBTTypes.String, "Entity");
 		if(s.equals(""))return;

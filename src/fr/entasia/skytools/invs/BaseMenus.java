@@ -16,7 +16,7 @@ public class BaseMenus {
 
 	// MENU WARPS
 
-	public static MenuCreator warpsMenu = new MenuCreator(null, null){
+	public static MenuCreator warpsMenu = new MenuCreator(){
 
 		public void onMenuClick(MenuClickEvent e){
 
@@ -31,7 +31,7 @@ public class BaseMenus {
 				case EMERALD:
 					w = Warp.getWarp("shop");
 					break;
-				case SAPLING:
+				case OAK_SAPLING:
 					w = Warp.getWarp("islands");
 					break;
 				case IRON_AXE:
@@ -48,10 +48,10 @@ public class BaseMenus {
 
 	public static void WarpsOpen(Player p){
 		Inventory inv = warpsMenu.createInv(6, "§aWarps");
-		ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte)14);
+		ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE);
 		for(int i : new int[]{28,30,32,34,38,40,42})inv.setItem(i, item);
 		for(int i=0;i<10;i++)inv.setItem(i+9, item);
-		item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte)4);
+		item = new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);
 		for(int i=0;i<4;i++)inv.setItem(i+12, item);
 
 		item = new ItemStack(Material.ELYTRA);
@@ -61,7 +61,7 @@ public class BaseMenus {
 		item.setItemMeta(meta);
 		inv.setItem(4, item);
 
-		item = new ItemStack(Material.SAPLING);
+		item = new ItemStack(Material.OAK_SAPLING);
 		meta = item.getItemMeta();
 		meta.setDisplayName("§7Iles");
 		meta.setLore(getDesc("islands"));

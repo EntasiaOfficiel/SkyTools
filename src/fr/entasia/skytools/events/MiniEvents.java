@@ -17,7 +17,7 @@ public class MiniEvents implements Listener {
 
 	@EventHandler
 	public void onFade(BlockFadeEvent e){
-		if(e.getBlock().getType()== Material.SOIL)e.setCancelled(true);
+		if(e.getBlock().getType()== Material.FARMLAND)e.setCancelled(true);
 	}
 
 }

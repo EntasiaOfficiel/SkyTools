@@ -27,7 +27,7 @@ public enum CustomSkulls {
 	CustomSkulls(String texture, String uuidstr, String name){
 		this(texture, uuidstr);
 
-		this.skullMeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+		this.skullMeta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.PLAYER_HEAD);
 		ItemUtils.setTexture(this.skullMeta, profile);
 		this.skullMeta.setDisplayName(name);
 		this.name = name;
@@ -48,7 +48,7 @@ public enum CustomSkulls {
 	}
 
 	public ItemStack genItem(int count){
-		ItemStack item = new ItemStack(Material.SKULL_ITEM, count, (short)3);
+		ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 		item.setItemMeta(skullMeta.clone());
 		return item;
 	}

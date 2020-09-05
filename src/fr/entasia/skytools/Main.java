@@ -1,5 +1,6 @@
 package fr.entasia.skytools;
 
+import fr.entasia.apis.other.ItemBuilder;
 import fr.entasia.skytools.commands.*;
 import fr.entasia.skytools.commands.custom.CustomArrowCmd;
 import fr.entasia.skytools.commands.custom.CustomEnchantCmd;
@@ -10,7 +11,6 @@ import fr.entasia.skytools.events.cenchants.FarmEvents;
 import fr.entasia.skytools.events.cenchants.SkyFisherEvents;
 import fr.entasia.skytools.objs.SkyCrates;
 import fr.entasia.skytools.objs.Warp;
-import fr.entasia.skytools.objs.custom.CustomArrows;
 import fr.entasia.skytools.tasks.CleanUpTask;
 import fr.entasia.skytools.tasks.LavaTask;
 import fr.entasia.skytools.tasks.SWTask;
@@ -22,9 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.util.Random;
@@ -133,81 +131,78 @@ public class Main extends JavaPlugin {
 	}
 
 	public static void registerRecipes(){
-		ItemStack item = new ItemStack(Material.HUGE_MUSHROOM_1, 2);
+		ItemStack item = new ItemStack(Material.BROWN_MUSHROOM, 2);
 		ItemMeta meta;
 
 		ShapelessRecipe slrecipe = new ShapelessRecipe(new NamespacedKey(main, "brown_mushoom_block"), item);
 		slrecipe.addIngredient(4, Material.BROWN_MUSHROOM);
 		Bukkit.addRecipe(slrecipe);
 
-		item = new ItemStack(Material.HUGE_MUSHROOM_2, 2);
+		item = new ItemStack(Material.RED_MUSHROOM_BLOCK, 2);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "red_mushoom_block"), item);
 		slrecipe.addIngredient(4, Material.RED_MUSHROOM);
 		Bukkit.addRecipe(slrecipe);
 
 		item = new ItemStack(Material.POISONOUS_POTATO);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "poison_potato_a"), item);
-		slrecipe.addIngredient(1, Material.POTATO_ITEM);
+		slrecipe.addIngredient(1, Material.POTATO);
 		slrecipe.addIngredient(1, Material.ROTTEN_FLESH);
 		Bukkit.addRecipe(slrecipe);
 
 		item = new ItemStack(Material.POISONOUS_POTATO, 3);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "poison_potato_b"), item);
-		slrecipe.addIngredient(1, Material.POTATO_ITEM);
+		slrecipe.addIngredient(1, Material.POTATO);
 		slrecipe.addIngredient(1, Material.SPIDER_EYE);
 		Bukkit.addRecipe(slrecipe);
 
 		item = new ItemStack(Material.POISONOUS_POTATO, 5);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "poison_potato_c"), item);
-		slrecipe.addIngredient(1, Material.POTATO_ITEM);
+		slrecipe.addIngredient(1, Material.POTATO);
 		slrecipe.addIngredient(1, Material.FERMENTED_SPIDER_EYE);
 		Bukkit.addRecipe(slrecipe);
 
-		item = new ItemStack(Material.DIRT);
-		meta = item.getItemMeta();
-		meta.setDisplayName("§6I am a flower pot");
-		item.setItemMeta(meta);
+		item = new ItemBuilder(Material.DIRT).name("§6I am a flower pot").build();
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "dirt_lol"), item);
 		slrecipe.addIngredient(1, Material.DIRT);
 		Bukkit.addRecipe(slrecipe);
 
-		item = new ItemStack(Material.TIPPED_ARROW);
-		PotionMeta pmeta = (PotionMeta) item.getItemMeta();
-		pmeta.setMainEffect(PotionEffectType.NIGHT_VISION);
-		pmeta.setColor(Color.fromRGB(255, 153, 255));
-		pmeta.setDisplayName("§f"+CustomArrows.FIREWORKS.name);
-		item.setItemMeta(pmeta);
-		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "arrow_fw"), item);
-		slrecipe.addIngredient(1, Material.ARROW);
-		slrecipe.addIngredient(4, Material.FIREWORK);
-		Bukkit.addRecipe(slrecipe);
+//		item = new ItemStack(Material.TIPPED_ARROW);
+//		PotionMeta pmeta = (PotionMeta) item.getItemMeta();
+//		pmeta.addCustomEffect(PotionEffectType.NIGHT_VISION);
+//		pmeta.setColor(Color.fromRGB(255, 153, 255));
+//		pmeta.setDisplayName("§f"+CustomArrows.FIREWORKS.name);
+//		item.setItemMeta(pmeta);
+//		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "arrow_fw"), item);
+//		slrecipe.addIngredient(1, Material.ARROW);
+//		slrecipe.addIngredient(4, Material.FIREWORK);
+//		Bukkit.addRecipe(slrecipe);
+//
+//		item = new ItemStack(Material.TIPPED_ARROW);
+//		pmeta = (PotionMeta) item.getItemMeta();
+//		pmeta.setColor(Color.fromRGB(3, 3, 4));
+//		pmeta.setDisplayName("§f"+CustomArrows.EXPLOSION.name);
+//		item.setItemMeta(pmeta);
+//		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "arrow_explosion"), item);
+//		slrecipe.addIngredient(1, Material.ARROW);
+//		slrecipe.addIngredient(1, Material.SULPHUR);
+//		Bukkit.addRecipe(slrecipe);
 
-		item = new ItemStack(Material.TIPPED_ARROW);
-		pmeta = (PotionMeta) item.getItemMeta();
-		pmeta.setColor(Color.fromRGB(3, 3, 4));
-		pmeta.setDisplayName("§f"+CustomArrows.EXPLOSION.name);
-		item.setItemMeta(pmeta);
-		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "arrow_explosion"), item);
-		slrecipe.addIngredient(1, Material.ARROW);
-		slrecipe.addIngredient(1, Material.SULPHUR);
-		Bukkit.addRecipe(slrecipe);
-
-		item = new ItemStack(Material.SNOW_BALL);
+		item = new ItemStack(Material.SNOWBALL);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "snow_fw_1"), item);
-		slrecipe.addIngredient(1, Material.SNOW_BALL);
-		slrecipe.addIngredient(1, Material.FIREWORK_CHARGE);
+		slrecipe.addIngredient(1, Material.SNOWBALL);
+		slrecipe.addIngredient(1, Material.FIREWORK_STAR);
 		Bukkit.addRecipe(slrecipe);
 
-		item = new ItemStack(Material.SNOW_BALL);
+		item = new ItemStack(Material.SNOWBALL);
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "snow_fw_2"), item);
-		slrecipe.addIngredient(1, Material.SNOW_BALL);
-		slrecipe.addIngredient(1, Material.FIREWORK);
+		slrecipe.addIngredient(1, Material.SNOWBALL);
+		slrecipe.addIngredient(1, Material.FIREWORK_ROCKET);
 		Bukkit.addRecipe(slrecipe);
 	}
 
 	public static void registerFW(){
 
-		FireworkMeta base = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK);
+		FireworkMeta base = (FireworkMeta) Bukkit.getItemFactory().getItemMeta(Material.FIREWORK_ROCKET);
 
 
 		Utils.metas = new FireworkMeta[3];

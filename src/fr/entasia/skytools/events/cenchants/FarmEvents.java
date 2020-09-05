@@ -35,13 +35,13 @@ public class FarmEvents implements Listener {
 	}
 
 	static{
-		seeds.put(Material.SEEDS, new SeedBlock(Material.CROPS, Material.SOIL));
-		seeds.put(Material.CARROT_ITEM, new SeedBlock(Material.CARROT, Material.SOIL));
-		seeds.put(Material.POTATO_ITEM, new SeedBlock(Material.POTATO, Material.SOIL));
-		seeds.put(Material.MELON_SEEDS, new SeedBlock(Material.MELON_STEM, Material.SOIL));
-		seeds.put(Material.PUMPKIN_SEEDS, new SeedBlock(Material.PUMPKIN_STEM, Material.SOIL));
-		seeds.put(Material.BEETROOT_SEEDS, new SeedBlock(Material.BEETROOT_BLOCK, Material.SOIL));
-		seeds.put(Material.NETHER_STALK, new SeedBlock(Material.NETHER_WARTS, Material.SOUL_SAND));
+		seeds.put(Material.WHEAT_SEEDS, new SeedBlock(Material.WHEAT, Material.FARMLAND));
+		seeds.put(Material.CARROT, new SeedBlock(Material.CARROT, Material.FARMLAND));
+		seeds.put(Material.POTATO, new SeedBlock(Material.POTATO, Material.FARMLAND));
+		seeds.put(Material.MELON_SEEDS, new SeedBlock(Material.MELON_STEM, Material.FARMLAND));
+		seeds.put(Material.PUMPKIN_SEEDS, new SeedBlock(Material.PUMPKIN_STEM, Material.FARMLAND));
+		seeds.put(Material.BEETROOT_SEEDS, new SeedBlock(Material.BEETROOTS, Material.FARMLAND));
+		seeds.put(Material.NETHER_WART, new SeedBlock(Material.NETHER_WART, Material.SOUL_SAND));
 
 		vectors = new Vector[5];
 		vectors[0] = new Vector(0, 0, 0);
@@ -102,7 +102,7 @@ public class FarmEvents implements Listener {
 		if(b.getType()==Material.AIR){
 			PlayerInventory inv = e.getPlayer().getInventory();
 			Material m = e.getFrom().getBlock().getType();
-			if(m==Material.SOUL_SAND||m==Material.SOIL){
+			if(m==Material.SOUL_SAND||m==Material.FARMLAND){
 				if(CustomEnchants.GREENER.hasEnchant(inv.getBoots())){
 					for(ItemStack i : inv.getContents()){
 						if(i==null||i.getType()==Material.AIR)continue;
