@@ -42,14 +42,6 @@ public class Utils {
 		blackmeta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).build());
 	}
 
-	public static ItemStack getSkull(ItemStack item, String uuidstr, String texture){
-		SkullMeta smeta = (SkullMeta)item.getItemMeta();
-		ItemUtils.setTexture(smeta, ItemUtils.genProfile(uuidstr, texture));
-		item.setItemMeta(smeta);
-		return item;
-
-	}
-
 	public static ToolPlayer getToolPlayer(Player p){
 		ToolPlayer tp = playerCache.get(p.getUniqueId());
 		if(tp==null){

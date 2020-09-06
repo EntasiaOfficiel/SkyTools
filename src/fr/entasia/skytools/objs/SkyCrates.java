@@ -103,8 +103,10 @@ public class SkyCrates {
 		ct3.name = "Beta";
 		ct3.key = new ItemBuilder(Material.COAL).fakeEnchant().name("§eClé de crate").lore("§6Crate §cBeta").build();
 
-		item = PetsUtils.getSkull(new ItemStack(Material.PLAYER_HEAD),"skull:panda", "d8cdd4f285632c25d762ece25f4193b966c2641b15d9bdbc0a113023de76ab");
+		item = new ItemStack(Material.PLAYER_HEAD);
+		GameProfile profile = ItemUtils.genProfile("skull:flying_bobby", "d8cdd4f285632c25d762ece25f4193b966c2641b15d9bdbc0a113023de76ab");
 		meta = item.getItemMeta();
+		ItemUtils.setTexture((SkullMeta)meta, profile);
 		meta.setDisplayName("Rip flying Bobby");
 		item.setItemMeta(meta);
 		meta.addEnchant(Enchantment.LURE, 1, true);
@@ -149,10 +151,10 @@ public class SkyCrates {
 		loot = new CrateLoot(1,"Restes de Poporc", item);
 		ct3.addLoot(loot);
 
-		item = PetsUtils.getSkull(new ItemStack(Material.PLAYER_HEAD),"skull_toad", "10a2ed5bb46c24e8ed94c279c5769bb86556a48469a3745b03f2abfb3fdb75");
-		GameProfile profile = ItemUtils.genProfile("skull_toad", "10a2ed5bb46c24e8ed94c279c5769bb86556a48469a3745b03f2abfb3fdb75");
-		ItemUtils.setTexture((SkullMeta)item.getItemMeta(), profile);
+		item = new ItemStack(Material.PLAYER_HEAD);
+		profile = ItemUtils.genProfile("skull_toad", "10a2ed5bb46c24e8ed94c279c5769bb86556a48469a3745b03f2abfb3fdb75");
 		meta = item.getItemMeta();
+		ItemUtils.setTexture((SkullMeta)meta, profile);
 		meta.setDisplayName("Joyeux Aujourd'hui !");
 		meta.addEnchant(Enchantment.LURE, 1, true);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
