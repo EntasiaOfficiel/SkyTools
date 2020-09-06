@@ -5,8 +5,6 @@ import org.bukkit.util.Vector;
 
 public enum DirectionUtils {
 
-	// attention : metas inversés
-	DOWN(new Vector(0, -1, 0), BlockFace.DOWN),
 	NORTH(new Vector(0, 0, -1), BlockFace.NORTH),
 	EAST(new Vector(1, 0, 0), BlockFace.EAST),
 	SOUTH(new Vector(0, 0, 1), BlockFace.SOUTH),

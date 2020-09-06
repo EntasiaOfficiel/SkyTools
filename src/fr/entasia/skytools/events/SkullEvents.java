@@ -1,5 +1,7 @@
 package fr.entasia.skytools.events;
 
+import com.destroystokyo.paper.MaterialSetTag;
+import com.destroystokyo.paper.MaterialTags;
 import com.mojang.authlib.GameProfile;
 import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
@@ -8,7 +10,9 @@ import fr.entasia.skytools.objs.custom.CustomSkulls;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rotatable;
+import org.bukkit.craftbukkit.v1_15_R1.block.impl.CraftSkullPlayerWall;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -118,6 +122,7 @@ public class SkullEvents implements Listener {
 										if(lb.getType()==Material.AIR){
 											place(lb, d, CustomSkulls.POMME);
 											particle(b.getLocation());
+											return;
 										}
 									}
 								}
@@ -130,11 +135,12 @@ public class SkullEvents implements Listener {
 	}
 
 	public static void place(Block b, DirectionUtils face, CustomSkulls skull){
-		b.setType(Material.PLAYER_HEAD);
+		b.setType(Material.PLAYER_WALL_HEAD);
 
-		Rotatable r = (Rotatable) b.getBlockData();
-		r.setRotation(face.face);
-		b.setBlockData(r);
+
+		Directional d = (Directional) b.getBlockData();
+		d.setFacing(face.face);
+		b.setBlockData(d);
 
 		ItemUtils.setTexture(b, skull.profile);
 	}
@@ -155,15 +161,16 @@ public class SkullEvents implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void b(BlockBreakEvent e){
-		if(e.getPlayer().getGameMode()== GameMode.SURVIVAL&&e.getBlock().getType()==Material.PLAYER_HEAD){
+		if(e.getPlayer().getGameMode()== GameMode.SURVIVAL&&(e.getBlock().getType()==Material.PLAYER_HEAD||e.getBlock().getType()==Material.PLAYER_WALL_HEAD)){
 			GameProfile profile = ItemUtils.getProfile(e.getBlock());
 			if(profile==null)return;
 			CustomSkulls cs = CustomSkulls.getByUUID(profile.getId());
 			if(cs==null)return;
 
 			e.setDropItems(false);
-			if(cs==CustomSkulls.POMME)e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.APPLE));
-			else{
+			if(cs==CustomSkulls.POMME){
+				e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.APPLE));
+			}else{
 				e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), cs.genItem(1));
 			}
 		}
