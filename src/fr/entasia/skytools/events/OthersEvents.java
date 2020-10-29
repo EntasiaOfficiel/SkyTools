@@ -275,19 +275,21 @@ public class OthersEvents implements Listener {
 		int current;
 		if (o == null) current = 1;
 		else current = (int) o;
-		Villagers vi = Villagers.getType(v);
-		if (vi == null) {
-			ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
-					" Infos :§6" + v.getLocation());
-		}else{
-			int newLvl = current+1;
-			if (newLvl >= vi.levels.length) return;
-			List<MerchantRecipe> list2 = new ArrayList<>(v.getRecipes());
-			vi.addToList(list2, newLvl);
-			nbt.setValue(NBTTypes.Int, "CareelLevel", newLvl);
-			EntityNBT.setNBT(v, nbt);
-			v.setRecipes(list2);
-		}
+		if(v.getScoreboardTags().contains("npctype")) {
+			Villagers vi = Villagers.getType(v);
+			if (vi == null) {
+				ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
+						" Infos :§6" + v.getLocation());
+			} else {
+				int newLvl = current + 1;
+				if (newLvl >= vi.levels.length) return;
+				List<MerchantRecipe> list2 = new ArrayList<>(v.getRecipes());
+				vi.addToList(list2, newLvl);
+				nbt.setValue(NBTTypes.Int, "CareelLevel", newLvl);
+				EntityNBT.setNBT(v, nbt);
+				v.setRecipes(list2);
+			}
+		}else v.remove(); // pas sensé arriver, mais ca arrive
 	}
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
