@@ -3,7 +3,6 @@ package fr.entasia.skytools.tasks;
 import fr.entasia.apis.other.Randomiser;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
-import fr.entasia.skytools.objs.Color;
 import fr.entasia.skytools.objs.custom.CustomArrows;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import org.bukkit.*;
@@ -41,7 +40,7 @@ public class AirHooksTask extends BukkitRunnable {
 
 	// particules
 	public Particle background=null;
-	public Color backgroundColor=null;
+	public Particle.DustOptions backgroundData =null;
 	public Particle fish=null;
 
 	// fonctions
@@ -50,20 +49,19 @@ public class AirHooksTask extends BukkitRunnable {
 	}
 
 
-	public void initColors (){
-		backgroundColor = new Color(0, 0, 0);
+	public void initColors(){
 		switch(w.getEnvironment()){
 			case NORMAL: {
 				if(w.getTime()>13000){
 					fish = Particle.SMOKE_NORMAL;
 
 					background = Particle.REDSTONE;
-					backgroundColor = new Color(128, 128, 128);
+					backgroundData = getDust(128, 128, 128);
 				}else{
 					fish = Particle.END_ROD;
 
 					background = Particle.REDSTONE;
-					backgroundColor = new Color(210, 240, 255);
+					backgroundData = getDust(210, 240, 255);
 				}
 				if(w.hasStorm())background = null;
 				break;
@@ -72,18 +70,21 @@ public class AirHooksTask extends BukkitRunnable {
 				fish = Particle.FLAME;
 
 				background = Particle.REDSTONE;
-				backgroundColor = new Color(255, 153, 0);
+				backgroundData = getDust(255, 153, 0);
 				break;
 			}
 			case THE_END:{
 				fish = Particle.DRAGON_BREATH;
 
 				background = Particle.REDSTONE;
-				backgroundColor = new Color(160, 160, 160);
+				backgroundData = getDust(160, 160, 160);
 				break;
 			}
 		}
+	}
 
+	private static Particle.DustOptions getDust(int r, int g, int b){
+		return new Particle.DustOptions(Color.fromRGB(r, g, b), 1);
 	}
 
 	public void init(){
@@ -114,7 +115,7 @@ public class AirHooksTask extends BukkitRunnable {
 
 			if(background!=null){
 				for (int j = 0; j < 50; j++) {
-					w.spawnParticle(background, corner.clone().add(randomVector()), 0, backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
+					w.spawnParticle(background, corner.clone().add(randomVector()), 0,   0, 0, 0, 1, backgroundData);
 				}
 			}
 

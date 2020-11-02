@@ -45,7 +45,7 @@ public class SkyFisherEvents implements Listener {
 						Location baseLoc = e.getHook().getLocation();
 
 						if(aht.background!=null){
-							aht.w.spawnParticle(aht.background, baseLoc, 0, aht.backgroundColor.r, aht.backgroundColor.g, aht.backgroundColor.b, 1);
+							aht.w.spawnParticle(aht.background, baseLoc, 0,     0, 0, 0, 1, aht.backgroundData);
 						}
 						if(counter!=10){
 							counter++;
