@@ -14,6 +14,8 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftMerchant;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractVillager;
 import org.bukkit.entity.Villager;
@@ -489,13 +491,16 @@ public enum Villagers {
 		throw new EntasiaException();
 	}
 
-	public void apply(Villager v){
+	public static void convert(Villager v){
+		v.getProfession()
+		v.setRecipes(new ArrayList<>());
 		v.setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
 		v.addScoreboardTag("npctype-"+id);
 		List<MerchantRecipe> list = new ArrayList<>();
-		addToList(list, 0);
-		v.setRecipes(list);
 		v.setProfession(p);
+		addToList(list, 0);
+		System.out.println(list);
+		v.setRecipes(list);
 //		EntityNBT.addNBT(v, new NBTComponent(String.format("{Career:%s}", id))); // est override par le jeu quand upgrade
 		NBTComponent nbt = EntityNBT.getNBT(v);
 		nbt.setValue(NBTTypes.Int, "CareelLevel", 0);

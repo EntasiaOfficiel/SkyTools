@@ -240,16 +240,16 @@ public class OthersEvents implements Listener {
 //	}
 
 	@EventHandler
-	public void a(EntitySpawnEvent e){
-		if(e.getEntity().getType()==EntityType.VILLAGER){
-			Villager v = (Villager)e.getEntity();
-			Villagers vi = Villagers.getOne();
-			vi.apply(v);
-		}
+	public void a(VillagerCareerChangeEvent e) {
+		System.out.println("career");
+		Villager v = e.getEntity();
+		Villagers vi = Villagers.getOne();
+		vi.apply(v);
 	}
 
 	@EventHandler
 	public void a(VillagerAcquireTradeEvent e){
+		System.out.println("aquire");
 		e.setCancelled(true);
 		if(e.getEntity().getTicksLived()<20)return;
 		testUpgrade(e.getEntity());
@@ -257,39 +257,42 @@ public class OthersEvents implements Listener {
 
 	@EventHandler
 	public void a(VillagerReplenishTradeEvent e) {
+		System.out.println("replenish");
 		e.setCancelled(true);
 		testUpgrade(e.getEntity());
 	}
 
 	public static void testUpgrade(AbstractVillager v) {
+		System.out.println("upgrade ?");
 		NBTComponent nbt = EntityNBT.getNBT(v);
 
 		List<MetadataValue> meta = v.getMetadata("lastUpgrade");
-		if(meta.size()!=0){
-			if(System.currentTimeMillis()-meta.get(0).asLong()<1000){
+		if (meta.size() != 0) {
+			if (System.currentTimeMillis() - meta.get(0).asLong() < 1000) {
+				System.out.println("refused");
 				return;
 			}
 		}
+		System.out.println("ok");
 		v.setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
 		Object o = nbt.getValue(NBTTypes.Int, "CareerLevel");
 		int current;
 		if (o == null) current = 1;
 		else current = (int) o;
-		if(v.getScoreboardTags().contains("npctype")) {
-			Villagers vi = Villagers.getType(v);
-			if (vi == null) {
-				ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
-						" Infos :§6" + v.getLocation());
-			} else {
-				int newLvl = current + 1;
-				if (newLvl >= vi.levels.length) return;
-				List<MerchantRecipe> list2 = new ArrayList<>(v.getRecipes());
-				vi.addToList(list2, newLvl);
-				nbt.setValue(NBTTypes.Int, "CareelLevel", newLvl);
-				EntityNBT.setNBT(v, nbt);
-				v.setRecipes(list2);
-			}
-		}else v.remove(); // pas sensé arriver, mais ca arrive
+		Villagers vi = Villagers.getType(v);
+		if (vi == null) {
+			ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
+					" Infos :§6" + v.getLocation());
+		} else {
+			int newLvl = current + 1;
+			if (newLvl >= vi.levels.length) return;
+			List<MerchantRecipe> list2 = new ArrayList<>(v.getRecipes());
+			vi.addToList(list2, newLvl);
+			nbt.setValue(NBTTypes.Int, "CareelLevel", newLvl);
+			EntityNBT.setNBT(v, nbt);
+			System.out.println("recipes : "+list2);
+			v.setRecipes(list2);
+		}
 	}
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
