@@ -1,7 +1,5 @@
 package fr.entasia.skytools.events;
 
-import com.destroystokyo.paper.MaterialSetTag;
-import com.destroystokyo.paper.MaterialTags;
 import com.mojang.authlib.GameProfile;
 import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
@@ -12,7 +10,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Rotatable;
-import org.bukkit.craftbukkit.v1_15_R1.block.impl.CraftSkullPlayerWall;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

@@ -147,8 +147,10 @@ public class OthersEvents implements Listener {
 									"\n§eClic droit pour se téléporter !\n ");
 						}
 					}
-				}else if (s.getLine(0).equals("§8[§7Poubelle§8]"))
+				}else if (s.getLine(0).equals("§8[§7Poubelle§8]")){
+					e.setCancelled(true);
 					p.openInventory(Bukkit.createInventory(null, 54, "§8Poubelle"));
+				}
 			}
 		}
 	}

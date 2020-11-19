@@ -1,5 +1,6 @@
 package fr.entasia.skytools.events;
 
+import fr.entasia.skycore.apis.OthersAPI;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -39,6 +40,7 @@ public class LockEvents implements Listener {
 	public void a(PlayerInteractEvent e){
 		if(!e.hasBlock())return;
 		Player p = e.getPlayer();
+		if(OthersAPI.isMasterEdit(p))return;
 
 		String s = null;
 		if(isChest(e.getClickedBlock().getType())) {

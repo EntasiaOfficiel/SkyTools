@@ -3,7 +3,6 @@ package fr.entasia.skytools.objs;
 import com.mojang.authlib.GameProfile;
 import fr.entasia.apis.other.ItemBuilder;
 import fr.entasia.apis.utils.ItemUtils;
-import fr.entasia.cosmetics.utils.pets.PetsUtils;
 import fr.entasia.crates.CratesAPI;
 import fr.entasia.crates.utils.CrateLoot;
 import fr.entasia.crates.utils.CrateType;
