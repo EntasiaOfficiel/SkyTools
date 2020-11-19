@@ -3,6 +3,7 @@ package fr.entasia.skytools.events;
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import fr.entasia.apis.nbt.EntityNBT;
 import fr.entasia.apis.nbt.NBTComponent;
+import fr.entasia.apis.nbt.NBTManager;
 import fr.entasia.apis.nbt.NBTTypes;
 import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.apis.utils.ServerUtils;
@@ -41,8 +42,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class OthersEvents implements Listener {
 
@@ -241,30 +241,67 @@ public class OthersEvents implements Listener {
 //		}
 //	}
 
-	@EventHandler
-	public void a(EntitySpawnEvent e){
-		if(e.getEntity().getType()==EntityType.VILLAGER){
-			Villager v = (Villager)e.getEntity();
-			Villagers vi = Villagers.getOne();
-			vi.apply(v);
-		}
-	}
+//	@EventHandler
+//	public void a(EntitySpawnEvent e){
+//		if(e.getEntity().getType()==EntityType.VILLAGER){
+//			Villager v = (Villager)e.getEntity();
+//			Villagers vi = Villagers.getOne();
+//			vi.apply(v);
+//		}
+//	}
 
 	@EventHandler
 	public void a(VillagerAcquireTradeEvent e){
 		e.setCancelled(true);
-		if(e.getEntity().getTicksLived()<20)return;
+
 		testUpgrade(e.getEntity());
+
 	}
 
+
+
+
 	@EventHandler
-	public void a(VillagerReplenishTradeEvent e) {
-		e.setCancelled(true);
-		testUpgrade(e.getEntity());
+	public void a(VillagerCareerChangeEvent e){
+		Villager v = e.getEntity();
+		boolean asProfession=false;
+		for(String s : v.getScoreboardTags()){
+			if (s.equalsIgnoreCase("asProfession")) {
+				asProfession = true;
+				break;
+			}
+		}
+
+		if(asProfession){
+			e.setCancelled(true);
+		}else{
+
+
+			ArrayList<Villagers> villagersList = new ArrayList<>();
+
+
+			for(Villagers vi : Villagers.values()){
+				if(vi.p == e.getProfession()){
+
+					villagersList.add(vi);
+				}
+			}
+			if(villagersList.isEmpty()){
+				e.setCancelled(true);
+			}else{
+				Random random = new Random();
+				Villagers vi = villagersList.get(random.nextInt(villagersList.size()));
+				vi.apply(v);
+
+			}
+
+
+
+		}
 	}
 
 	public static void testUpgrade(AbstractVillager v) {
-		NBTComponent nbt = EntityNBT.getNBT(v);
+
 
 		List<MetadataValue> meta = v.getMetadata("lastUpgrade");
 		if(meta.size()!=0){
@@ -273,25 +310,38 @@ public class OthersEvents implements Listener {
 			}
 		}
 		v.setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
-		Object o = nbt.getValue(NBTTypes.Int, "CareerLevel");
-		int current;
-		if (o == null) current = 1;
-		else current = (int) o;
-		if(v.getScoreboardTags().contains("npctype")) {
-			Villagers vi = Villagers.getType(v);
-			if (vi == null) {
-				ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
-						" Infos :§6" + v.getLocation());
-			} else {
-				int newLvl = current + 1;
-				if (newLvl >= vi.levels.length) return;
-				List<MerchantRecipe> list2 = new ArrayList<>(v.getRecipes());
-				vi.addToList(list2, newLvl);
-				nbt.setValue(NBTTypes.Int, "CareelLevel", newLvl);
-				EntityNBT.setNBT(v, nbt);
-				v.setRecipes(list2);
+
+
+		int current=0;
+		for(String s : v.getScoreboardTags()){
+			if(s.startsWith("CareerLevel-")){
+				current= Integer.parseInt(s.split("-")[1]);
 			}
-		}else v.remove(); // pas sensé arriver, mais ca arrive
+		}
+		//Object o = nbt.getValue(NBTTypes.Int, "CareerLevel");
+		//int current;
+		//if (o == null) current = 0;
+		//else current = (int) o;
+		Villagers vi = Villagers.getType(v);
+
+		if (vi == null) {
+			ServerUtils.permMsg("log.upgradenpc", "§cUne erreur s'est produite lors de l'upgrade d'un villageois ! (career not found)." +
+					" Infos :§6" + v.getLocation());
+		} else {
+
+
+
+
+			int newLvl = current + 1;
+			if (newLvl >= vi.levels.length) return;
+			List<MerchantRecipe> list2 = new ArrayList<>(v.getRecipes());
+			vi.addToList(list2, newLvl);
+			v.getScoreboardTags().clear();
+			v.addScoreboardTag("npctype-"+vi.id);
+			v.addScoreboardTag("asProfession");
+			v.addScoreboardTag("CareerLevel-"+newLvl);
+			v.setRecipes(list2);
+		}
 	}
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
@@ -328,9 +378,9 @@ public class OthersEvents implements Listener {
 			item.subtract();
 			EntityNBT.addNBT(e.getRightClicked(), new NBTComponent("{ConversionTime:60}"));
 		}else if(e.getRightClicked().getType()==EntityType.VILLAGER){
-			if(Main.r.nextInt(50)==0){
+			/*if(Main.r.nextInt(50)==0){
 				e.getPlayer().sendMessage("§bMerci à §3wishdrow§b pour les trades custom des PNJ ! :)");
-			}
+			}*/
 		}
 	}
 
