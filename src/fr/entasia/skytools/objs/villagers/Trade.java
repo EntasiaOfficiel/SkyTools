@@ -22,6 +22,7 @@ public class Trade {
 
 	public MerchantRecipe buildOne(){
 		MerchantRecipe a = new MerchantRecipe(result.build(), 0, 10+Main.r.nextInt(20), true);
+		a.setVillagerExperience(1);
 		for(TradeItem ti : needs){
 			a.addIngredient(ti.build());
 		}

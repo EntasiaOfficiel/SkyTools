@@ -30,7 +30,6 @@ import static org.bukkit.entity.Villager.Profession;
 
 public enum Villagers {
 
-
 	PRETRE(0, Profession.CLERIC, 10, 1, 0,
 		new TradeLevel(
 			new Trade(new TradeItem(Material.BREAD).name("§7Pain divin")).need(new TradeItem(Material.EMERALD)),
@@ -473,8 +472,22 @@ public enum Villagers {
 	}
 
 	public static Villagers getType(AbstractVillager v){
+
+
+
+		int npcType=0;
+
+		for(String s : v.getScoreboardTags()){
+			if(s.startsWith("npctype")){
+				npcType = Integer.parseInt(s.split("-")[1]);
+			}
+		}
+
+
 		for(Villagers vi : values()){
-			if(v.getScoreboardTags().contains("npctype-"+vi.id)){
+
+
+			if(npcType == vi.id){
 				return vi;
 			}
 		}
@@ -490,16 +503,28 @@ public enum Villagers {
 	}
 
 	public void apply(Villager v){
+
+
+
+
+
 		v.setMetadata("lastUpgrade", new FixedMetadataValue(Main.main, System.currentTimeMillis()));
 		v.addScoreboardTag("npctype-"+id);
+		v.addScoreboardTag("asProfession");
+		v.addScoreboardTag("CareerLevel-"+0);
+
 		List<MerchantRecipe> list = new ArrayList<>();
-		addToList(list, 0);
+		addToList(list, 1);
 		v.setRecipes(list);
 		v.setProfession(p);
 //		EntityNBT.addNBT(v, new NBTComponent(String.format("{Career:%s}", id))); // est override par le jeu quand upgrade
-		NBTComponent nbt = EntityNBT.getNBT(v);
-		nbt.setValue(NBTTypes.Int, "CareelLevel", 0);
-		EntityNBT.setNBT(v, nbt);
+
+
+
+
+
+
+
 	}
 
 	public void addToList(List<MerchantRecipe> list, int from){ // current 1-5 (max=5)
@@ -511,6 +536,7 @@ public enum Villagers {
 			Trade t = tempTrades.remove(Main.r.nextInt(tempTrades.size()));
 			list.add(t.buildOne());
 		}
+
 	}
 
 // EN CAS DE % DE CHANCE DANS LES TRADES DANS EUX MÊMES
