@@ -366,23 +366,15 @@ public class OthersEvents implements Listener {
 	}
 
 
-	@EventHandler
-	public void a(PlayerInteractEntityEvent e) {
-		if(e.getHand()!= EquipmentSlot.HAND)return;
-		if(e.getRightClicked().getType()==EntityType.ZOMBIE_VILLAGER){
-			ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
-			if(!ItemUtils.hasName(item, "§fÉtoile guérisseuse")) {
-				item = e.getPlayer().getInventory().getItemInOffHand();
-				if (!ItemUtils.hasName(item, "§fÉtoile guérisseuse")) return;
-			}
-			item.subtract();
-			EntityNBT.addNBT(e.getRightClicked(), new NBTComponent("{ConversionTime:60}"));
-		}else if(e.getRightClicked().getType()==EntityType.VILLAGER){
-			/*if(Main.r.nextInt(50)==0){
-				e.getPlayer().sendMessage("§bMerci à §3wishdrow§b pour les trades custom des PNJ ! :)");
-			}*/
-		}
-	}
+//	@EventHandler
+//	public void a(PlayerInteractEntityEvent e) {
+//		if(e.getHand()!= EquipmentSlot.HAND)return;
+//		if(e.getRightClicked().getType()==EntityType.VILLAGER){
+//			if(Main.r.nextInt(50)==0){
+//				e.getPlayer().sendMessage("§bMerci à §3wishdrow§b pour les trades custom des PNJ ! :)");
+//			}
+//		}
+//	}
 
 //	@EventHandler
 //	public void a(InventoryOpenEvent e) throws ReflectiveOperationException {
