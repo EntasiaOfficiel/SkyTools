@@ -44,7 +44,7 @@ public class SkullEvents implements Listener {
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void a(PlayerInteractEvent e){
 		if(e.getHand()==EquipmentSlot.HAND&&e.getAction()==Action.RIGHT_CLICK_BLOCK&&e.getItem()!=null&&e.getItem().getType()==Material.BONE_MEAL){
-			if(e.getClickedBlock().getType()==Material.GRASS) {
+			if(e.getClickedBlock().getType()==Material.GRASS_BLOCK) {
 				if (e.getClickedBlock().getLocation().add(0, 1, 0).getBlock().getType() == Material.AIR) {
 					e.getItem().subtract();
 
@@ -77,7 +77,7 @@ public class SkullEvents implements Listener {
 										}else return;
 
 										b.setType(Material.PLAYER_HEAD);
-										ItemUtils.setTexture(b, profile);
+										ItemUtils.setProfile(b, profile);
 
 										Rotatable data = (Rotatable) b.getBlockData();
 										data.setRotation(a.get(Main.r.nextInt(a.size())));
@@ -139,7 +139,7 @@ public class SkullEvents implements Listener {
 		d.setFacing(face.face);
 		b.setBlockData(d);
 
-		ItemUtils.setTexture(b, skull.profile);
+		ItemUtils.setProfile(b, skull.profile);
 	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
