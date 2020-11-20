@@ -39,6 +39,7 @@ import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -70,6 +71,32 @@ public class OthersEvents implements Listener {
 				e.setCancelled(true);
 			}
 
+		}
+		if(e.getDamager() instanceof Arrow){
+			ProjectileSource projectileSource = ((Arrow) e.getDamager()).getShooter();
+			if(projectileSource instanceof Player){
+				Player p = (Player) projectileSource;
+				boolean damagerIsland = false;
+				boolean victimIsland = false;
+
+				if(e.getEntity() instanceof Player){
+					Player victim = (Player) e.getEntity();
+					for(ISPLink link : BaseAPI.getIsland(e.getEntity().getLocation()).getMembers()){
+
+						if(link.sp.equals(BaseAPI.getSkyPlayer(p.getUniqueId()))) damagerIsland=true;
+						if(link.sp.equals(BaseAPI.getOnlineSP(victim))) victimIsland=true;
+					}
+					if((!victimIsland || !damagerIsland )&&!OthersAPI.isMasterEdit(p) && !p.getWorld().getName().equalsIgnoreCase("spawn") && p!=victim){
+
+						p.sendMessage("§cTu ne peux pas faire de dégat à cette personne !");
+						e.setCancelled(true);
+					}
+
+
+				}
+
+
+			}
 		}
 	}
 
