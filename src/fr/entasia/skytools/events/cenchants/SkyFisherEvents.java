@@ -85,7 +85,7 @@ public class SkyFisherEvents implements Listener {
 					cancel();
 				}
 			}.runTaskTimer(Main.main, 2, 2);
-		}else if(e.getState()==PlayerFishEvent.State.CAUGHT_ENTITY||e.getState()== PlayerFishEvent.State.FAILED_ATTEMPT || e.getState() == PlayerFishEvent.State.CAUGHT_FISH){
+		}else if(e.getState()==PlayerFishEvent.State.CAUGHT_ENTITY||e.getState()== PlayerFishEvent.State.FAILED_ATTEMPT || e.getState() == PlayerFishEvent.State.CAUGHT_FISH || e.getState() == PlayerFishEvent.State.REEL_IN){
 			for(AirHooksTask aht : Utils.airHookTasks){
 				if(aht.hook==e.getHook()){
 					if(aht.isTrapped()){
