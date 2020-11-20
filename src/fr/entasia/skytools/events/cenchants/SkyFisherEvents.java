@@ -1,10 +1,12 @@
 package fr.entasia.skytools.events.cenchants;
 
+
 import fr.entasia.apis.utils.ItemUtils;
 import fr.entasia.skytools.Main;
 import fr.entasia.skytools.Utils;
 import fr.entasia.skytools.objs.custom.CustomEnchants;
 import fr.entasia.skytools.tasks.AirHooksTask;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -83,12 +85,13 @@ public class SkyFisherEvents implements Listener {
 					cancel();
 				}
 			}.runTaskTimer(Main.main, 2, 2);
-		}else if(e.getState()==PlayerFishEvent.State.CAUGHT_ENTITY||e.getState()==PlayerFishEvent.State.FAILED_ATTEMPT){
+		}else if(e.getState()==PlayerFishEvent.State.CAUGHT_ENTITY||e.getState()== PlayerFishEvent.State.FAILED_ATTEMPT || e.getState() == PlayerFishEvent.State.CAUGHT_FISH || e.getState() == PlayerFishEvent.State.REEL_IN){
 			for(AirHooksTask aht : Utils.airHookTasks){
 				if(aht.hook==e.getHook()){
 					if(aht.isTrapped()){
 						ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
 						if(!CustomEnchants.SKY_FISHER.hasEnchant(item))return;
+
 
 						if(ItemUtils.damage(item, 12)) {
 							e.getPlayer().getInventory().setItemInMainHand(null);
@@ -113,6 +116,7 @@ public class SkyFisherEvents implements Listener {
 							}
 						}
 						assert ent != null;
+						//ent.teleport(e.getPlayer());
 						Vector v = e.getPlayer().getLocation().subtract(aht.centerLoc()).toVector().multiply(1/8f).add(new Vector(0, 0.3, 0));
 						ent.setVelocity(v);
 					}
