@@ -46,7 +46,7 @@ public class SkullEvents implements Listener {
 		if(e.getHand()==EquipmentSlot.HAND&&e.getAction()==Action.RIGHT_CLICK_BLOCK&&e.getItem()!=null&&e.getItem().getType()==Material.BONE_MEAL){
 			if(e.getClickedBlock().getType()==Material.GRASS_BLOCK) {
 				if (e.getClickedBlock().getLocation().add(0, 1, 0).getBlock().getType() == Material.AIR) {
-					e.getItem().subtract();
+					if (e.getPlayer().getGameMode() != GameMode.CREATIVE) e.getItem().subtract();
 
 					Location loc = e.getClickedBlock().getLocation();
 					int minx = loc.getBlockX() - 3;

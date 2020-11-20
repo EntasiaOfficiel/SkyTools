@@ -33,7 +33,7 @@ public class Main extends JavaPlugin {
 	Stratégie actuelle :
 
 	- Charger toutes les iles au démarrage
-	- Charger tout les joueurs au démarragze
+	- Charger tout les joueurs au démarrage
 	 */
 
 	public static Main main;
@@ -103,7 +103,7 @@ public class Main extends JavaPlugin {
 		}
 	}
 
-	public static void loadConfigs() throws Exception {
+	public static void loadConfigs() throws Throwable {
 		main.saveDefaultConfig();
 		main.reloadConfig();
 
@@ -131,8 +131,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public static void registerRecipes(){
-		ItemStack item = new ItemStack(Material.BROWN_MUSHROOM, 2);
-		ItemMeta meta;
+		ItemStack item = new ItemStack(Material.BROWN_MUSHROOM_BLOCK, 2);
 
 		ShapelessRecipe slrecipe = new ShapelessRecipe(new NamespacedKey(main, "brown_mushoom_block"), item);
 		slrecipe.addIngredient(4, Material.BROWN_MUSHROOM);
@@ -161,7 +160,7 @@ public class Main extends JavaPlugin {
 		slrecipe.addIngredient(1, Material.FERMENTED_SPIDER_EYE);
 		Bukkit.addRecipe(slrecipe);
 
-		item = new ItemBuilder(Material.DIRT).name("§6I am a flower pot").build();
+		item = new ItemBuilder(Material.DIRT).name("§6I am a flower pot").lore("§7§oVive le code").build();
 		slrecipe = new ShapelessRecipe(new NamespacedKey(main, "dirt_lol"), item);
 		slrecipe.addIngredient(1, Material.DIRT);
 		Bukkit.addRecipe(slrecipe);

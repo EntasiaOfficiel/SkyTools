@@ -19,8 +19,8 @@ public class SkyToolsCmd implements CommandExecutor {
 					try{
 						Main.loadConfigs();
 						p.sendMessage("§aConfiguration rechargée avec succès !");
-					}catch(Exception e){
-						e.printStackTrace();
+					}catch(Throwable t){
+						t.printStackTrace();
 						p.sendMessage("§cConfiguration rechargée avec erreur ! ( voir console )");
 					}
 				}else{
